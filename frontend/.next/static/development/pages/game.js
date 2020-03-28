@@ -25059,7 +25059,7 @@ var Game = function Game(props) {
 
 /***/ }),
 
-/***/ 11:
+/***/ 8:
 /*!*****************************!*\
   !*** multi ./pages/game.js ***!
   \*****************************/
@@ -25084,5 +25084,5 @@ module.exports = dll_18682c416555df0bf0b9;
 
 /***/ })
 
-},[[11,"static/runtime/webpack.js"]]]));;
+},[[8,"static/runtime/webpack.js"]]]));;
 //# sourceMappingURL=game.js.map

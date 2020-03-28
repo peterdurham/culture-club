@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import gql from "graphql-tag";
 import Head from "next/head";
+import Link from "next/link";
 import { Query } from "react-apollo";
 import styled from "styled-components";
 
@@ -93,6 +94,14 @@ class SingleMovie extends Component {
                 <h2>
                   Viewing {movie.title} <span>({movie.year})</span>{" "}
                 </h2>
+                <Link
+                  href={{
+                    pathname: "update",
+                    query: { id: movie.id }
+                  }}
+                >
+                  <a>Edit ✏️</a>
+                </Link>
                 <div className="movie__rating">
                   <Rating>4.5</Rating> releaseDate/country? -
                   <GenreButton>genre</GenreButton>,

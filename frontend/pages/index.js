@@ -7,7 +7,7 @@ import Games from "../components/Games";
 const Home = props => {
   return (
     <div>
-      <Items page={parseFloat(props.query.page) || 1} />
+      {/* <Items page={parseFloat(props.query.page) || 1} /> */}
       <Movies page={parseFloat(props.query.page) || 1} />
       <Books page={parseFloat(props.query.page) || 1} />
       <Games page={parseFloat(props.query.page) || 1} />

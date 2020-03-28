@@ -9,15 +9,15 @@ import Error from "./ErrorMessage";
 const CREATE_MOVIE_MUTATION = gql`
   mutation CREATE_MOVIE_MUTATION(
     $title: String!
-    $description: String!
     $year: Int!
+    $description: String!
     $image: String
     $largeImage: String
   ) {
     createMovie(
       title: $title
-      description: $description
       year: $year
+      description: $description
       image: $image
       largeImage: $largeImage
     ) {
@@ -29,8 +29,9 @@ const CREATE_MOVIE_MUTATION = gql`
 class CreateMovie extends Component {
   state = {
     title: "",
-    description: "",
+    director: "",
     year: null,
+    description: "",
     image: "",
     largeImage: ""
   };
@@ -82,7 +83,7 @@ class CreateMovie extends Component {
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
               <label htmlFor="file">
-                Image
+                Image*
                 <input
                   type="file"
                   id="file"
@@ -101,7 +102,7 @@ class CreateMovie extends Component {
               </label>
 
               <label htmlFor="title">
-                Title
+                Title*
                 <input
                   type="text"
                   id="title"
@@ -113,8 +114,21 @@ class CreateMovie extends Component {
                 />
               </label>
 
+              <label htmlFor="director">
+                Director
+                <input
+                  type="text"
+                  id="director"
+                  name="director"
+                  placeholder="Director"
+                  required
+                  value={this.state.director}
+                  onChange={this.handleChange}
+                />
+              </label>
+
               <label htmlFor="year">
-                Year
+                Year*
                 <input
                   type="number"
                   id="year"
@@ -127,7 +141,7 @@ class CreateMovie extends Component {
               </label>
 
               <label htmlFor="description">
-                Description
+                Description*
                 <textarea
                   id="description"
                   name="description"

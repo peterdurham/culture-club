@@ -85,7 +85,7 @@ class CreateBook extends Component {
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
               <label htmlFor="file">
-                Image
+                Image*
                 <input
                   type="file"
                   id="file"
@@ -104,7 +104,7 @@ class CreateBook extends Component {
               </label>
 
               <label htmlFor="title">
-                Title
+                Title*
                 <input
                   type="text"
                   id="title"
@@ -116,7 +116,7 @@ class CreateBook extends Component {
                 />
               </label>
               <label htmlFor="author">
-                Author
+                Author*
                 <input
                   type="text"
                   id="author"
@@ -129,7 +129,7 @@ class CreateBook extends Component {
               </label>
 
               <label htmlFor="year">
-                Year
+                Year*
                 <input
                   type="number"
                   id="year"
@@ -142,7 +142,7 @@ class CreateBook extends Component {
               </label>
 
               <label htmlFor="description">
-                Description
+                Description*
                 <textarea
                   id="description"
                   name="description"

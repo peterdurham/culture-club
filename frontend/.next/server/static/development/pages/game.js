@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -393,7 +393,7 @@ var Game = function Game(props) {
 
 /***/ }),
 
-/***/ 11:
+/***/ 8:
 /*!*****************************!*\
   !*** multi ./pages/game.js ***!
   \*****************************/

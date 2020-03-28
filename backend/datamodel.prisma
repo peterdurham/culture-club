@@ -25,6 +25,12 @@ enum GameStatus {
   BEAT_IT
   TO_PLAY
 }
+enum NumPlayers {
+  SINGLE_PLAYER_OFFLINE
+  MULTI_PLAYER_OFFLINE
+  SINGLE_PLAYER_ONLINE
+  MULTI_PLAYER_ONLINE
+}
 
 type User {
   id: ID! @id
@@ -41,7 +47,14 @@ type Movie {
   id: ID! @id
   title: String!
   description: String!
+  director: String
   year: Int!
+  genres: [String] @scalarList(strategy: RELATION)
+  length: Int
+  actors: [String] @scalarList(strategy: RELATION)
+  budget: Int
+  gross: Int
+  imdbURL: String
   image: String
   largeImage: String
   status: MovieStatus
@@ -54,6 +67,11 @@ type Book {
   author: String!
   description: String!
   year: Int!
+  genres: [String] @scalarList(strategy: RELATION)
+  pdfURL: String
+  printLength: Int
+  publisher: String
+  characters: [String] @scalarList(strategy: RELATION)
   image: String
   largeImage: String
   status: BookStatus
@@ -66,6 +84,11 @@ type Game {
   developer: String!
   description: String!
   year: Int!
+  genres: [String] @scalarList(strategy: RELATION)
+  platforms: [String] @scalarList(strategy: RELATION)
+  characters: [String] @scalarList(strategy: RELATION)
+  numPlayers: NumPlayers
+  websiteURL: String
   image: String
   largeImage: String
   status: MovieStatus

@@ -1,115 +1,23 @@
 {
-  "devFiles": [],
+  "devFiles": [
+    "static/development/dll/dll_6f6d76e8a5c73f028d9b.js"
+  ],
   "pages": {
     "/_app": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/add-book": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/add-game": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/add-movie": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/book": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/books": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/game": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/games": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/index": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/item": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/items": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/movie": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/movies": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/order": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/orders": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/permissions": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/reset": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/sell": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/signup": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
-    ],
-    "/update": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ],
     "/_error": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ],
-    "/": [
-      "static/runtime/webpack-42652fa8b82c329c0559.js",
-      "static/chunks/commons.a928b6de4121878c62f5.js",
-      "static/runtime/main-1b254460b67dcf7ace3a.js"
+    "/update-movie": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/game": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ]
   }
 }

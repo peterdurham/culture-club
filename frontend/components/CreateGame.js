@@ -85,7 +85,7 @@ class CreateGame extends Component {
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
               <label htmlFor="file">
-                Image
+                Image*
                 <input
                   type="file"
                   id="file"
@@ -104,7 +104,7 @@ class CreateGame extends Component {
               </label>
 
               <label htmlFor="title">
-                Title
+                Title*
                 <input
                   type="text"
                   id="title"
@@ -117,7 +117,7 @@ class CreateGame extends Component {
               </label>
 
               <label htmlFor="developer">
-                Developer
+                Developer*
                 <input
                   type="text"
                   id="developer"
@@ -130,7 +130,7 @@ class CreateGame extends Component {
               </label>
 
               <label htmlFor="year">
-                Year
+                Year*
                 <input
                   type="number"
                   id="year"
@@ -143,7 +143,7 @@ class CreateGame extends Component {
               </label>
 
               <label htmlFor="description">
-                Description
+                Description*
                 <textarea
                   id="description"
                   name="description"

@@ -1,5 +1,5 @@
-# source: https://us1.prisma.sh/peter-durham-ae1855/culture-club/dev
-# timestamp: Wed Mar 25 2020 21:45:21 GMT-0700 (Pacific Daylight Time)
+# source: https://culture-club-prod-6ac1562427.herokuapp.com/culture-club-production/prod
+# timestamp: Sat Mar 28 2020 14:30:48 GMT-0700 (Pacific Daylight Time)
 
 type AggregateBook {
   count: Int!
@@ -44,6 +44,11 @@ type Book implements Node {
   author: String!
   description: String!
   year: Int!
+  genres: [String!]!
+  pdfURL: String
+  printLength: Int
+  publisher: String
+  characters: [String!]!
   image: String
   largeImage: String
   status: BookStatus
@@ -60,15 +65,28 @@ type BookConnection {
   aggregate: AggregateBook!
 }
 
+input BookCreatecharactersInput {
+  set: [String!]
+}
+
+input BookCreategenresInput {
+  set: [String!]
+}
+
 input BookCreateInput {
   id: ID
   title: String!
   author: String!
   description: String!
   year: Int!
+  pdfURL: String
+  printLength: Int
+  publisher: String
   image: String
   largeImage: String
   status: BookStatus
+  genres: BookCreategenresInput
+  characters: BookCreatecharactersInput
   user: UserCreateOneInput!
 }
 
@@ -92,6 +110,12 @@ enum BookOrderByInput {
   description_DESC
   year_ASC
   year_DESC
+  pdfURL_ASC
+  pdfURL_DESC
+  printLength_ASC
+  printLength_DESC
+  publisher_ASC
+  publisher_DESC
   image_ASC
   image_DESC
   largeImage_ASC
@@ -106,6 +130,11 @@ type BookPreviousValues {
   author: String!
   description: String!
   year: Int!
+  genres: [String!]!
+  pdfURL: String
+  printLength: Int
+  publisher: String
+  characters: [String!]!
   image: String
   largeImage: String
   status: BookStatus
@@ -156,14 +185,27 @@ input BookSubscriptionWhereInput {
   node: BookWhereInput
 }
 
+input BookUpdatecharactersInput {
+  set: [String!]
+}
+
+input BookUpdategenresInput {
+  set: [String!]
+}
+
 input BookUpdateInput {
   title: String
   author: String
   description: String
   year: Int
+  pdfURL: String
+  printLength: Int
+  publisher: String
   image: String
   largeImage: String
   status: BookStatus
+  genres: BookUpdategenresInput
+  characters: BookUpdatecharactersInput
   user: UserUpdateOneRequiredInput
 }
 
@@ -172,9 +214,14 @@ input BookUpdateManyMutationInput {
   author: String
   description: String
   year: Int
+  pdfURL: String
+  printLength: Int
+  publisher: String
   image: String
   largeImage: String
   status: BookStatus
+  genres: BookUpdategenresInput
+  characters: BookUpdatecharactersInput
 }
 
 input BookWhereInput {
@@ -368,6 +415,108 @@ input BookWhereInput {
 
   """All values greater than or equal the given value."""
   year_gte: Int
+  pdfURL: String
+
+  """All values that are not equal to given value."""
+  pdfURL_not: String
+
+  """All values that are contained in given list."""
+  pdfURL_in: [String!]
+
+  """All values that are not contained in given list."""
+  pdfURL_not_in: [String!]
+
+  """All values less than the given value."""
+  pdfURL_lt: String
+
+  """All values less than or equal the given value."""
+  pdfURL_lte: String
+
+  """All values greater than the given value."""
+  pdfURL_gt: String
+
+  """All values greater than or equal the given value."""
+  pdfURL_gte: String
+
+  """All values containing the given string."""
+  pdfURL_contains: String
+
+  """All values not containing the given string."""
+  pdfURL_not_contains: String
+
+  """All values starting with the given string."""
+  pdfURL_starts_with: String
+
+  """All values not starting with the given string."""
+  pdfURL_not_starts_with: String
+
+  """All values ending with the given string."""
+  pdfURL_ends_with: String
+
+  """All values not ending with the given string."""
+  pdfURL_not_ends_with: String
+  printLength: Int
+
+  """All values that are not equal to given value."""
+  printLength_not: Int
+
+  """All values that are contained in given list."""
+  printLength_in: [Int!]
+
+  """All values that are not contained in given list."""
+  printLength_not_in: [Int!]
+
+  """All values less than the given value."""
+  printLength_lt: Int
+
+  """All values less than or equal the given value."""
+  printLength_lte: Int
+
+  """All values greater than the given value."""
+  printLength_gt: Int
+
+  """All values greater than or equal the given value."""
+  printLength_gte: Int
+  publisher: String
+
+  """All values that are not equal to given value."""
+  publisher_not: String
+
+  """All values that are contained in given list."""
+  publisher_in: [String!]
+
+  """All values that are not contained in given list."""
+  publisher_not_in: [String!]
+
+  """All values less than the given value."""
+  publisher_lt: String
+
+  """All values less than or equal the given value."""
+  publisher_lte: String
+
+  """All values greater than the given value."""
+  publisher_gt: String
+
+  """All values greater than or equal the given value."""
+  publisher_gte: String
+
+  """All values containing the given string."""
+  publisher_contains: String
+
+  """All values not containing the given string."""
+  publisher_not_contains: String
+
+  """All values starting with the given string."""
+  publisher_starts_with: String
+
+  """All values not starting with the given string."""
+  publisher_not_starts_with: String
+
+  """All values ending with the given string."""
+  publisher_ends_with: String
+
+  """All values not ending with the given string."""
+  publisher_not_ends_with: String
   image: String
 
   """All values that are not equal to given value."""
@@ -767,6 +916,11 @@ type Game implements Node {
   developer: String!
   description: String!
   year: Int!
+  genres: [String!]!
+  platforms: [String!]!
+  characters: [String!]!
+  numPlayers: NumPlayers
+  websiteURL: String
   image: String
   largeImage: String
   status: MovieStatus
@@ -783,16 +937,33 @@ type GameConnection {
   aggregate: AggregateGame!
 }
 
+input GameCreatecharactersInput {
+  set: [String!]
+}
+
+input GameCreategenresInput {
+  set: [String!]
+}
+
 input GameCreateInput {
   id: ID
   title: String!
   developer: String!
   description: String!
   year: Int!
+  numPlayers: NumPlayers
+  websiteURL: String
   image: String
   largeImage: String
   status: MovieStatus
+  genres: GameCreategenresInput
+  platforms: GameCreateplatformsInput
+  characters: GameCreatecharactersInput
   user: UserCreateOneInput!
+}
+
+input GameCreateplatformsInput {
+  set: [String!]
 }
 
 """An edge in a connection."""
@@ -815,6 +986,10 @@ enum GameOrderByInput {
   description_DESC
   year_ASC
   year_DESC
+  numPlayers_ASC
+  numPlayers_DESC
+  websiteURL_ASC
+  websiteURL_DESC
   image_ASC
   image_DESC
   largeImage_ASC
@@ -829,6 +1004,11 @@ type GamePreviousValues {
   developer: String!
   description: String!
   year: Int!
+  genres: [String!]!
+  platforms: [String!]!
+  characters: [String!]!
+  numPlayers: NumPlayers
+  websiteURL: String
   image: String
   largeImage: String
   status: MovieStatus
@@ -873,14 +1053,27 @@ input GameSubscriptionWhereInput {
   node: GameWhereInput
 }
 
+input GameUpdatecharactersInput {
+  set: [String!]
+}
+
+input GameUpdategenresInput {
+  set: [String!]
+}
+
 input GameUpdateInput {
   title: String
   developer: String
   description: String
   year: Int
+  numPlayers: NumPlayers
+  websiteURL: String
   image: String
   largeImage: String
   status: MovieStatus
+  genres: GameUpdategenresInput
+  platforms: GameUpdateplatformsInput
+  characters: GameUpdatecharactersInput
   user: UserUpdateOneRequiredInput
 }
 
@@ -889,9 +1082,18 @@ input GameUpdateManyMutationInput {
   developer: String
   description: String
   year: Int
+  numPlayers: NumPlayers
+  websiteURL: String
   image: String
   largeImage: String
   status: MovieStatus
+  genres: GameUpdategenresInput
+  platforms: GameUpdateplatformsInput
+  characters: GameUpdatecharactersInput
+}
+
+input GameUpdateplatformsInput {
+  set: [String!]
 }
 
 input GameWhereInput {
@@ -1085,6 +1287,56 @@ input GameWhereInput {
 
   """All values greater than or equal the given value."""
   year_gte: Int
+  numPlayers: NumPlayers
+
+  """All values that are not equal to given value."""
+  numPlayers_not: NumPlayers
+
+  """All values that are contained in given list."""
+  numPlayers_in: [NumPlayers!]
+
+  """All values that are not contained in given list."""
+  numPlayers_not_in: [NumPlayers!]
+  websiteURL: String
+
+  """All values that are not equal to given value."""
+  websiteURL_not: String
+
+  """All values that are contained in given list."""
+  websiteURL_in: [String!]
+
+  """All values that are not contained in given list."""
+  websiteURL_not_in: [String!]
+
+  """All values less than the given value."""
+  websiteURL_lt: String
+
+  """All values less than or equal the given value."""
+  websiteURL_lte: String
+
+  """All values greater than the given value."""
+  websiteURL_gt: String
+
+  """All values greater than or equal the given value."""
+  websiteURL_gte: String
+
+  """All values containing the given string."""
+  websiteURL_contains: String
+
+  """All values not containing the given string."""
+  websiteURL_not_contains: String
+
+  """All values starting with the given string."""
+  websiteURL_starts_with: String
+
+  """All values not starting with the given string."""
+  websiteURL_not_starts_with: String
+
+  """All values ending with the given string."""
+  websiteURL_ends_with: String
+
+  """All values not ending with the given string."""
+  websiteURL_not_ends_with: String
   image: String
 
   """All values that are not equal to given value."""
@@ -1629,7 +1881,14 @@ type Movie implements Node {
   id: ID!
   title: String!
   description: String!
+  director: String
   year: Int!
+  genres: [String!]!
+  length: Int
+  actors: [String!]!
+  budget: Int
+  gross: Int
+  imdbURL: String
   image: String
   largeImage: String
   status: MovieStatus
@@ -1646,14 +1905,29 @@ type MovieConnection {
   aggregate: AggregateMovie!
 }
 
+input MovieCreateactorsInput {
+  set: [String!]
+}
+
+input MovieCreategenresInput {
+  set: [String!]
+}
+
 input MovieCreateInput {
   id: ID
   title: String!
   description: String!
+  director: String
   year: Int!
+  length: Int
+  budget: Int
+  gross: Int
+  imdbURL: String
   image: String
   largeImage: String
   status: MovieStatus
+  genres: MovieCreategenresInput
+  actors: MovieCreateactorsInput
   user: UserCreateOneInput!
 }
 
@@ -1673,8 +1947,18 @@ enum MovieOrderByInput {
   title_DESC
   description_ASC
   description_DESC
+  director_ASC
+  director_DESC
   year_ASC
   year_DESC
+  length_ASC
+  length_DESC
+  budget_ASC
+  budget_DESC
+  gross_ASC
+  gross_DESC
+  imdbURL_ASC
+  imdbURL_DESC
   image_ASC
   image_DESC
   largeImage_ASC
@@ -1687,7 +1971,14 @@ type MoviePreviousValues {
   id: ID!
   title: String!
   description: String!
+  director: String
   year: Int!
+  genres: [String!]!
+  length: Int
+  actors: [String!]!
+  budget: Int
+  gross: Int
+  imdbURL: String
   image: String
   largeImage: String
   status: MovieStatus
@@ -1738,23 +2029,45 @@ input MovieSubscriptionWhereInput {
   node: MovieWhereInput
 }
 
+input MovieUpdateactorsInput {
+  set: [String!]
+}
+
+input MovieUpdategenresInput {
+  set: [String!]
+}
+
 input MovieUpdateInput {
   title: String
   description: String
+  director: String
   year: Int
+  length: Int
+  budget: Int
+  gross: Int
+  imdbURL: String
   image: String
   largeImage: String
   status: MovieStatus
+  genres: MovieUpdategenresInput
+  actors: MovieUpdateactorsInput
   user: UserUpdateOneRequiredInput
 }
 
 input MovieUpdateManyMutationInput {
   title: String
   description: String
+  director: String
   year: Int
+  length: Int
+  budget: Int
+  gross: Int
+  imdbURL: String
   image: String
   largeImage: String
   status: MovieStatus
+  genres: MovieUpdategenresInput
+  actors: MovieUpdateactorsInput
 }
 
 input MovieWhereInput {
@@ -1886,6 +2199,46 @@ input MovieWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
+  director: String
+
+  """All values that are not equal to given value."""
+  director_not: String
+
+  """All values that are contained in given list."""
+  director_in: [String!]
+
+  """All values that are not contained in given list."""
+  director_not_in: [String!]
+
+  """All values less than the given value."""
+  director_lt: String
+
+  """All values less than or equal the given value."""
+  director_lte: String
+
+  """All values greater than the given value."""
+  director_gt: String
+
+  """All values greater than or equal the given value."""
+  director_gte: String
+
+  """All values containing the given string."""
+  director_contains: String
+
+  """All values not containing the given string."""
+  director_not_contains: String
+
+  """All values starting with the given string."""
+  director_starts_with: String
+
+  """All values not starting with the given string."""
+  director_not_starts_with: String
+
+  """All values ending with the given string."""
+  director_ends_with: String
+
+  """All values not ending with the given string."""
+  director_not_ends_with: String
   year: Int
 
   """All values that are not equal to given value."""
@@ -1908,6 +2261,112 @@ input MovieWhereInput {
 
   """All values greater than or equal the given value."""
   year_gte: Int
+  length: Int
+
+  """All values that are not equal to given value."""
+  length_not: Int
+
+  """All values that are contained in given list."""
+  length_in: [Int!]
+
+  """All values that are not contained in given list."""
+  length_not_in: [Int!]
+
+  """All values less than the given value."""
+  length_lt: Int
+
+  """All values less than or equal the given value."""
+  length_lte: Int
+
+  """All values greater than the given value."""
+  length_gt: Int
+
+  """All values greater than or equal the given value."""
+  length_gte: Int
+  budget: Int
+
+  """All values that are not equal to given value."""
+  budget_not: Int
+
+  """All values that are contained in given list."""
+  budget_in: [Int!]
+
+  """All values that are not contained in given list."""
+  budget_not_in: [Int!]
+
+  """All values less than the given value."""
+  budget_lt: Int
+
+  """All values less than or equal the given value."""
+  budget_lte: Int
+
+  """All values greater than the given value."""
+  budget_gt: Int
+
+  """All values greater than or equal the given value."""
+  budget_gte: Int
+  gross: Int
+
+  """All values that are not equal to given value."""
+  gross_not: Int
+
+  """All values that are contained in given list."""
+  gross_in: [Int!]
+
+  """All values that are not contained in given list."""
+  gross_not_in: [Int!]
+
+  """All values less than the given value."""
+  gross_lt: Int
+
+  """All values less than or equal the given value."""
+  gross_lte: Int
+
+  """All values greater than the given value."""
+  gross_gt: Int
+
+  """All values greater than or equal the given value."""
+  gross_gte: Int
+  imdbURL: String
+
+  """All values that are not equal to given value."""
+  imdbURL_not: String
+
+  """All values that are contained in given list."""
+  imdbURL_in: [String!]
+
+  """All values that are not contained in given list."""
+  imdbURL_not_in: [String!]
+
+  """All values less than the given value."""
+  imdbURL_lt: String
+
+  """All values less than or equal the given value."""
+  imdbURL_lte: String
+
+  """All values greater than the given value."""
+  imdbURL_gt: String
+
+  """All values greater than or equal the given value."""
+  imdbURL_gte: String
+
+  """All values containing the given string."""
+  imdbURL_contains: String
+
+  """All values not containing the given string."""
+  imdbURL_not_contains: String
+
+  """All values starting with the given string."""
+  imdbURL_starts_with: String
+
+  """All values not starting with the given string."""
+  imdbURL_not_starts_with: String
+
+  """All values ending with the given string."""
+  imdbURL_ends_with: String
+
+  """All values not ending with the given string."""
+  imdbURL_not_ends_with: String
   image: String
 
   """All values that are not equal to given value."""
@@ -2066,6 +2525,13 @@ enum MutationType {
 interface Node {
   """The id of the object."""
   id: ID!
+}
+
+enum NumPlayers {
+  SINGLE_PLAYER_OFFLINE
+  MULTI_PLAYER_OFFLINE
+  SINGLE_PLAYER_ONLINE
+  MULTI_PLAYER_ONLINE
 }
 
 type Order implements Node {
