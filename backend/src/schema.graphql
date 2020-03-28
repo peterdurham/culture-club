@@ -1,0 +1,118 @@
+# import * from './generated/prisma.graphql'
+
+type SuccessMessage {
+  message: String
+}
+
+type Mutation {
+  createItem(
+    title: String
+    description: String
+    price: Int
+    image: String
+    largeImage: String
+  ): Item!
+  updateItem(id: ID!, title: String, description: String, price: Int): Item!
+  deleteItem(id: ID!): Item
+  createMovie(
+    title: String
+    description: String
+    year: Int
+    image: String
+    largeImage: String
+  ): Movie!
+  updateMovie(
+    id: ID!
+    title: String
+    author: String
+    description: String
+    year: Int
+  ): Movie!
+  deleteMovie(id: ID!): Movie
+  createBook(
+    title: String
+    author: String
+    description: String
+    year: Int
+    image: String
+    largeImage: String
+  ): Book!
+  updateBook(
+    id: ID!
+    title: String
+    developer: String
+    description: String
+    year: Int
+  ): Book!
+  deleteBook(id: ID!): Book
+  createGame(
+    title: String
+    developer: String
+    description: String
+    year: Int
+    image: String
+    largeImage: String
+  ): Game!
+  updateGame(id: ID!, title: String, description: String, year: Int): Game!
+  deleteGame(id: ID!): Game
+  signup(email: String!, password: String!, name: String!): User!
+  signin(email: String!, password: String!): User!
+  signout: SuccessMessage
+  requestReset(email: String!): SuccessMessage
+  resetPassword(
+    resetToken: String!
+    password: String!
+    confirmPassword: String!
+  ): User!
+  updatePermissions(permissions: [Permission], userId: ID!): User
+  addToCart(id: ID!): CartItem
+  removeFromCart(id: ID!): CartItem
+  createOrder(token: String!): Order!
+}
+
+type Query {
+  items(
+    where: ItemWhereInput
+    orderBy: ItemOrderByInput
+    skip: Int
+    first: Int
+  ): [Item]!
+  item(where: ItemWhereUniqueInput!): Item
+  itemsConnection(where: ItemWhereInput): ItemConnection!
+  movies(
+    where: MovieWhereInput
+    orderBy: MovieOrderByInput
+    skip: Int
+    first: Int
+  ): [Movie]!
+  movie(where: MovieWhereUniqueInput!): Movie
+  moviesConnection(where: MovieWhereInput): MovieConnection!
+  books(
+    where: BookWhereInput
+    orderBy: BookOrderByInput
+    skip: Int
+    first: Int
+  ): [Book]!
+  book(where: BookWhereUniqueInput!): Book
+  booksConnection(where: BookWhereInput): BookConnection!
+  games(
+    where: GameWhereInput
+    orderBy: GameOrderByInput
+    skip: Int
+    first: Int
+  ): [Game]!
+  game(where: GameWhereUniqueInput!): Game
+  gamesConnection(where: GameWhereInput): GameConnection!
+  me: User
+  users: [User]!
+  order(id: ID!): Order
+  orders(orderBy: OrderOrderByInput): [Order]!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  permissions: [Permission!]!
+  cart: [CartItem!]!
+}
