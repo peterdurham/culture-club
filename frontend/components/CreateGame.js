@@ -30,12 +30,12 @@ const CREATE_GAME_MUTATION = gql`
 
 class CreateGame extends Component {
   state = {
-    title: "Cool Shoes",
-    developer: "squaresoft",
-    description: "I love those shoes",
-    year: 1000,
-    image: "dog.jpg",
-    largeImage: "large-dog.jpg"
+    title: "",
+    developer: "",
+    description: "",
+    year: null,
+    image: "",
+    largeImage: ""
   };
   handleChange = e => {
     const { name, type, value } = e.target;

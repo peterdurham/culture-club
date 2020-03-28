@@ -30,12 +30,12 @@ const CREATE_BOOK_MUTATION = gql`
 
 class CreateBook extends Component {
   state = {
-    title: "Cool Shoes",
-    author: "Tolkien",
-    description: "I love those shoes",
-    year: 1000,
-    image: "dog.jpg",
-    largeImage: "large-dog.jpg"
+    title: "",
+    author: "",
+    description: "",
+    year: null,
+    image: "",
+    largeImage: ""
   };
   handleChange = e => {
     const { name, type, value } = e.target;

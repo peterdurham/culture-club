@@ -28,11 +28,11 @@ const CREATE_MOVIE_MUTATION = gql`
 
 class CreateMovie extends Component {
   state = {
-    title: "Cool Shoes",
-    description: "I love those shoes",
-    image: "dog.jpg",
-    largeImage: "large-dog.jpg",
-    year: 1000
+    title: "",
+    description: "",
+    year: null,
+    image: "",
+    largeImage: ""
   };
   handleChange = e => {
     const { name, type, value } = e.target;
