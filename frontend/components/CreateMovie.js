@@ -9,15 +9,25 @@ import Error from "./ErrorMessage";
 const CREATE_MOVIE_MUTATION = gql`
   mutation CREATE_MOVIE_MUTATION(
     $title: String!
+    $director: String
     $year: Int!
     $description: String!
+    $length: Int
+    $budget: Int
+    $gross: Int
+    $imdbURL: String
     $image: String
     $largeImage: String
   ) {
     createMovie(
       title: $title
+      director: $director
       year: $year
       description: $description
+      length: $length
+      budget: $budget
+      gross: $gross
+      imdbURL: $imdbURL
       image: $image
       largeImage: $largeImage
     ) {
@@ -32,6 +42,10 @@ class CreateMovie extends Component {
     director: "",
     year: null,
     description: "",
+    length: null,
+    budget: null,
+    gross: null,
+    imdbURL: "",
     image: "",
     largeImage: ""
   };
@@ -121,7 +135,6 @@ class CreateMovie extends Component {
                   id="director"
                   name="director"
                   placeholder="Director"
-                  required
                   value={this.state.director}
                   onChange={this.handleChange}
                 />
@@ -148,6 +161,54 @@ class CreateMovie extends Component {
                   placeholder="Enter A Description"
                   required
                   value={this.state.description}
+                  onChange={this.handleChange}
+                />
+              </label>
+
+              <label htmlFor="length">
+                length (min)
+                <input
+                  type="number"
+                  id="length"
+                  name="length"
+                  placeholder="Length in minutes"
+                  value={this.state.length}
+                  onChange={this.handleChange}
+                />
+              </label>
+
+              <label htmlFor="budget">
+                Budget ($)
+                <input
+                  type="number"
+                  id="budget"
+                  name="budget"
+                  placeholder="Budget"
+                  value={this.state.budget}
+                  onChange={this.handleChange}
+                />
+              </label>
+
+              <label htmlFor="gross">
+                gross ($)
+                <input
+                  type="number"
+                  id="gross"
+                  name="gross"
+                  placeholder="gross"
+                  value={this.state.gross}
+                  onChange={this.handleChange}
+                />
+              </label>
+
+              <label htmlFor="imdbURL">
+                imdb URL
+                <input
+                  type="text"
+                  id="imdbURL"
+                  name="imdbURL"
+                  placeholder="imdb URL"
+                  value={this.state.imdbURL}
                   onChange={this.handleChange}
                 />
               </label>

@@ -19,6 +19,10 @@ type Mutation {
     director: String
     year: Int
     description: String
+    length: Int
+    budget: Int
+    gross: Int
+    imdbURL: String
     image: String
     largeImage: String
   ): Movie!
@@ -27,6 +31,10 @@ type Mutation {
     title: String
     director: String
     description: String
+    length: Int
+    budget: Int
+    gross: Int
+    imdbURL: String
     year: Int
   ): Movie!
   deleteMovie(id: ID!): Movie

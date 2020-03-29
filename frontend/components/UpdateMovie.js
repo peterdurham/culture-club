@@ -22,17 +22,29 @@ const UPDATE_MOVIE_MUTATION = gql`
     $title: String
     $description: String
     $year: Int
+    $length: Int
+    $budget: Int
+    $gross: Int
+    $imdbURL: String
   ) {
     updateMovie(
       id: $id
       title: $title
       description: $description
       year: $year
+      length: $length
+      budget: $budget
+      gross: $gross
+      imdbURL: $imdbURL
     ) {
       id
       title
       description
       year
+      length
+      budget
+      gross
+      imdbURL
     }
   }
 `;
@@ -87,18 +99,6 @@ class UpdateMovie extends Component {
                       />
                     </label>
 
-                    <label htmlFor="director">
-                      Director
-                      <input
-                        type="text"
-                        id="director"
-                        name="director"
-                        placeholder="Director"
-                        required
-                        defaultValue={data.movie.director}
-                        onChange={this.handleChange}
-                      />
-                    </label>
                     <label htmlFor="year">
                       Year
                       <input
@@ -120,6 +120,62 @@ class UpdateMovie extends Component {
                         placeholder="Enter A Description"
                         required
                         defaultValue={data.movie.description}
+                        onChange={this.handleChange}
+                      />
+                    </label>
+                    <label htmlFor="director">
+                      Director
+                      <input
+                        type="text"
+                        id="director"
+                        name="director"
+                        placeholder="Director"
+                        defaultValue={data.movie.director}
+                        onChange={this.handleChange}
+                      />
+                    </label>
+
+                    <label htmlFor="length">
+                      Length (minutes)
+                      <input
+                        type="number"
+                        id="length"
+                        name="length"
+                        placeholder="Enter A movie length in minutes"
+                        defaultValue={data.movie.length}
+                        onChange={this.handleChange}
+                      />
+                    </label>
+
+                    <label htmlFor="budget">
+                      Budget
+                      <textarea
+                        id="budget"
+                        name="budget"
+                        placeholder="Budget"
+                        defaultValue={data.movie.budget}
+                        onChange={this.handleChange}
+                      />
+                    </label>
+
+                    <label htmlFor="gross">
+                      Gross
+                      <textarea
+                        id="gross"
+                        name="gross"
+                        placeholder="Gross"
+                        defaultValue={data.movie.gross}
+                        onChange={this.handleChange}
+                      />
+                    </label>
+
+                    <label htmlFor="imdbURL">
+                      IMDB Link
+                      <textarea
+                        id="imdbURL"
+                        name="imdbURL"
+                        placeholder="IMDB URL"
+                        defaultValue={data.movie.imdbURL}
                         onChange={this.handleChange}
                       />
                     </label>
