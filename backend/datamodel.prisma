@@ -91,7 +91,7 @@ type Game {
   websiteURL: String
   image: String
   largeImage: String
-  status: MovieStatus
+  status: GameStatus
   user: User!
 }
 

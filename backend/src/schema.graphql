@@ -23,19 +23,25 @@ type Mutation {
     budget: Int
     gross: Int
     imdbURL: String
+    genres: [String]
+    actors: [String]
+    status: MovieStatus
     image: String
     largeImage: String
   ): Movie!
   updateMovie(
     id: ID!
     title: String
+    year: Int
     director: String
     description: String
     length: Int
     budget: Int
     gross: Int
     imdbURL: String
-    year: Int
+    genres: [String]
+    actors: [String]
+    status: MovieStatus
   ): Movie!
   deleteMovie(id: ID!): Movie
   createBook(
@@ -43,6 +49,12 @@ type Mutation {
     author: String
     year: Int
     description: String
+    printLength: Int
+    publisher: String
+    pdfURL: String
+    genres: [String]
+    characters: [String]
+    status: BookStatus
     image: String
     largeImage: String
   ): Book!
@@ -52,6 +64,12 @@ type Mutation {
     author: String
     year: Int
     description: String
+    printLength: Int
+    publisher: String
+    pdfURL: String
+    genres: [String]
+    characters: [String]
+    status: BookStatus
   ): Book!
   deleteBook(id: ID!): Book
   createGame(
@@ -59,6 +77,11 @@ type Mutation {
     developer: String
     description: String
     year: Int
+    numPlayers: NumPlayers
+    websiteURL: String
+    platforms: [String]
+    characters: [String]
+    status: GameStatus
     image: String
     largeImage: String
   ): Game!
@@ -68,6 +91,11 @@ type Mutation {
     developer: String
     description: String
     year: Int
+    numPlayers: NumPlayers
+    websiteURL: String
+    platforms: [String]
+    characters: [String]
+    status: GameStatus
   ): Game!
   deleteGame(id: ID!): Game
   signup(email: String!, password: String!, name: String!): User!

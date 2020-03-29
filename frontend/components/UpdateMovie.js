@@ -13,6 +13,10 @@ const SINGLE_MOVIE_QUERY = gql`
       title
       description
       year
+      length
+      budget
+      gross
+      imdbURL
     }
   }
 `;

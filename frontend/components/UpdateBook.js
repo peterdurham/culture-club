@@ -5,6 +5,7 @@ import Router from "next/router";
 import Form from "./styles/Form";
 import formatMoney from "../lib/formatMoney";
 import Error from "./ErrorMessage";
+import { BookGenres } from "../config";
 
 const SINGLE_BOOK_QUERY = gql`
   query SINGLE_BOOK_QUERY($id: ID!) {
@@ -14,6 +15,12 @@ const SINGLE_BOOK_QUERY = gql`
       author
       description
       year
+      printLength
+      publisher
+      pdfURL
+      genres
+      characters
+      status
     }
   }
 `;
@@ -24,6 +31,12 @@ const UPDATE_BOOK_MUTATION = gql`
     $author: String
     $description: String
     $year: Int
+    $printLength: Int
+    $publisher: String
+    $pdfURL: String
+    $genres: [String]
+    $characters: [String]
+    $status: BookStatus
   ) {
     updateBook(
       id: $id
@@ -31,12 +44,24 @@ const UPDATE_BOOK_MUTATION = gql`
       author: $author
       description: $description
       year: $year
+      printLength: $printLength
+      publisher: $publisher
+      pdfURL: $pdfURL
+      genres: $genres
+      characters: $characters
+      status: $status
     ) {
       id
       title
       author
       description
       year
+      printLength
+      publisher
+      pdfURL
+      genres
+      characters
+      status
     }
   }
 `;
@@ -45,8 +70,25 @@ class UpdateBook extends Component {
   state = {};
   handleChange = e => {
     const { name, type, value } = e.target;
-    const val = type === "number" ? parseFloat(value) : value;
-    this.setState({ [name]: val });
+    let val = type === "number" ? parseFloat(value) : value;
+
+    if (type === "checkbox" && name === "genres") {
+      const genres = [];
+      var genresSelected = document.querySelectorAll(".bookGenreInput");
+      genresSelected.forEach(genre => {
+        if (genre.checked) {
+          genres.push(genre.defaultValue);
+        }
+      });
+      console.log(genres, "GENRES YO");
+      this.setState({ [name]: genres });
+    } else {
+      this.setState({ [name]: val });
+    }
+
+    // val = e.target.name === "genres" ? val.split(", ") : val;
+    // val = e.target.name === "characters" ? val.split(", ") : val;
+    // console.log(val);
   };
   updateBook = async (e, updateBookMutation) => {
     e.preventDefault();
@@ -126,6 +168,93 @@ class UpdateBook extends Component {
                         defaultValue={data.book.description}
                         onChange={this.handleChange}
                       />
+                    </label>
+                    <label htmlFor="printLength">
+                      Print Length (pages)
+                      <input
+                        type="number"
+                        id="printLength"
+                        name="printLength"
+                        placeholder="Number of Pages"
+                        defaultValue={data.book.printLength}
+                        onChange={this.handleChange}
+                      />
+                    </label>
+                    <label htmlFor="publisher">
+                      Publisher
+                      <input
+                        type="text"
+                        id="publisher"
+                        name="publisher"
+                        placeholder="Publisher"
+                        defaultValue={data.book.publisher}
+                        onChange={this.handleChange}
+                      />
+                    </label>
+                    <label htmlFor="pdfURL">
+                      Link to PDF
+                      <input
+                        type="text"
+                        id="pdfURL"
+                        name="pdfURL"
+                        placeholder="PDF Link"
+                        defaultValue={data.book.pdfURL}
+                        onChange={this.handleChange}
+                      />
+                    </label>
+                    <label htmlFor="genres">
+                      Genres (comma separated)
+                      <div>
+                        {BookGenres.map(genre => {
+                          return (
+                            <div key={genre.value}>
+                              <input
+                                type="checkbox"
+                                name="genres"
+                                className="bookGenreInput"
+                                placeholder={genre.title}
+                                defaultValue={genre.value}
+                                onChange={this.handleChange}
+                              />
+                              {genre.title}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </label>
+                    <label htmlFor="characters">
+                      Characters
+                      <input
+                        type="text"
+                        id="characters"
+                        name="characters"
+                        placeholder="Characters"
+                        defaultValue={data.book.characters}
+                        onChange={this.handleChange}
+                      />
+                    </label>
+                    <label htmlFor="status">
+                      Book Status
+                      {/* <input
+                        type="text"
+                        id="status"
+                        name="status"
+                        placeholder="status"
+                        defaultValue={data.book.status}
+                        onChange={this.handleChange}
+                      /> */}
+                      <select
+                        id="status"
+                        name="status"
+                        onChange={this.handleChange}
+                        defaultValue={data.book.status}
+                      >
+                        <option value="UNSELECTED">Choose Status</option>
+                        <option value="READ_IT">Read It</option>
+                        <option selected value="TO_READ">
+                          To Read
+                        </option>
+                      </select>
                     </label>
                     <button type="submit">
                       Sav{loading ? "ing" : "e"} Changes

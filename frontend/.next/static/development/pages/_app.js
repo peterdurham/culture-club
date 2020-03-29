@@ -1949,7 +1949,7 @@ var Supreme = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h3.withC
 /*!*******************!*\
   !*** ./config.js ***!
   \*******************/
-/*! exports provided: endpoint, prodEndpoint, perPage */
+/*! exports provided: endpoint, prodEndpoint, perPage, BookGenres, MovieGenres, GameGenres */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1957,10 +1957,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "endpoint", function() { return endpoint; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "prodEndpoint", function() { return prodEndpoint; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "perPage", function() { return perPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BookGenres", function() { return BookGenres; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MovieGenres", function() { return MovieGenres; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GameGenres", function() { return GameGenres; });
 // This is client side config only - don't put anything in here that shouldn't be public!
 var endpoint = "http://localhost:4444";
 var prodEndpoint = "https://culture-club-yoga-prod.herokuapp.com/";
 var perPage = 16;
+var BookGenres = [{
+  value: "fantasy",
+  title: "Fantasy"
+}, {
+  value: "sci-Fi",
+  title: "Sci-Fi"
+}, {
+  value: "mystery",
+  title: "Mystery"
+}, {
+  value: "philosophy",
+  title: "Philosophy"
+}, {
+  value: "history",
+  title: "History"
+}];
+var MovieGenres = [];
+var GameGenres = [];
 
 /***/ }),
 

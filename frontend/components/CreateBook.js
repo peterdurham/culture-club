@@ -14,12 +14,24 @@ const CREATE_BOOK_MUTATION = gql`
     $year: Int!
     $image: String
     $largeImage: String
+    $printLength: Int
+    $publisher: String
+    $pdfURL: String
+    $genres: [String]
+    $characters: [String]
+    $status: BookStatus
   ) {
     createBook(
       title: $title
       author: $author
       description: $description
       year: $year
+      printLength: $printLength
+      publisher: $publisher
+      pdfURL: $pdfURL
+      genres: $genres
+      characters: $characters
+      status: $status
       image: $image
       largeImage: $largeImage
     ) {
@@ -34,6 +46,12 @@ class CreateBook extends Component {
     author: "",
     description: "",
     year: null,
+    printLength: null,
+    publisher: "",
+    pdfURL: "",
+    genres: [],
+    characters: [],
+    status: "UNSELECTED",
     image: "",
     largeImage: ""
   };
@@ -102,7 +120,6 @@ class CreateBook extends Component {
                   />
                 )}
               </label>
-
               <label htmlFor="title">
                 Title*
                 <input
@@ -127,7 +144,6 @@ class CreateBook extends Component {
                   onChange={this.handleChange}
                 />
               </label>
-
               <label htmlFor="year">
                 Year*
                 <input
@@ -140,7 +156,6 @@ class CreateBook extends Component {
                   onChange={this.handleChange}
                 />
               </label>
-
               <label htmlFor="description">
                 Description*
                 <textarea
@@ -149,6 +164,72 @@ class CreateBook extends Component {
                   placeholder="Enter A Description"
                   required
                   value={this.state.description}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label htmlFor="printLength">
+                Print Length (pages)
+                <input
+                  type="number"
+                  id="printLength"
+                  name="printLength"
+                  placeholder="Number of Pages"
+                  value={this.state.printLength}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label htmlFor="publisher">
+                Publisher
+                <input
+                  type="text"
+                  id="publisher"
+                  name="publisher"
+                  placeholder="Publisher"
+                  value={this.state.publisher}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label htmlFor="pdfURL">
+                Link to PDF
+                <input
+                  type="text"
+                  id="pdfURL"
+                  name="pdfURL"
+                  placeholder="PDF Link"
+                  value={this.state.pdfURL}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label htmlFor="genres">
+                Genres (comma separated)
+                <input
+                  type="text"
+                  id="genres"
+                  name="genres"
+                  placeholder="Genres"
+                  value={this.state.genres}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label htmlFor="characters">
+                Characters
+                <input
+                  type="text"
+                  id="characters"
+                  name="characters"
+                  placeholder="Characters"
+                  value={this.state.characters}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label htmlFor="status">
+                Movie Status: UNSELECTED, SEEN_IT, TO_WATCH
+                <input
+                  type="text"
+                  id="status"
+                  name="status"
+                  placeholder="status"
+                  value={this.state.status}
                   onChange={this.handleChange}
                 />
               </label>

@@ -1,5 +1,5 @@
-# source: https://culture-club-prod-6ac1562427.herokuapp.com/culture-club-production/prod
-# timestamp: Sat Mar 28 2020 14:30:48 GMT-0700 (Pacific Daylight Time)
+# source: https://us1.prisma.sh/peter-durham-ae1855/culture-club/dev
+# timestamp: Sun Mar 29 2020 08:12:24 GMT-0700 (Pacific Daylight Time)
 
 type AggregateBook {
   count: Int!
@@ -923,7 +923,7 @@ type Game implements Node {
   websiteURL: String
   image: String
   largeImage: String
-  status: MovieStatus
+  status: GameStatus
   user: User!
 }
 
@@ -955,7 +955,7 @@ input GameCreateInput {
   websiteURL: String
   image: String
   largeImage: String
-  status: MovieStatus
+  status: GameStatus
   genres: GameCreategenresInput
   platforms: GameCreateplatformsInput
   characters: GameCreatecharactersInput
@@ -1011,7 +1011,14 @@ type GamePreviousValues {
   websiteURL: String
   image: String
   largeImage: String
-  status: MovieStatus
+  status: GameStatus
+}
+
+enum GameStatus {
+  UNSELECTED
+  OWN_IT
+  BEAT_IT
+  TO_PLAY
 }
 
 type GameSubscriptionPayload {
@@ -1070,7 +1077,7 @@ input GameUpdateInput {
   websiteURL: String
   image: String
   largeImage: String
-  status: MovieStatus
+  status: GameStatus
   genres: GameUpdategenresInput
   platforms: GameUpdateplatformsInput
   characters: GameUpdatecharactersInput
@@ -1086,7 +1093,7 @@ input GameUpdateManyMutationInput {
   websiteURL: String
   image: String
   largeImage: String
-  status: MovieStatus
+  status: GameStatus
   genres: GameUpdategenresInput
   platforms: GameUpdateplatformsInput
   characters: GameUpdatecharactersInput
@@ -1417,16 +1424,16 @@ input GameWhereInput {
 
   """All values not ending with the given string."""
   largeImage_not_ends_with: String
-  status: MovieStatus
+  status: GameStatus
 
   """All values that are not equal to given value."""
-  status_not: MovieStatus
+  status_not: GameStatus
 
   """All values that are contained in given list."""
-  status_in: [MovieStatus!]
+  status_in: [GameStatus!]
 
   """All values that are not contained in given list."""
-  status_not_in: [MovieStatus!]
+  status_not_in: [GameStatus!]
   user: UserWhereInput
 }
 
