@@ -5,6 +5,7 @@ import Router from "next/router";
 import Form from "./styles/Form";
 import formatMoney from "../lib/formatMoney";
 import Error from "./ErrorMessage";
+import { BookGenres } from "../config";
 
 const CREATE_BOOK_MUTATION = gql`
   mutation CREATE_BOOK_MUTATION(
@@ -17,9 +18,9 @@ const CREATE_BOOK_MUTATION = gql`
     $printLength: Int
     $publisher: String
     $pdfURL: String
-    $genres: [String]
-    $characters: [String]
-    $status: BookStatus
+    $genre1: BookGenre
+    $genre2: BookGenre
+    $genre3: BookGenre
   ) {
     createBook(
       title: $title
@@ -29,9 +30,9 @@ const CREATE_BOOK_MUTATION = gql`
       printLength: $printLength
       publisher: $publisher
       pdfURL: $pdfURL
-      genres: $genres
-      characters: $characters
-      status: $status
+      genre1: $genre1
+      genre2: $genre2
+      genre3: $genre3
       image: $image
       largeImage: $largeImage
     ) {
@@ -49,16 +50,29 @@ class CreateBook extends Component {
     printLength: null,
     publisher: "",
     pdfURL: "",
-    genres: [],
-    characters: [],
-    status: "UNSELECTED",
+    genre1: "UNSELECTED",
+    genre2: "UNSELECTED",
+    genre3: "UNSELECTED",
     image: "",
     largeImage: ""
   };
   handleChange = e => {
     const { name, type, value } = e.target;
     const val = type === "number" ? parseFloat(value) : value;
-    this.setState({ [name]: val });
+
+    if (type === "checkbox" && name === "genres") {
+      const genres = [];
+      var genresSelected = document.querySelectorAll(".bookGenreInput");
+      genresSelected.forEach(genre => {
+        if (genre.checked) {
+          genres.push(genre.defaultValue);
+        }
+      });
+      console.log(genres, "GENRES YO");
+      this.setState({ [name]: genres });
+    } else {
+      this.setState({ [name]: val });
+    }
   };
 
   uploadFile = async e => {
@@ -90,10 +104,11 @@ class CreateBook extends Component {
             onSubmit={async e => {
               // Stop the form from submitting
               e.preventDefault();
+              console.log(this.state, "STATE");
               // call the mutation
               const res = await createBook();
               // change them to the single item page
-              console.log(res);
+              console.log(res, "RESPOSNE");
               Router.push({
                 pathname: "/book",
                 query: { id: res.data.createBook.id }
@@ -189,6 +204,63 @@ class CreateBook extends Component {
                   onChange={this.handleChange}
                 />
               </label>
+
+              <label htmlFor="genre1">
+                Genre
+                <select
+                  id="genre1"
+                  name="genre1"
+                  onChange={this.handleChange}
+                  defaultValue="UNSELECTED"
+                >
+                  {BookGenres.map(genre => {
+                    return (
+                      <option value={genre.value} key={genre.value}>
+                        {genre.title}
+                      </option>
+                    );
+                  })}
+                </select>
+              </label>
+              {this.state.genre1 !== "UNSELECTED" && (
+                <label htmlFor="genre2">
+                  Genre 2
+                  <select
+                    id="genre2"
+                    name="genre2"
+                    onChange={this.handleChange}
+                    defaultValue="UNSELECTED"
+                  >
+                    {BookGenres.map(genre => {
+                      return (
+                        <option value={genre.value} key={genre.value}>
+                          {genre.title}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </label>
+              )}
+              {this.state.genre2 !== "UNSELECTED" &&
+                this.state.genre1 !== "UNSELECTED" && (
+                  <label htmlFor="genre3">
+                    Genre 3
+                    <select
+                      id="genre3"
+                      name="genre3"
+                      onChange={this.handleChange}
+                      defaultValue="UNSELECTED"
+                    >
+                      {BookGenres.map(genre => {
+                        return (
+                          <option value={genre.value} key={genre.value}>
+                            {genre.title}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </label>
+                )}
               <label htmlFor="pdfURL">
                 Link to PDF
                 <input
@@ -197,39 +269,6 @@ class CreateBook extends Component {
                   name="pdfURL"
                   placeholder="PDF Link"
                   value={this.state.pdfURL}
-                  onChange={this.handleChange}
-                />
-              </label>
-              <label htmlFor="genres">
-                Genres (comma separated)
-                <input
-                  type="text"
-                  id="genres"
-                  name="genres"
-                  placeholder="Genres"
-                  value={this.state.genres}
-                  onChange={this.handleChange}
-                />
-              </label>
-              <label htmlFor="characters">
-                Characters
-                <input
-                  type="text"
-                  id="characters"
-                  name="characters"
-                  placeholder="Characters"
-                  value={this.state.characters}
-                  onChange={this.handleChange}
-                />
-              </label>
-              <label htmlFor="status">
-                Movie Status: UNSELECTED, SEEN_IT, TO_WATCH
-                <input
-                  type="text"
-                  id="status"
-                  name="status"
-                  placeholder="status"
-                  value={this.state.status}
                   onChange={this.handleChange}
                 />
               </label>

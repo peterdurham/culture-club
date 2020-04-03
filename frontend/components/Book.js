@@ -9,6 +9,11 @@ import DeleteBook from "./DeleteBook";
 import AddToCart from "./AddToCart";
 import styled from "styled-components";
 
+import AddToToRead from "./AddToToRead";
+import RemoveFromToRead from "./RemoveFromToRead";
+import AddToReadIt from "./AddToReadIt";
+import RemoveFromReadIt from "./RemoveFromReadIt";
+
 const BookStyles = styled.div`
   background: white;
   border: 1px solid ${props => props.theme.offWhite};
@@ -21,6 +26,7 @@ const BookStyles = styled.div`
   width: 194px;
   margin-bottom: 20px;
   overflow: hidden;
+
   button {
     position: absolute;
     bottom: 0;
@@ -30,6 +36,19 @@ const BookStyles = styled.div`
     color: #fff;
     font-size: 24px;
   }
+  .toReadButton {
+    top: 20px;
+    position: absolute;
+    width: 100%;
+    height: 20px;
+  }
+  .readItButton {
+    top: 60px;
+    position: absolute;
+    width: 100%;
+    height: 20px;
+  }
+
   img {
     border-radius: 8px;
     width: 100%;
@@ -73,7 +92,10 @@ export default class Book extends Component {
   };
 
   render() {
-    const { book } = this.props;
+    const { book, me } = this.props;
+
+    const toReadIds = me.toRead.map(item => item.book.id);
+    const readItIds = me.readIt.map(item => item.book.id);
     return (
       <BookStyles>
         <Link
@@ -128,31 +150,20 @@ export default class Book extends Component {
             <path d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"></path>
           </svg>
         </DeleteBook>
-        {/* <Title>
-          <Link
-            href={{
-              pathname: "/book",
-              query: { id: book.id }
-            }}
-          >
-            <a>{book.title}</a>
-          </Link>
-        </Title> */}
-
-        {/* <p>{book.description}</p> */}
-        {/* 
-        <div className="buttonList">
-          <Link
-            href={{
-              pathname: "update",
-              query: { id: book.id }
-            }}
-          >
-            <a>Edit ✏️</a>
-          </Link>
-          <AddToCart id={book.id} />
-          <DeleteBook id={book.id}>Delete This Book</DeleteBook>
-        </div> */}
+        <div className="toReadButton">
+          {toReadIds.indexOf(book.id) > -1 ? (
+            <RemoveFromToRead id={book.id} />
+          ) : (
+            <AddToToRead id={book.id} />
+          )}
+        </div>{" "}
+        <div className="readItButton">
+          {readItIds.indexOf(book.id) > -1 ? (
+            <RemoveFromReadIt id={book.id} />
+          ) : (
+            <AddToReadIt id={book.id} />
+          )}
+        </div>
       </BookStyles>
     );
   }

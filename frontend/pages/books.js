@@ -4,7 +4,7 @@ const BooksPage = props => {
   return (
     <div>
       <h1>Books Page</h1>
-      <Books />
+      <Books filter="all" />
     </div>
   );
 };

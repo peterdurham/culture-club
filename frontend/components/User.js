@@ -9,6 +9,48 @@ const CURRENT_USER_QUERY = gql`
       email
       name
       permissions
+      toWatch {
+        id
+        movie {
+          id
+          title
+        }
+      }
+      seenIt {
+        id
+        movie {
+          id
+          title
+        }
+      }
+      toRead {
+        id
+        book {
+          id
+          title
+        }
+      }
+      readIt {
+        id
+        book {
+          id
+          title
+        }
+      }
+      toPlay {
+        id
+        game {
+          id
+          title
+        }
+      }
+      playedIt {
+        id
+        game {
+          id
+          title
+        }
+      }
       cart {
         id
         quantity

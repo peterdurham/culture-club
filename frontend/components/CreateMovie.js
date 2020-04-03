@@ -5,6 +5,7 @@ import Router from "next/router";
 import Form from "./styles/Form";
 import formatMoney from "../lib/formatMoney";
 import Error from "./ErrorMessage";
+import { MovieGenres } from "../config";
 
 const CREATE_MOVIE_MUTATION = gql`
   mutation CREATE_MOVIE_MUTATION(
@@ -16,6 +17,9 @@ const CREATE_MOVIE_MUTATION = gql`
     $budget: Int
     $gross: Int
     $imdbURL: String
+    $genre1: MovieGenre
+    $genre2: MovieGenre
+    $genre3: MovieGenre
     $image: String
     $largeImage: String
   ) {
@@ -28,6 +32,9 @@ const CREATE_MOVIE_MUTATION = gql`
       budget: $budget
       gross: $gross
       imdbURL: $imdbURL
+      genre1: $genre1
+      genre2: $genre2
+      genre3: $genre3
       image: $image
       largeImage: $largeImage
     ) {
@@ -46,6 +53,9 @@ class CreateMovie extends Component {
     budget: null,
     gross: null,
     imdbURL: "",
+    genre1: "UNSELECTED",
+    genre2: "UNSELECTED",
+    genre3: "UNSELECTED",
     image: "",
     largeImage: ""
   };
@@ -212,6 +222,63 @@ class CreateMovie extends Component {
                   onChange={this.handleChange}
                 />
               </label>
+              <label htmlFor="genre1">
+                Genre
+                <select
+                  id="genre1"
+                  name="genre1"
+                  onChange={this.handleChange}
+                  defaultValue="UNSELECTED"
+                >
+                  {MovieGenres.map(genre => {
+                    return (
+                      <option value={genre.value} key={genre.value}>
+                        {genre.title}
+                      </option>
+                    );
+                  })}
+                </select>
+              </label>
+              {this.state.genre1 !== "UNSELECTED" && (
+                <label htmlFor="genre2">
+                  Genre 2
+                  <select
+                    id="genre2"
+                    name="genre2"
+                    onChange={this.handleChange}
+                    defaultValue="UNSELECTED"
+                  >
+                    {MovieGenres.map(genre => {
+                      return (
+                        <option value={genre.value} key={genre.value}>
+                          {genre.title}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </label>
+              )}
+              {this.state.genre2 !== "UNSELECTED" &&
+                this.state.genre1 !== "UNSELECTED" && (
+                  <label htmlFor="genre3">
+                    Genre 3
+                    <select
+                      id="genre3"
+                      name="genre3"
+                      onChange={this.handleChange}
+                      defaultValue="UNSELECTED"
+                    >
+                      {MovieGenres.map(genre => {
+                        return (
+                          <option value={genre.value} key={genre.value}>
+                            {genre.title}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </label>
+                )}
+
               <button type="submit">Submit</button>
             </fieldset>
           </Form>

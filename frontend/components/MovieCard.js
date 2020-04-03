@@ -9,43 +9,76 @@ import DeleteMovie from "./DeleteMovie";
 
 import DeleteButton from "./DeleteButton";
 import AddToCart from "./AddToCart";
+import AddToToWatch from "./AddToToWatch";
+import RemoveFromToWatch from "./RemoveFromToWatch";
+import AddToSeenIt from "./AddToSeenIt";
+import RemoveFromSeenIt from "./RemoveFromSeenIt";
 
-const CardStyles = styled.div`
-  height: 385px;
-  width: 200px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgb(222, 222, 222);
-  h2 {
-    font-size: 16px;
-    margin: 0;
-  }
+import { TiEdit } from "react-icons/ti";
+
+const CardTallStyles = styled.div`
+  height: 355px;
+  width: 190px;
+
   img {
     width: 100%;
-    height: 300px;
+    height: 275px;
     object-fit: cover;
+    transition: all 0.3s;
   }
-`;
-const MovieDetails = styled.a`
-  text-align: left;
-  padding: 12px;
-  h2 {
-    font-size: 14px;
-    line-height: 22.4px;
-    font-weight: 400;
-    margin: 0 10px;
+  img:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.67);
+  }
+  .CardTall__title {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    font-weight: 700;
+    max-width: 15.6rem;
+    text-align: left;
     cursor: pointer;
   }
-  h3 {
-    font-size: 14.4px;
-    line-height: 24.68px;
-    font-weight: 400;
-    margin: 0 10px;
+  .CardTall__title:hover {
+    text-decoration: underline;
+  }
+  .CardTall__buttons {
+    height: 24px;
+    display: flex;
+  }
+  .CardTall__buttons {
+    cursor: pointer;
+  }
+  .CardTall__details {
+    margin-top: 0.4rem;
+    font-size: 1.4rem;
+    line-height: 2.6rem;
+  }
+  .CardTall__details span {
+    cursor: pointer;
+  }
+  .CardTall__details span:hover {
+    text-decoration: underline;
+  }
+  .flex-apart {
+    display: flex;
+    justify-content: space-between;
+  }
+  svg {
+    font-size: 1.92rem;
+  }
+  button {
+    background: #fff;
+    border: none;
+    padding: 0 0 0 4px;
+    cursor: pointer;
   }
 `;
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, me }) => {
+  const toWatchIds = me.toWatch.map(item => item.movie.id);
+  const seenItIds = me.seenIt.map(item => item.movie.id);
+
   return (
-    <CardStyles>
+    <CardTallStyles>
       <Link
         href={{
           pathname: "/movie",
@@ -55,37 +88,46 @@ const MovieCard = ({ movie }) => {
         <a>{movie.image && <img src={movie.image} alt="movie poster" />}</a>
       </Link>
 
-      <MovieDetails>
-        <Link
-          href={{
-            pathname: "/movie",
-            query: { id: movie.id }
-          }}
-        >
-          <h2>{movie.title}</h2>
-        </Link>
-        <h3>{movie.year}</h3>
-        <Link
-          href={{
-            pathname: "update-movie",
-            query: { id: movie.id }
-          }}
-        >
-          <svg
-            stroke="currentColor"
-            fill="currentColor"
-            strokeWidth="0"
-            viewBox="0 0 576 512"
-            height="1em"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+      <div className="movie-details">
+        <div className="flex-apart">
+          <Link
+            href={{
+              pathname: "/movie",
+              query: { id: movie.id }
+            }}
           >
-            <path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"></path>
-          </svg>
-        </Link>
-        <DeleteMovie id={movie.id}>Delete This Movie</DeleteMovie>
-      </MovieDetails>
-    </CardStyles>
+            <span className="CardTall__title">{movie.title}</span>
+          </Link>
+
+          <div className="CardTall__buttons">
+            <Link
+              href={{
+                pathname: "update-movie",
+                query: { id: movie.id }
+              }}
+            >
+              <TiEdit />
+            </Link>
+            <DeleteMovie id={movie.id}>Delete This Movie</DeleteMovie>
+          </div>
+        </div>
+
+        <div className="flex-apart CardTall__details">
+          <span>genre</span>
+          <span>{movie.year}</span>
+          {toWatchIds.indexOf(movie.id) > -1 ? (
+            <RemoveFromToWatch id={movie.id} />
+          ) : (
+            <AddToToWatch id={movie.id} />
+          )}
+          {seenItIds.indexOf(movie.id) > -1 ? (
+            <RemoveFromSeenIt id={movie.id} />
+          ) : (
+            <AddToSeenIt id={movie.id} />
+          )}
+        </div>
+      </div>
+    </CardTallStyles>
   );
 };
 export default MovieCard;

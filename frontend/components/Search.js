@@ -6,9 +6,9 @@ import gql from "graphql-tag";
 import debounce from "lodash.debounce";
 import { DropDown, DropDownItem, SearchStyles } from "./styles/DropDown";
 
-const SEARCH_ITEMS_QUERY = gql`
-  query SEARCH_ITEMS_QUERY($searchTerm: String!) {
-    items(
+const SEARCH_MOVIES_QUERY = gql`
+  query SEARCH_MOVIES_QUERY($searchTerm: String!) {
+    movies(
       where: {
         OR: [
           { title_contains: $searchTerm }
@@ -22,17 +22,17 @@ const SEARCH_ITEMS_QUERY = gql`
     }
   }
 `;
-function routeToItem(item) {
+function routeToMovie(movie) {
   Router.push({
-    pathname: "/item",
+    pathname: "/movie",
     query: {
-      id: item.id
+      id: movie.id
     }
   });
 }
 class AutoComplete extends React.Component {
   state = {
-    items: [],
+    movies: [],
     loading: false
   };
   onChange = debounce(async (e, client) => {
@@ -42,11 +42,11 @@ class AutoComplete extends React.Component {
     this.setState({ loading: true });
     // manually query apollo client
     const res = await client.query({
-      query: SEARCH_ITEMS_QUERY,
+      query: SEARCH_MOVIES_QUERY,
       variables: { searchTerm: e.target.value }
     });
     this.setState({
-      items: res.data.items,
+      movies: res.data.movies,
       loading: false
     });
   }, 350);
@@ -55,8 +55,8 @@ class AutoComplete extends React.Component {
     return (
       <SearchStyles>
         <Downshift
-          onChange={routeToItem}
-          itemToString={item => (item === null ? "" : item.title)}
+          onChange={routeToMovie}
+          itemToString={movie => (movie === null ? "" : movie.title)}
         >
           {({
             getInputProps,
@@ -71,9 +71,9 @@ class AutoComplete extends React.Component {
                   <input
                     {...getInputProps({
                       type: "search",
-                      placeholder: "search for an item",
+                      placeholder: "search for an movie",
                       id: "search",
-                      className: this.state.loading,
+                      // className: this.state.loading,
                       onChange: e => {
                         e.persist();
                         this.onChange(e, client);
@@ -84,17 +84,17 @@ class AutoComplete extends React.Component {
               </ApolloConsumer>
               {isOpen && (
                 <DropDown>
-                  {this.state.items.map((item, index) => (
+                  {this.state.movies.map((movie, index) => (
                     <DropDownItem
-                      {...getItemProps({ item })}
-                      key={item.id}
+                      {...getItemProps({ item: movie })}
+                      key={movie.id}
                       highlighted={index === highlightedIndex}
                     >
-                      <img width="50" src={item.image} alt={item.title} />
-                      {item.title}
+                      <img width="50" src={movie.image} alt={movie.title} />
+                      {movie.title}
                     </DropDownItem>
                   ))}
-                  {!this.state.items.length && !this.state.loading && (
+                  {!this.state.movies.length && !this.state.loading && (
                     <DropDownItem>Nothing Found for {inputValue}</DropDownItem>
                   )}
                 </DropDown>

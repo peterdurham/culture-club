@@ -5,6 +5,8 @@ import styled from "styled-components";
 import Game from "./Game";
 import Pagination from "./PaginationGames";
 import { perPage } from "../config";
+import SearchGames from "./SearchGames";
+import User from "./User";
 
 const ALL_GAMES_QUERY = gql`
   query ALL_GAMES_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
@@ -37,30 +39,71 @@ const GamesList = styled.div`
 class Games extends Component {
   render() {
     return (
-      <Center>
-        <Pagination page={this.props.page} />
-        <Query
-          query={ALL_GAMES_QUERY}
-          // fetchPolicy="network-only"
-          variables={{
-            skip: this.props.page * perPage - perPage,
-            first: perPage
-          }}
-        >
-          {({ data, error, loading }) => {
-            if (loading) return <p>Loading...</p>;
-            if (error) return <p>Error: {error.message}</p>;
-            return (
-              <GamesList>
-                {data.games.map(game => (
-                  <Game game={game} key={game.id} />
-                ))}
-              </GamesList>
-            );
-          }}
-        </Query>
-        <Pagination page={this.props.page} />
-      </Center>
+      <User>
+        {({ data: { me } }) => {
+          return (
+            <Center>
+              <SearchGames />
+              <Pagination page={this.props.page} />
+              <Query
+                query={ALL_GAMES_QUERY}
+                // fetchPolicy="network-only"
+                variables={{
+                  skip: this.props.page * perPage - perPage,
+                  first: perPage
+                }}
+              >
+                {({ data, error, loading }) => {
+                  if (loading) return <p>Loading...</p>;
+                  if (error) return <p>Error: {error.message}</p>;
+                  return (
+                    <GamesList>
+                      {this.props.filter === "all" && (
+                        <>
+                          {data.games.map(game => (
+                            <Game game={game} key={game.id} me={me} />
+                          ))}
+                        </>
+                      )}
+                      {this.props.filter === "toPlay" && (
+                        <>
+                          {data.games
+                            .filter(game => {
+                              const toPlayIds = me.toPlay.map(
+                                item => item.game.id
+                              );
+
+                              return toPlayIds.indexOf(game.id) > -1;
+                            })
+                            .map(game => (
+                              <Game game={game} key={game.id} me={me} />
+                            ))}
+                        </>
+                      )}
+                      {this.props.filter === "playedIt" && (
+                        <>
+                          {data.games
+                            .filter(game => {
+                              const playedItIds = me.playedIt.map(
+                                item => item.game.id
+                              );
+
+                              return playedItIds.indexOf(game.id) > -1;
+                            })
+                            .map(game => (
+                              <Game game={game} key={game.id} me={me} />
+                            ))}
+                        </>
+                      )}
+                    </GamesList>
+                  );
+                }}
+              </Query>
+              <Pagination page={this.props.page} />
+            </Center>
+          );
+        }}
+      </User>
     );
   }
 }

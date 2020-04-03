@@ -4,7 +4,7 @@ const MoviesPage = props => {
   return (
     <div>
       <h1>Movies Page</h1>
-      <Movies />
+      <Movies filter="all" />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React from "react";
 import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import { adopt } from "react-adopt";
+import Link from "next/link";
 import User from "../components/User";
 import CartStyles from "./styles/CartStyles";
 import Supreme from "./styles/Supreme";
@@ -52,14 +53,25 @@ const Cart = () => {
                 {me.cart.length > 1 && "s"} in your cart
               </p>
             </header>
-            <div>
-              <div>movies i've watched</div>
-              <div>movies to see</div>
-              <div>books i've red</div>
-              <div>books to read</div>
-              <div>games i've got/played/beat</div>
-              <div>games to get/play/beat</div>
-              <div>Custom lists</div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <Link href="/to-watch">
+                <a>Movies to see ({me.toWatch.length})</a>
+              </Link>
+              <Link href="/to-play">
+                <a>Games to play ({me.toPlay.length})</a>
+              </Link>
+              <Link href="/to-read">
+                <a>Books to read ({me.toRead.length})</a>
+              </Link>
+              <Link href="/seen-it">
+                <a>Movies i've seen ({me.seenIt.length})</a>
+              </Link>
+              <Link href="/played-it">
+                <a>Games i've played ({me.playedIt.length})</a>
+              </Link>
+              <Link href="/read-it">
+                <a>Books i've read ({me.readIt.length})</a>
+              </Link>
             </div>
             <ul>
               {me.cart.map(cartItem => (

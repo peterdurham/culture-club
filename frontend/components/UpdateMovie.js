@@ -5,18 +5,23 @@ import Router from "next/router";
 import Form from "./styles/Form";
 import formatMoney from "../lib/formatMoney";
 import Error from "./ErrorMessage";
+import { MovieGenres } from "../config";
 
 const SINGLE_MOVIE_QUERY = gql`
   query SINGLE_MOVIE_QUERY($id: ID!) {
     movie(where: { id: $id }) {
       id
       title
-      description
       year
+      director
+      description
       length
       budget
       gross
       imdbURL
+      genre1
+      genre2
+      genre3
     }
   }
 `;
@@ -24,31 +29,43 @@ const UPDATE_MOVIE_MUTATION = gql`
   mutation UPDATE_MOVIE_MUTATION(
     $id: ID!
     $title: String
-    $description: String
     $year: Int
+    $director: String
+    $description: String
     $length: Int
     $budget: Int
     $gross: Int
     $imdbURL: String
+    $genre1: MovieGenre
+    $genre2: MovieGenre
+    $genre3: MovieGenre
   ) {
     updateMovie(
       id: $id
       title: $title
-      description: $description
       year: $year
+      director: $director
+      description: $description
       length: $length
       budget: $budget
       gross: $gross
       imdbURL: $imdbURL
+      genre1: $genre1
+      genre2: $genre2
+      genre3: $genre3
     ) {
       id
       title
+      director
       description
       year
       length
       budget
       gross
       imdbURL
+      genre1
+      genre2
+      genre3
     }
   }
 `;
@@ -172,7 +189,62 @@ class UpdateMovie extends Component {
                         onChange={this.handleChange}
                       />
                     </label>
-
+                    <label htmlFor="genre1">
+                      Genre
+                      <select
+                        id="genre1"
+                        name="genre1"
+                        onChange={this.handleChange}
+                        defaultValue={data.movie.genre1}
+                      >
+                        {MovieGenres.map(genre => {
+                          return (
+                            <option value={genre.value} key={genre.value}>
+                              {genre.title}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </label>
+                    {this.state.genre1 !== "UNSELECTED" && (
+                      <label htmlFor="genre2">
+                        Genre 2
+                        <select
+                          id="genre2"
+                          name="genre2"
+                          onChange={this.handleChange}
+                          defaultValue={data.movie.genre2}
+                        >
+                          {MovieGenres.map(genre => {
+                            return (
+                              <option value={genre.value} key={genre.value}>
+                                {genre.title}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </label>
+                    )}
+                    {this.state.genre2 !== "UNSELECTED" &&
+                      this.state.genre1 !== "UNSELECTED" && (
+                        <label htmlFor="genre3">
+                          Genre 3
+                          <select
+                            id="genre3"
+                            name="genre3"
+                            onChange={this.handleChange}
+                            defaultValue={data.movie.genre3}
+                          >
+                            {MovieGenres.map(genre => {
+                              return (
+                                <option value={genre.value} key={genre.value}>
+                                  {genre.title}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </label>
+                      )}
                     <label htmlFor="imdbURL">
                       IMDB Link
                       <textarea

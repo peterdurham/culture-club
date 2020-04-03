@@ -5,6 +5,7 @@ import Router from "next/router";
 import Form from "./styles/Form";
 import formatMoney from "../lib/formatMoney";
 import Error from "./ErrorMessage";
+import { GameGenres, GamePlatforms } from "../config";
 
 const CREATE_GAME_MUTATION = gql`
   mutation CREATE_GAME_MUTATION(
@@ -12,6 +13,14 @@ const CREATE_GAME_MUTATION = gql`
     $developer: String!
     $description: String!
     $year: Int!
+    $numPlayers: NumPlayers
+    $websiteURL: String
+    $platform1: GamePlatform
+    $platform2: GamePlatform
+    $platform3: GamePlatform
+    $genre1: GameGenre
+    $genre2: GameGenre
+    $genre3: GameGenre
     $image: String
     $largeImage: String
   ) {
@@ -20,6 +29,14 @@ const CREATE_GAME_MUTATION = gql`
       developer: $developer
       description: $description
       year: $year
+      numPlayers: $numPlayers
+      websiteURL: $websiteURL
+      platform1: $platform1
+      platform2: $platform2
+      platform3: $platform3
+      genre1: $genre1
+      genre2: $genre2
+      genre3: $genre3
       image: $image
       largeImage: $largeImage
     ) {
@@ -34,6 +51,14 @@ class CreateGame extends Component {
     developer: "",
     description: "",
     year: null,
+    numPlayers: null,
+    websiteURL: "",
+    platform1: "UNSELECTED",
+    platform2: "UNSELECTED",
+    platform3: "UNSELECTED",
+    genre1: "UNSELECTED",
+    genre2: "UNSELECTED",
+    genre3: "UNSELECTED",
     image: "",
     largeImage: ""
   };
@@ -84,6 +109,7 @@ class CreateGame extends Component {
           >
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
+              <h2>Add Game</h2>
               <label htmlFor="file">
                 Image*
                 <input
@@ -138,6 +164,154 @@ class CreateGame extends Component {
                   placeholder="Year"
                   required
                   value={this.state.year}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label htmlFor="numPlayers">
+                Number of Players
+                <select
+                  id="numPlayers"
+                  name="numPlayers"
+                  onChange={this.handleChange}
+                  defaultValue="UNSELECTED"
+                >
+                  <option value="UNSELECTED">Select Number of Players</option>
+                  <option value="SINGLE_PLAYER_OFFLINE">
+                    Single Player (offline)
+                  </option>
+                  <option value="MULTI_PLAYER_OFFLINE">
+                    Multiplayer (offline)
+                  </option>
+                  <option value="SINGLE_PLAYER_ONLINE">
+                    Single Player (online)
+                  </option>
+                  <option value="MULTI_PLAYER_ONLINE">
+                    Multiplayer (online)
+                  </option>
+                </select>
+              </label>
+
+              <label htmlFor="platform1">
+                Platforms
+                <select
+                  id="platform1"
+                  name="platform1"
+                  onChange={this.handleChange}
+                  defaultValue="UNSELECTED"
+                >
+                  {GamePlatforms.map(platform => {
+                    return (
+                      <option value={platform.value} key={platform.value}>
+                        {platform.title}
+                      </option>
+                    );
+                  })}
+                </select>
+              </label>
+              {this.state.platform1 !== "UNSELECTED" && (
+                <label htmlFor="platform2">
+                  Platform 2
+                  <select
+                    id="platform2"
+                    name="platform2"
+                    onChange={this.handleChange}
+                    defaultValue="UNSELECTED"
+                  >
+                    {GamePlatforms.map(platform => {
+                      return (
+                        <option value={platform.value} key={platform.value}>
+                          {platform.title}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </label>
+              )}
+              {this.state.platform2 !== "UNSELECTED" &&
+                this.state.platform1 !== "UNSELECTED" && (
+                  <label htmlFor="platform2">
+                    Platform 3
+                    <select
+                      id="platform2"
+                      name="platform2"
+                      onChange={this.handleChange}
+                      defaultValue="UNSELECTED"
+                    >
+                      {GamePlatforms.map(platform => {
+                        return (
+                          <option value={platform.value} key={platform.value}>
+                            {platform.title}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </label>
+                )}
+
+              <label htmlFor="genre1">
+                Genre
+                <select
+                  id="genre1"
+                  name="genre1"
+                  onChange={this.handleChange}
+                  defaultValue="UNSELECTED"
+                >
+                  {GameGenres.map(genre => {
+                    return (
+                      <option value={genre.value} key={genre.value}>
+                        {genre.title}
+                      </option>
+                    );
+                  })}
+                </select>
+              </label>
+              {this.state.genre1 !== "UNSELECTED" && (
+                <label htmlFor="genre2">
+                  Genre 2
+                  <select
+                    id="genre2"
+                    name="genre2"
+                    onChange={this.handleChange}
+                    defaultValue="UNSELECTED"
+                  >
+                    {GameGenres.map(genre => {
+                      return (
+                        <option value={genre.value} key={genre.value}>
+                          {genre.title}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </label>
+              )}
+              {this.state.genre2 !== "UNSELECTED" &&
+                this.state.genre1 !== "UNSELECTED" && (
+                  <label htmlFor="genre3">
+                    Genre 3
+                    <select
+                      id="genre3"
+                      name="genre3"
+                      onChange={this.handleChange}
+                      defaultValue="UNSELECTED"
+                    >
+                      {GameGenres.map(genre => {
+                        return (
+                          <option value={genre.value} key={genre.value}>
+                            {genre.title}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </label>
+                )}
+              <label htmlFor="websiteURL">
+                Website URL
+                <input
+                  type="text"
+                  id="websiteURL"
+                  name="websiteURL"
+                  placeholder="Website URL"
+                  value={this.state.websiteURL}
                   onChange={this.handleChange}
                 />
               </label>

@@ -5,6 +5,8 @@ import styled from "styled-components";
 import Book from "./Book";
 import Pagination from "./PaginationBooks";
 import { perPage } from "../config";
+import SearchBooks from "./SearchBooks";
+import User from "./User";
 
 const ALL_BOOKS_QUERY = gql`
   query ALL_BOOKS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
@@ -37,30 +39,71 @@ const BooksList = styled.div`
 class Books extends Component {
   render() {
     return (
-      <Center>
-        <Pagination page={this.props.page} />
-        <Query
-          query={ALL_BOOKS_QUERY}
-          // fetchPolicy="network-only"
-          variables={{
-            skip: this.props.page * perPage - perPage,
-            first: perPage
-          }}
-        >
-          {({ data, error, loading }) => {
-            if (loading) return <p>Loading...</p>;
-            if (error) return <p>Error: {error.message}</p>;
-            return (
-              <BooksList>
-                {data.books.map(book => (
-                  <Book book={book} key={book.id} />
-                ))}
-              </BooksList>
-            );
-          }}
-        </Query>
-        <Pagination page={this.props.page} />
-      </Center>
+      <User>
+        {({ data: { me } }) => {
+          return (
+            <Center>
+              <SearchBooks />
+              <Pagination page={this.props.page} />
+              <Query
+                query={ALL_BOOKS_QUERY}
+                // fetchPolicy="network-only"
+                variables={{
+                  skip: this.props.page * perPage - perPage,
+                  first: perPage
+                }}
+              >
+                {({ data, error, loading }) => {
+                  if (loading) return <p>Loading...</p>;
+                  if (error) return <p>Error: {error.message}</p>;
+                  return (
+                    <BooksList>
+                      {this.props.filter === "all" && (
+                        <>
+                          {data.books.map(book => (
+                            <Book book={book} key={book.id} me={me} />
+                          ))}
+                        </>
+                      )}
+                      {this.props.filter === "toRead" && (
+                        <>
+                          {data.books
+                            .filter(book => {
+                              const toReadIds = me.toRead.map(
+                                item => item.book.id
+                              );
+
+                              return toReadIds.indexOf(book.id) > -1;
+                            })
+                            .map(book => (
+                              <Book book={book} key={book.id} me={me} />
+                            ))}
+                        </>
+                      )}
+                      {this.props.filter === "readIt" && (
+                        <>
+                          {data.books
+                            .filter(book => {
+                              const readItIds = me.readIt.map(
+                                item => item.book.id
+                              );
+
+                              return readItIds.indexOf(book.id) > -1;
+                            })
+                            .map(book => (
+                              <Book book={book} key={book.id} me={me} />
+                            ))}
+                        </>
+                      )}
+                    </BooksList>
+                  );
+                }}
+              </Query>
+              <Pagination page={this.props.page} />
+            </Center>
+          );
+        }}
+      </User>
     );
   }
 }

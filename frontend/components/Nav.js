@@ -11,9 +11,6 @@ const Nav = () => {
     <User>
       {({ data: { me } }) => (
         <NavStyles>
-          <Link href="/items">
-            <a>Shop</a>
-          </Link>
           <Link href="/movies">
             <a>Movies</a>
           </Link>
@@ -40,14 +37,14 @@ const Nav = () => {
               {/* <Link href="/orders">
                 <a>Orders</a>
               </Link> */}
-              <Link href="/me">
+              {/* <Link href="/me">
                 <a>Account</a>
-              </Link>
+              </Link> */}
               <Signout />
               <Mutation mutation={TOGGLE_CART_MUTATION}>
                 {toggleCart => (
                   <button onClick={toggleCart}>
-                    My Cart
+                    My Lists
                     <CartCount
                       count={me.cart.reduce(
                         (tally, cartItem) => tally + cartItem.quantity,

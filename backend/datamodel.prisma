@@ -7,25 +7,86 @@ enum Permission {
   PERMISSIONUPDATE
 }
 
-enum MovieStatus {
+enum MovieGenre {
   UNSELECTED
-  SEEN_IT
-  TO_WATCH
+  ACTION
+  ANIME
+  CLASSIC
+  COMEDY
+  DOCUMENTARY
+  DRAMA
+  HISTORY
+  HORROR
+  INDEPENDENT
+  SCI_FI
+  FANTASY
+  THRILLER
+  INTERNATIONAL
+  SPORTS
 }
 
-enum BookStatus {
+enum BookGenre {
   UNSELECTED
-  READ_IT
-  TO_READ
+  FANTASY
+  SCI_FI
+  CLASSICS
+  HORROR
+  MYSTERY
+  COMIC
+  PHILOSOPHY
+  HISTORY
+  MYTHOLOGY
+  BUSINESS
+  ECONOMICS
+  SCIENCE
+  ROMANCE
+  WESTERN
+  CHILDRENS
+  BIOGRAPHY
+  NEW_AGE
+  SELF_HELP 
 }
 
-enum GameStatus {
+enum GameGenre {
   UNSELECTED
-  OWN_IT
-  BEAT_IT
-  TO_PLAY
+  RPG
+  ACTION
+  FIGHTING
+  ADVENTURE
+  SIMULATION
+  SCI_FI
+  SPORTS
+  CARD_OR_BOARD
+  PLATFORM
+  STEALTH
+  SURVIVAL
+  MMORPG
+  SHOOTER
+  STRATEGY
+  VR
 }
+
+enum GamePlatform {
+  UNSELECTED
+  PC
+  NES
+  SNES
+  N64
+  DREAMCAST
+  GAMECUBE
+  WII
+  SWITCH
+  XBOX
+  XBOX_360
+  XBOX_ONE
+  PSX
+  PS2
+  PS3
+  PS4
+}
+
 enum NumPlayers {
+  UNSELECTED
   SINGLE_PLAYER_OFFLINE
   MULTI_PLAYER_OFFLINE
   SINGLE_PLAYER_ONLINE
@@ -41,6 +102,12 @@ type User {
   resetTokenExpiry: Float
   permissions: [Permission] @scalarList(strategy: RELATION)
   cart: [CartItem!]!
+  toWatch: [ToWatchItem!]!
+  seenIt: [SeenItItem!]!
+  toRead: [ToReadItem!]!
+  readIt: [ReadItItem!]!
+  toPlay: [ToPlayItem!]!
+  playedIt: [PlayedItItem!]!
 }
 
 type Movie {
@@ -49,15 +116,15 @@ type Movie {
   description: String!
   director: String
   year: Int!
-  genres: [String] @scalarList(strategy: RELATION)
+  genre1: MovieGenre!
+  genre2: MovieGenre
+  genre3: MovieGenre
   length: Int
-  actors: [String] @scalarList(strategy: RELATION)
   budget: Int
   gross: Int
   imdbURL: String
   image: String
   largeImage: String
-  status: MovieStatus
   user: User!
 }
 
@@ -67,31 +134,33 @@ type Book {
   author: String!
   description: String!
   year: Int!
-  genres: [String] @scalarList(strategy: RELATION)
-  pdfURL: String
-  printLength: Int
+  genre1: BookGenre!
+  genre2: BookGenre
+  genre3: BookGenre
   publisher: String
-  characters: [String] @scalarList(strategy: RELATION)
+  printLength: Int
+  pdfURL: String
   image: String
   largeImage: String
-  status: BookStatus
   user: User!
 }
 
 type Game {
   id: ID! @id
   title: String!
-  developer: String!
+  developer: String
   description: String!
   year: Int!
-  genres: [String] @scalarList(strategy: RELATION)
-  platforms: [String] @scalarList(strategy: RELATION)
-  characters: [String] @scalarList(strategy: RELATION)
   numPlayers: NumPlayers
+  genre1: GameGenre!
+  genre2: GameGenre
+  genre3: GameGenre
+  platform1: GamePlatform!
+  platform2: GamePlatform
+  platform3: GamePlatform
   websiteURL: String
   image: String
   largeImage: String
-  status: GameStatus
   user: User!
 }
 
@@ -112,6 +181,37 @@ type CartItem {
   quantity: Int! @default(value: 1)
   item: Item #relationship to Item
   user: User! #relationship to user 
+}
+
+type ToWatchItem {
+  id: ID! @id
+  movie: Movie
+  user: User!
+}
+type SeenItItem {
+  id: ID! @id
+  movie: Movie
+  user: User!
+}
+type ToReadItem {
+  id: ID! @id
+  book: Book
+  user: User!
+}
+type ReadItItem {
+  id: ID! @id
+  book: Book
+  user: User!
+}
+type ToPlayItem {
+  id: ID! @id
+  game: Game
+  user: User!
+}
+type PlayedItItem {
+  id: ID! @id
+  game: Game
+  user: User!
 }
 
 type OrderItem {

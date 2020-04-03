@@ -444,6 +444,345 @@ const Mutations = {
       info
     );
   },
+  async addToToWatch(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+    if (!userId) {
+      throw new Error("You must be signed in to add things");
+    }
+
+    const [existingToWatchItem] = await ctx.db.query.toWatchItems({
+      where: {
+        user: { id: userId },
+        movie: { id: args.id }
+      }
+    });
+
+    if (existingToWatchItem) {
+      console.log("this item is already in their list");
+      return existingToWatchItem;
+    }
+
+    return ctx.db.mutation.createToWatchItem(
+      {
+        data: {
+          user: {
+            connect: { id: userId }
+          },
+          movie: {
+            connect: { id: args.id }
+          }
+        }
+      },
+      info
+    );
+  },
+  async removeFromToWatch(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+
+    const [existingToWatchItem] = await ctx.db.query.toWatchItems({
+      where: {
+        user: { id: userId },
+        movie: { id: args.id }
+      }
+    });
+    // 1.5 make sure we found an item
+    if (!existingToWatchItem) throw new Error("no toWatchItem found!");
+    // 2. TODO: make sure they own that movie item
+    // if (existingToWatchItem.user !== userId) {
+    //   throw new Error("Cheatin huhhh, not your item");
+    // }
+
+    return ctx.db.mutation.deleteToWatchItem(
+      {
+        where: {
+          id: existingToWatchItem.id
+        }
+      },
+      info
+    );
+  },
+  async addToSeenIt(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+    if (!userId) {
+      throw new Error("You must be signed in to add things");
+    }
+
+    const [existingSeenItItem] = await ctx.db.query.seenItItems({
+      where: {
+        user: { id: userId },
+        movie: { id: args.id }
+      }
+    });
+
+    if (existingSeenItItem) {
+      console.log("this item is already in their list");
+      return existingSeenItItem;
+    }
+
+    return ctx.db.mutation.createSeenItItem(
+      {
+        data: {
+          user: {
+            connect: { id: userId }
+          },
+          movie: {
+            connect: { id: args.id }
+          }
+        }
+      },
+      info
+    );
+  },
+  async removeFromSeenIt(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+
+    const [existingSeenItItem] = await ctx.db.query.seenItItems({
+      where: {
+        user: { id: userId },
+        movie: { id: args.id }
+      }
+    });
+
+    if (!existingSeenItItem) throw new Error("no SeenItItem found!");
+    // if (existingSeenItItem.user !== userId) {
+    //   throw new Error("Cheatin huhhh, not your item");
+    // }
+
+    return ctx.db.mutation.deleteSeenItItem(
+      {
+        where: {
+          id: existingSeenItItem.id
+        }
+      },
+      info
+    );
+  },
+  async addToToRead(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+    if (!userId) {
+      throw new Error("You must be signed in to add things");
+    }
+
+    const [existingToReadItem] = await ctx.db.query.toReadItems({
+      where: {
+        user: { id: userId },
+        book: { id: args.id }
+      }
+    });
+
+    if (existingToReadItem) {
+      console.log("this item is already in their list");
+      return existingToReadItem;
+    }
+
+    return ctx.db.mutation.createToReadItem(
+      {
+        data: {
+          user: {
+            connect: { id: userId }
+          },
+          book: {
+            connect: { id: args.id }
+          }
+        }
+      },
+      info
+    );
+  },
+  async removeFromToRead(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+
+    const [existingToReadItem] = await ctx.db.query.toReadItems({
+      where: {
+        user: { id: userId },
+        book: { id: args.id }
+      }
+    });
+    // 1.5 make sure we found an item
+    if (!existingToReadItem) throw new Error("no toReadItem found!");
+    // 2. TODO: make sure they own that movie item
+    // if (existingToReadItem.user !== userId) {
+    //   throw new Error("Cheatin huhhh, not your item");
+    // }
+
+    return ctx.db.mutation.deleteToReadItem(
+      {
+        where: {
+          id: existingToReadItem.id
+        }
+      },
+      info
+    );
+  },
+  async addToReadIt(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+    if (!userId) {
+      throw new Error("You must be signed in to add things");
+    }
+
+    const [existingReadItItem] = await ctx.db.query.readItItems({
+      where: {
+        user: { id: userId },
+        book: { id: args.id }
+      }
+    });
+
+    if (existingReadItItem) {
+      console.log("this item is already in their list");
+      return existingReadItItem;
+    }
+
+    return ctx.db.mutation.createReadItItem(
+      {
+        data: {
+          user: {
+            connect: { id: userId }
+          },
+          book: {
+            connect: { id: args.id }
+          }
+        }
+      },
+      info
+    );
+  },
+  async removeFromReadIt(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+
+    const [existingReadItItem] = await ctx.db.query.readItItems({
+      where: {
+        user: { id: userId },
+        book: { id: args.id }
+      }
+    });
+
+    if (!existingReadItItem) throw new Error("no ReadItItem found!");
+    // if (existingReadItItem.user !== userId) {
+    //   throw new Error("Cheatin huhhh, not your item");
+    // }
+
+    return ctx.db.mutation.deleteReadItItem(
+      {
+        where: {
+          id: existingReadItItem.id
+        }
+      },
+      info
+    );
+  },
+  async addToToPlay(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+    if (!userId) {
+      throw new Error("You must be signed in to add things");
+    }
+
+    const [existingToPlayItem] = await ctx.db.query.toPlayItems({
+      where: {
+        user: { id: userId },
+        game: { id: args.id }
+      }
+    });
+
+    if (existingToPlayItem) {
+      console.log("this item is already in their list");
+      return existingToPlayItem;
+    }
+
+    return ctx.db.mutation.createToPlayItem(
+      {
+        data: {
+          user: {
+            connect: { id: userId }
+          },
+          game: {
+            connect: { id: args.id }
+          }
+        }
+      },
+      info
+    );
+  },
+  async removeFromToPlay(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+
+    const [existingToPlayItem] = await ctx.db.query.toPlayItems({
+      where: {
+        user: { id: userId },
+        game: { id: args.id }
+      }
+    });
+    // 1.5 make sure we found an item
+    if (!existingToPlayItem) throw new Error("no toPlayItem found!");
+    // 2. TODO: make sure they own that movie item
+    // if (existingToPlayItem.user !== userId) {
+    //   throw new Error("Cheatin huhhh, not your item");
+    // }
+
+    return ctx.db.mutation.deleteToPlayItem(
+      {
+        where: {
+          id: existingToPlayItem.id
+        }
+      },
+      info
+    );
+  },
+  async addToPlayedIt(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+    if (!userId) {
+      throw new Error("You must be signed in to add things");
+    }
+
+    const [existingPlayedItItem] = await ctx.db.query.playedItItems({
+      where: {
+        user: { id: userId },
+        game: { id: args.id }
+      }
+    });
+
+    if (existingPlayedItItem) {
+      console.log("this item is already in their list");
+      return existingPlayedItItem;
+    }
+
+    return ctx.db.mutation.createPlayedItItem(
+      {
+        data: {
+          user: {
+            connect: { id: userId }
+          },
+          game: {
+            connect: { id: args.id }
+          }
+        }
+      },
+      info
+    );
+  },
+  async removeFromPlayedIt(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+
+    const [existingPlayedItItem] = await ctx.db.query.playedItItems({
+      where: {
+        user: { id: userId },
+        game: { id: args.id }
+      }
+    });
+
+    if (!existingPlayedItItem) throw new Error("no PlayedItItem found!");
+    // if (existingPlayedItItem.user !== userId) {
+    //   throw new Error("Cheatin huhhh, not your item");
+    // }
+
+    return ctx.db.mutation.deletePlayedItItem(
+      {
+        where: {
+          id: existingPlayedItItem.id
+        }
+      },
+      info
+    );
+  },
   async createOrder(parent, args, ctx, info) {
     // 1. Query the current user and make sure they are signed in
     const { userId } = ctx.request;

@@ -18,9 +18,9 @@ const SINGLE_BOOK_QUERY = gql`
       printLength
       publisher
       pdfURL
-      genres
-      characters
-      status
+      genre1
+      genre2
+      genre3
     }
   }
 `;
@@ -34,9 +34,9 @@ const UPDATE_BOOK_MUTATION = gql`
     $printLength: Int
     $publisher: String
     $pdfURL: String
-    $genres: [String]
-    $characters: [String]
-    $status: BookStatus
+    $genre1: BookGenre
+    $genre2: BookGenre
+    $genre3: BookGenre
   ) {
     updateBook(
       id: $id
@@ -47,9 +47,9 @@ const UPDATE_BOOK_MUTATION = gql`
       printLength: $printLength
       publisher: $publisher
       pdfURL: $pdfURL
-      genres: $genres
-      characters: $characters
-      status: $status
+      genre1: $genre1
+      genre2: $genre2
+      genre3: $genre3
     ) {
       id
       title
@@ -59,9 +59,9 @@ const UPDATE_BOOK_MUTATION = gql`
       printLength
       publisher
       pdfURL
-      genres
-      characters
-      status
+      genre1
+      genre2
+      genre3
     }
   }
 `;
@@ -127,7 +127,6 @@ class UpdateBook extends Component {
                         id="title"
                         name="title"
                         placeholder="Title"
-                        required
                         defaultValue={data.book.title}
                         onChange={this.handleChange}
                       />
@@ -139,7 +138,6 @@ class UpdateBook extends Component {
                         id="author"
                         name="author"
                         placeholder="Author"
-                        required
                         defaultValue={data.book.author}
                         onChange={this.handleChange}
                       />
@@ -152,7 +150,6 @@ class UpdateBook extends Component {
                         id="year"
                         name="year"
                         placeholder="Year"
-                        required
                         defaultValue={data.book.year}
                         onChange={this.handleChange}
                       />
@@ -164,7 +161,6 @@ class UpdateBook extends Component {
                         id="description"
                         name="description"
                         placeholder="Enter A Description"
-                        required
                         defaultValue={data.book.description}
                         onChange={this.handleChange}
                       />
@@ -191,6 +187,63 @@ class UpdateBook extends Component {
                         onChange={this.handleChange}
                       />
                     </label>
+                    <label htmlFor="genre1">
+                      Genre
+                      <select
+                        id="genre1"
+                        name="genre1"
+                        onChange={this.handleChange}
+                        defaultValue={data.book.genre1}
+                      >
+                        {BookGenres.map(genre => {
+                          return (
+                            <option value={genre.value} key={genre.value}>
+                              {genre.title}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </label>
+                    {this.state.genre1 !== "UNSELECTED" && (
+                      <label htmlFor="genre2">
+                        Genre 2
+                        <select
+                          id="genre2"
+                          name="genre2"
+                          onChange={this.handleChange}
+                          defaultValue={data.book.genre2}
+                        >
+                          {BookGenres.map(genre => {
+                            return (
+                              <option value={genre.value} key={genre.value}>
+                                {genre.title}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </label>
+                    )}
+                    {this.state.genre2 !== "UNSELECTED" &&
+                      this.state.genre1 !== "UNSELECTED" && (
+                        <label htmlFor="genre3">
+                          Genre 3
+                          <select
+                            id="genre3"
+                            name="genre3"
+                            onChange={this.handleChange}
+                            defaultValue={data.book.genre3}
+                          >
+                            {BookGenres.map(genre => {
+                              return (
+                                <option value={genre.value} key={genre.value}>
+                                  {genre.title}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </label>
+                      )}
+
                     <label htmlFor="pdfURL">
                       Link to PDF
                       <input
@@ -201,60 +254,6 @@ class UpdateBook extends Component {
                         defaultValue={data.book.pdfURL}
                         onChange={this.handleChange}
                       />
-                    </label>
-                    <label htmlFor="genres">
-                      Genres (comma separated)
-                      <div>
-                        {BookGenres.map(genre => {
-                          return (
-                            <div key={genre.value}>
-                              <input
-                                type="checkbox"
-                                name="genres"
-                                className="bookGenreInput"
-                                placeholder={genre.title}
-                                defaultValue={genre.value}
-                                onChange={this.handleChange}
-                              />
-                              {genre.title}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </label>
-                    <label htmlFor="characters">
-                      Characters
-                      <input
-                        type="text"
-                        id="characters"
-                        name="characters"
-                        placeholder="Characters"
-                        defaultValue={data.book.characters}
-                        onChange={this.handleChange}
-                      />
-                    </label>
-                    <label htmlFor="status">
-                      Book Status
-                      {/* <input
-                        type="text"
-                        id="status"
-                        name="status"
-                        placeholder="status"
-                        defaultValue={data.book.status}
-                        onChange={this.handleChange}
-                      /> */}
-                      <select
-                        id="status"
-                        name="status"
-                        onChange={this.handleChange}
-                        defaultValue={data.book.status}
-                      >
-                        <option value="UNSELECTED">Choose Status</option>
-                        <option value="READ_IT">Read It</option>
-                        <option selected value="TO_READ">
-                          To Read
-                        </option>
-                      </select>
                     </label>
                     <button type="submit">
                       Sav{loading ? "ing" : "e"} Changes

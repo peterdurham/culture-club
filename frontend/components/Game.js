@@ -8,6 +8,10 @@ import AddToCart from "./AddToCart";
 import styled from "styled-components";
 
 import DeleteButton from "./DeleteButton";
+import AddToToPlay from "./AddToToPlay";
+import RemoveFromToPlay from "./RemoveFromToPlay";
+import AddToPlayedIt from "./AddToPlayedIt";
+import RemoveFromPlayedIt from "./RemoveFromPlayedIt";
 
 const GameStyles = styled.div`
   background: white;
@@ -76,7 +80,10 @@ class Game extends Component {
   };
 
   render() {
-    const { game } = this.props;
+    const { game, me } = this.props;
+
+    const toPlayIds = me.toPlay.map(item => item.game.id);
+    const playedItIds = me.playedIt.map(item => item.game.id);
     return (
       <GameStyles>
         {/* {game.image && <img src={game.image} alt={game.title} />} */}
@@ -103,11 +110,23 @@ class Game extends Component {
               <a>{game.title}</a>
             </Link>
           </Title>
-
           {/* <p>{game.description}</p> */}
           <p>console</p>
           <p>developer</p>
-
+          <div className="toPlayButton">
+            {toPlayIds.indexOf(game.id) > -1 ? (
+              <RemoveFromToPlay id={game.id} />
+            ) : (
+              <AddToToPlay id={game.id} />
+            )}
+          </div>{" "}
+          <div className="playedItButton">
+            {playedItIds.indexOf(game.id) > -1 ? (
+              <RemoveFromPlayedIt id={game.id} />
+            ) : (
+              <AddToPlayedIt id={game.id} />
+            )}
+          </div>
           <div
             className="buttonList"
             style={{ display: "flex", justifyContent: "center" }}
@@ -137,7 +156,7 @@ class Game extends Component {
               <svg
                 stroke="currentColor"
                 fill="currentColor"
-                stroke-width="0"
+                strokeWidth="0"
                 viewBox="0 0 1024 1024"
                 height="1em"
                 width="1em"
@@ -147,7 +166,6 @@ class Game extends Component {
               </svg>
             </DeleteGame>
           </div>
-
           {/* <div className="buttonList">
             <Link
               href={{

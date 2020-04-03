@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/peter-durham-ae1855/culture-club/dev
-# timestamp: Sun Mar 29 2020 08:12:24 GMT-0700 (Pacific Daylight Time)
+# timestamp: Thu Apr 02 2020 21:54:31 GMT-0700 (Pacific Daylight Time)
 
 type AggregateBook {
   count: Int!
@@ -29,6 +29,30 @@ type AggregateOrderItem {
   count: Int!
 }
 
+type AggregatePlayedItItem {
+  count: Int!
+}
+
+type AggregateReadItItem {
+  count: Int!
+}
+
+type AggregateSeenItItem {
+  count: Int!
+}
+
+type AggregateToPlayItem {
+  count: Int!
+}
+
+type AggregateToReadItem {
+  count: Int!
+}
+
+type AggregateToWatchItem {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -44,14 +68,14 @@ type Book implements Node {
   author: String!
   description: String!
   year: Int!
-  genres: [String!]!
-  pdfURL: String
-  printLength: Int
+  genre1: BookGenre!
+  genre2: BookGenre
+  genre3: BookGenre
   publisher: String
-  characters: [String!]!
+  printLength: Int
+  pdfURL: String
   image: String
   largeImage: String
-  status: BookStatus
   user: User!
 }
 
@@ -65,29 +89,26 @@ type BookConnection {
   aggregate: AggregateBook!
 }
 
-input BookCreatecharactersInput {
-  set: [String!]
-}
-
-input BookCreategenresInput {
-  set: [String!]
-}
-
 input BookCreateInput {
   id: ID
   title: String!
   author: String!
   description: String!
   year: Int!
-  pdfURL: String
-  printLength: Int
+  genre1: BookGenre!
+  genre2: BookGenre
+  genre3: BookGenre
   publisher: String
+  printLength: Int
+  pdfURL: String
   image: String
   largeImage: String
-  status: BookStatus
-  genres: BookCreategenresInput
-  characters: BookCreatecharactersInput
   user: UserCreateOneInput!
+}
+
+input BookCreateOneInput {
+  create: BookCreateInput
+  connect: BookWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -97,6 +118,28 @@ type BookEdge {
 
   """A cursor for use in pagination."""
   cursor: String!
+}
+
+enum BookGenre {
+  UNSELECTED
+  FANTASY
+  SCI_FI
+  CLASSICS
+  HORROR
+  MYSTERY
+  COMIC
+  PHILOSOPHY
+  HISTORY
+  MYTHOLOGY
+  BUSINESS
+  ECONOMICS
+  SCIENCE
+  ROMANCE
+  WESTERN
+  CHILDRENS
+  BIOGRAPHY
+  NEW_AGE
+  SELF_HELP
 }
 
 enum BookOrderByInput {
@@ -110,18 +153,22 @@ enum BookOrderByInput {
   description_DESC
   year_ASC
   year_DESC
-  pdfURL_ASC
-  pdfURL_DESC
-  printLength_ASC
-  printLength_DESC
+  genre1_ASC
+  genre1_DESC
+  genre2_ASC
+  genre2_DESC
+  genre3_ASC
+  genre3_DESC
   publisher_ASC
   publisher_DESC
+  printLength_ASC
+  printLength_DESC
+  pdfURL_ASC
+  pdfURL_DESC
   image_ASC
   image_DESC
   largeImage_ASC
   largeImage_DESC
-  status_ASC
-  status_DESC
 }
 
 type BookPreviousValues {
@@ -130,20 +177,14 @@ type BookPreviousValues {
   author: String!
   description: String!
   year: Int!
-  genres: [String!]!
-  pdfURL: String
-  printLength: Int
+  genre1: BookGenre!
+  genre2: BookGenre
+  genre3: BookGenre
   publisher: String
-  characters: [String!]!
+  printLength: Int
+  pdfURL: String
   image: String
   largeImage: String
-  status: BookStatus
-}
-
-enum BookStatus {
-  UNSELECTED
-  READ_IT
-  TO_READ
 }
 
 type BookSubscriptionPayload {
@@ -185,12 +226,20 @@ input BookSubscriptionWhereInput {
   node: BookWhereInput
 }
 
-input BookUpdatecharactersInput {
-  set: [String!]
-}
-
-input BookUpdategenresInput {
-  set: [String!]
+input BookUpdateDataInput {
+  title: String
+  author: String
+  description: String
+  year: Int
+  genre1: BookGenre
+  genre2: BookGenre
+  genre3: BookGenre
+  publisher: String
+  printLength: Int
+  pdfURL: String
+  image: String
+  largeImage: String
+  user: UserUpdateOneRequiredInput
 }
 
 input BookUpdateInput {
@@ -198,14 +247,14 @@ input BookUpdateInput {
   author: String
   description: String
   year: Int
-  pdfURL: String
-  printLength: Int
+  genre1: BookGenre
+  genre2: BookGenre
+  genre3: BookGenre
   publisher: String
+  printLength: Int
+  pdfURL: String
   image: String
   largeImage: String
-  status: BookStatus
-  genres: BookUpdategenresInput
-  characters: BookUpdatecharactersInput
   user: UserUpdateOneRequiredInput
 }
 
@@ -214,14 +263,28 @@ input BookUpdateManyMutationInput {
   author: String
   description: String
   year: Int
-  pdfURL: String
-  printLength: Int
+  genre1: BookGenre
+  genre2: BookGenre
+  genre3: BookGenre
   publisher: String
+  printLength: Int
+  pdfURL: String
   image: String
   largeImage: String
-  status: BookStatus
-  genres: BookUpdategenresInput
-  characters: BookUpdatecharactersInput
+}
+
+input BookUpdateOneInput {
+  create: BookCreateInput
+  connect: BookWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: BookUpdateDataInput
+  upsert: BookUpsertNestedInput
+}
+
+input BookUpsertNestedInput {
+  update: BookUpdateDataInput!
+  create: BookCreateInput!
 }
 
 input BookWhereInput {
@@ -415,68 +478,36 @@ input BookWhereInput {
 
   """All values greater than or equal the given value."""
   year_gte: Int
-  pdfURL: String
+  genre1: BookGenre
 
   """All values that are not equal to given value."""
-  pdfURL_not: String
+  genre1_not: BookGenre
 
   """All values that are contained in given list."""
-  pdfURL_in: [String!]
+  genre1_in: [BookGenre!]
 
   """All values that are not contained in given list."""
-  pdfURL_not_in: [String!]
-
-  """All values less than the given value."""
-  pdfURL_lt: String
-
-  """All values less than or equal the given value."""
-  pdfURL_lte: String
-
-  """All values greater than the given value."""
-  pdfURL_gt: String
-
-  """All values greater than or equal the given value."""
-  pdfURL_gte: String
-
-  """All values containing the given string."""
-  pdfURL_contains: String
-
-  """All values not containing the given string."""
-  pdfURL_not_contains: String
-
-  """All values starting with the given string."""
-  pdfURL_starts_with: String
-
-  """All values not starting with the given string."""
-  pdfURL_not_starts_with: String
-
-  """All values ending with the given string."""
-  pdfURL_ends_with: String
-
-  """All values not ending with the given string."""
-  pdfURL_not_ends_with: String
-  printLength: Int
+  genre1_not_in: [BookGenre!]
+  genre2: BookGenre
 
   """All values that are not equal to given value."""
-  printLength_not: Int
+  genre2_not: BookGenre
 
   """All values that are contained in given list."""
-  printLength_in: [Int!]
+  genre2_in: [BookGenre!]
 
   """All values that are not contained in given list."""
-  printLength_not_in: [Int!]
+  genre2_not_in: [BookGenre!]
+  genre3: BookGenre
 
-  """All values less than the given value."""
-  printLength_lt: Int
+  """All values that are not equal to given value."""
+  genre3_not: BookGenre
 
-  """All values less than or equal the given value."""
-  printLength_lte: Int
+  """All values that are contained in given list."""
+  genre3_in: [BookGenre!]
 
-  """All values greater than the given value."""
-  printLength_gt: Int
-
-  """All values greater than or equal the given value."""
-  printLength_gte: Int
+  """All values that are not contained in given list."""
+  genre3_not_in: [BookGenre!]
   publisher: String
 
   """All values that are not equal to given value."""
@@ -517,6 +548,68 @@ input BookWhereInput {
 
   """All values not ending with the given string."""
   publisher_not_ends_with: String
+  printLength: Int
+
+  """All values that are not equal to given value."""
+  printLength_not: Int
+
+  """All values that are contained in given list."""
+  printLength_in: [Int!]
+
+  """All values that are not contained in given list."""
+  printLength_not_in: [Int!]
+
+  """All values less than the given value."""
+  printLength_lt: Int
+
+  """All values less than or equal the given value."""
+  printLength_lte: Int
+
+  """All values greater than the given value."""
+  printLength_gt: Int
+
+  """All values greater than or equal the given value."""
+  printLength_gte: Int
+  pdfURL: String
+
+  """All values that are not equal to given value."""
+  pdfURL_not: String
+
+  """All values that are contained in given list."""
+  pdfURL_in: [String!]
+
+  """All values that are not contained in given list."""
+  pdfURL_not_in: [String!]
+
+  """All values less than the given value."""
+  pdfURL_lt: String
+
+  """All values less than or equal the given value."""
+  pdfURL_lte: String
+
+  """All values greater than the given value."""
+  pdfURL_gt: String
+
+  """All values greater than or equal the given value."""
+  pdfURL_gte: String
+
+  """All values containing the given string."""
+  pdfURL_contains: String
+
+  """All values not containing the given string."""
+  pdfURL_not_contains: String
+
+  """All values starting with the given string."""
+  pdfURL_starts_with: String
+
+  """All values not starting with the given string."""
+  pdfURL_not_starts_with: String
+
+  """All values ending with the given string."""
+  pdfURL_ends_with: String
+
+  """All values not ending with the given string."""
+  pdfURL_not_ends_with: String
   image: String
 
   """All values that are not equal to given value."""
@@ -597,16 +690,6 @@ input BookWhereInput {
 
   """All values not ending with the given string."""
   largeImage_not_ends_with: String
-  status: BookStatus
-
-  """All values that are not equal to given value."""
-  status_not: BookStatus
-
-  """All values that are contained in given list."""
-  status_in: [BookStatus!]
-
-  """All values that are not contained in given list."""
-  status_not_in: [BookStatus!]
   user: UserWhereInput
 }
 
@@ -913,17 +996,19 @@ scalar DateTime
 type Game implements Node {
   id: ID!
   title: String!
-  developer: String!
+  developer: String
   description: String!
   year: Int!
-  genres: [String!]!
-  platforms: [String!]!
-  characters: [String!]!
   numPlayers: NumPlayers
+  genre1: GameGenre!
+  genre2: GameGenre
+  genre3: GameGenre
+  platform1: GamePlatform!
+  platform2: GamePlatform
+  platform3: GamePlatform
   websiteURL: String
   image: String
   largeImage: String
-  status: GameStatus
   user: User!
 }
 
@@ -937,33 +1022,28 @@ type GameConnection {
   aggregate: AggregateGame!
 }
 
-input GameCreatecharactersInput {
-  set: [String!]
-}
-
-input GameCreategenresInput {
-  set: [String!]
-}
-
 input GameCreateInput {
   id: ID
   title: String!
-  developer: String!
+  developer: String
   description: String!
   year: Int!
   numPlayers: NumPlayers
+  genre1: GameGenre!
+  genre2: GameGenre
+  genre3: GameGenre
+  platform1: GamePlatform!
+  platform2: GamePlatform
+  platform3: GamePlatform
   websiteURL: String
   image: String
   largeImage: String
-  status: GameStatus
-  genres: GameCreategenresInput
-  platforms: GameCreateplatformsInput
-  characters: GameCreatecharactersInput
   user: UserCreateOneInput!
 }
 
-input GameCreateplatformsInput {
-  set: [String!]
+input GameCreateOneInput {
+  create: GameCreateInput
+  connect: GameWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -973,6 +1053,25 @@ type GameEdge {
 
   """A cursor for use in pagination."""
   cursor: String!
+}
+
+enum GameGenre {
+  UNSELECTED
+  RPG
+  ACTION
+  FIGHTING
+  ADVENTURE
+  SIMULATION
+  SCI_FI
+  SPORTS
+  CARD_OR_BOARD
+  PLATFORM
+  STEALTH
+  SURVIVAL
+  MMORPG
+  SHOOTER
+  STRATEGY
+  VR
 }
 
 enum GameOrderByInput {
@@ -988,37 +1087,61 @@ enum GameOrderByInput {
   year_DESC
   numPlayers_ASC
   numPlayers_DESC
+  genre1_ASC
+  genre1_DESC
+  genre2_ASC
+  genre2_DESC
+  genre3_ASC
+  genre3_DESC
+  platform1_ASC
+  platform1_DESC
+  platform2_ASC
+  platform2_DESC
+  platform3_ASC
+  platform3_DESC
   websiteURL_ASC
   websiteURL_DESC
   image_ASC
   image_DESC
   largeImage_ASC
   largeImage_DESC
-  status_ASC
-  status_DESC
+}
+
+enum GamePlatform {
+  UNSELECTED
+  PC
+  NES
+  SNES
+  N64
+  DREAMCAST
+  GAMECUBE
+  WII
+  SWITCH
+  XBOX
+  XBOX_360
+  XBOX_ONE
+  PSX
+  PS2
+  PS3
+  PS4
 }
 
 type GamePreviousValues {
   id: ID!
   title: String!
-  developer: String!
+  developer: String
   description: String!
   year: Int!
-  genres: [String!]!
-  platforms: [String!]!
-  characters: [String!]!
   numPlayers: NumPlayers
+  genre1: GameGenre!
+  genre2: GameGenre
+  genre3: GameGenre
+  platform1: GamePlatform!
+  platform2: GamePlatform
+  platform3: GamePlatform
   websiteURL: String
   image: String
   largeImage: String
-  status: GameStatus
-}
-
-enum GameStatus {
-  UNSELECTED
-  OWN_IT
-  BEAT_IT
-  TO_PLAY
 }
 
 type GameSubscriptionPayload {
@@ -1060,12 +1183,22 @@ input GameSubscriptionWhereInput {
   node: GameWhereInput
 }
 
-input GameUpdatecharactersInput {
-  set: [String!]
-}
-
-input GameUpdategenresInput {
-  set: [String!]
+input GameUpdateDataInput {
+  title: String
+  developer: String
+  description: String
+  year: Int
+  numPlayers: NumPlayers
+  genre1: GameGenre
+  genre2: GameGenre
+  genre3: GameGenre
+  platform1: GamePlatform
+  platform2: GamePlatform
+  platform3: GamePlatform
+  websiteURL: String
+  image: String
+  largeImage: String
+  user: UserUpdateOneRequiredInput
 }
 
 input GameUpdateInput {
@@ -1074,13 +1207,15 @@ input GameUpdateInput {
   description: String
   year: Int
   numPlayers: NumPlayers
+  genre1: GameGenre
+  genre2: GameGenre
+  genre3: GameGenre
+  platform1: GamePlatform
+  platform2: GamePlatform
+  platform3: GamePlatform
   websiteURL: String
   image: String
   largeImage: String
-  status: GameStatus
-  genres: GameUpdategenresInput
-  platforms: GameUpdateplatformsInput
-  characters: GameUpdatecharactersInput
   user: UserUpdateOneRequiredInput
 }
 
@@ -1090,17 +1225,29 @@ input GameUpdateManyMutationInput {
   description: String
   year: Int
   numPlayers: NumPlayers
+  genre1: GameGenre
+  genre2: GameGenre
+  genre3: GameGenre
+  platform1: GamePlatform
+  platform2: GamePlatform
+  platform3: GamePlatform
   websiteURL: String
   image: String
   largeImage: String
-  status: GameStatus
-  genres: GameUpdategenresInput
-  platforms: GameUpdateplatformsInput
-  characters: GameUpdatecharactersInput
 }
 
-input GameUpdateplatformsInput {
-  set: [String!]
+input GameUpdateOneInput {
+  create: GameCreateInput
+  connect: GameWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: GameUpdateDataInput
+  upsert: GameUpsertNestedInput
+}
+
+input GameUpsertNestedInput {
+  update: GameUpdateDataInput!
+  create: GameCreateInput!
 }
 
 input GameWhereInput {
@@ -1304,6 +1451,66 @@ input GameWhereInput {
 
   """All values that are not contained in given list."""
   numPlayers_not_in: [NumPlayers!]
+  genre1: GameGenre
+
+  """All values that are not equal to given value."""
+  genre1_not: GameGenre
+
+  """All values that are contained in given list."""
+  genre1_in: [GameGenre!]
+
+  """All values that are not contained in given list."""
+  genre1_not_in: [GameGenre!]
+  genre2: GameGenre
+
+  """All values that are not equal to given value."""
+  genre2_not: GameGenre
+
+  """All values that are contained in given list."""
+  genre2_in: [GameGenre!]
+
+  """All values that are not contained in given list."""
+  genre2_not_in: [GameGenre!]
+  genre3: GameGenre
+
+  """All values that are not equal to given value."""
+  genre3_not: GameGenre
+
+  """All values that are contained in given list."""
+  genre3_in: [GameGenre!]
+
+  """All values that are not contained in given list."""
+  genre3_not_in: [GameGenre!]
+  platform1: GamePlatform
+
+  """All values that are not equal to given value."""
+  platform1_not: GamePlatform
+
+  """All values that are contained in given list."""
+  platform1_in: [GamePlatform!]
+
+  """All values that are not contained in given list."""
+  platform1_not_in: [GamePlatform!]
+  platform2: GamePlatform
+
+  """All values that are not equal to given value."""
+  platform2_not: GamePlatform
+
+  """All values that are contained in given list."""
+  platform2_in: [GamePlatform!]
+
+  """All values that are not contained in given list."""
+  platform2_not_in: [GamePlatform!]
+  platform3: GamePlatform
+
+  """All values that are not equal to given value."""
+  platform3_not: GamePlatform
+
+  """All values that are contained in given list."""
+  platform3_in: [GamePlatform!]
+
+  """All values that are not contained in given list."""
+  platform3_not_in: [GamePlatform!]
   websiteURL: String
 
   """All values that are not equal to given value."""
@@ -1424,16 +1631,6 @@ input GameWhereInput {
 
   """All values not ending with the given string."""
   largeImage_not_ends_with: String
-  status: GameStatus
-
-  """All values that are not equal to given value."""
-  status_not: GameStatus
-
-  """All values that are contained in given list."""
-  status_in: [GameStatus!]
-
-  """All values that are not contained in given list."""
-  status_not_in: [GameStatus!]
   user: UserWhereInput
 }
 
@@ -1890,15 +2087,15 @@ type Movie implements Node {
   description: String!
   director: String
   year: Int!
-  genres: [String!]!
+  genre1: MovieGenre!
+  genre2: MovieGenre
+  genre3: MovieGenre
   length: Int
-  actors: [String!]!
   budget: Int
   gross: Int
   imdbURL: String
   image: String
   largeImage: String
-  status: MovieStatus
   user: User!
 }
 
@@ -1912,30 +2109,27 @@ type MovieConnection {
   aggregate: AggregateMovie!
 }
 
-input MovieCreateactorsInput {
-  set: [String!]
-}
-
-input MovieCreategenresInput {
-  set: [String!]
-}
-
 input MovieCreateInput {
   id: ID
   title: String!
   description: String!
   director: String
   year: Int!
+  genre1: MovieGenre!
+  genre2: MovieGenre
+  genre3: MovieGenre
   length: Int
   budget: Int
   gross: Int
   imdbURL: String
   image: String
   largeImage: String
-  status: MovieStatus
-  genres: MovieCreategenresInput
-  actors: MovieCreateactorsInput
   user: UserCreateOneInput!
+}
+
+input MovieCreateOneInput {
+  create: MovieCreateInput
+  connect: MovieWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -1945,6 +2139,24 @@ type MovieEdge {
 
   """A cursor for use in pagination."""
   cursor: String!
+}
+
+enum MovieGenre {
+  UNSELECTED
+  ACTION
+  ANIME
+  CLASSIC
+  COMEDY
+  DOCUMENTARY
+  DRAMA
+  HISTORY
+  HORROR
+  INDEPENDENT
+  SCI_FI
+  FANTASY
+  THRILLER
+  INTERNATIONAL
+  SPORTS
 }
 
 enum MovieOrderByInput {
@@ -1958,6 +2170,12 @@ enum MovieOrderByInput {
   director_DESC
   year_ASC
   year_DESC
+  genre1_ASC
+  genre1_DESC
+  genre2_ASC
+  genre2_DESC
+  genre3_ASC
+  genre3_DESC
   length_ASC
   length_DESC
   budget_ASC
@@ -1970,8 +2188,6 @@ enum MovieOrderByInput {
   image_DESC
   largeImage_ASC
   largeImage_DESC
-  status_ASC
-  status_DESC
 }
 
 type MoviePreviousValues {
@@ -1980,21 +2196,15 @@ type MoviePreviousValues {
   description: String!
   director: String
   year: Int!
-  genres: [String!]!
+  genre1: MovieGenre!
+  genre2: MovieGenre
+  genre3: MovieGenre
   length: Int
-  actors: [String!]!
   budget: Int
   gross: Int
   imdbURL: String
   image: String
   largeImage: String
-  status: MovieStatus
-}
-
-enum MovieStatus {
-  UNSELECTED
-  SEEN_IT
-  TO_WATCH
 }
 
 type MovieSubscriptionPayload {
@@ -2036,12 +2246,21 @@ input MovieSubscriptionWhereInput {
   node: MovieWhereInput
 }
 
-input MovieUpdateactorsInput {
-  set: [String!]
-}
-
-input MovieUpdategenresInput {
-  set: [String!]
+input MovieUpdateDataInput {
+  title: String
+  description: String
+  director: String
+  year: Int
+  genre1: MovieGenre
+  genre2: MovieGenre
+  genre3: MovieGenre
+  length: Int
+  budget: Int
+  gross: Int
+  imdbURL: String
+  image: String
+  largeImage: String
+  user: UserUpdateOneRequiredInput
 }
 
 input MovieUpdateInput {
@@ -2049,15 +2268,15 @@ input MovieUpdateInput {
   description: String
   director: String
   year: Int
+  genre1: MovieGenre
+  genre2: MovieGenre
+  genre3: MovieGenre
   length: Int
   budget: Int
   gross: Int
   imdbURL: String
   image: String
   largeImage: String
-  status: MovieStatus
-  genres: MovieUpdategenresInput
-  actors: MovieUpdateactorsInput
   user: UserUpdateOneRequiredInput
 }
 
@@ -2066,15 +2285,29 @@ input MovieUpdateManyMutationInput {
   description: String
   director: String
   year: Int
+  genre1: MovieGenre
+  genre2: MovieGenre
+  genre3: MovieGenre
   length: Int
   budget: Int
   gross: Int
   imdbURL: String
   image: String
   largeImage: String
-  status: MovieStatus
-  genres: MovieUpdategenresInput
-  actors: MovieUpdateactorsInput
+}
+
+input MovieUpdateOneInput {
+  create: MovieCreateInput
+  connect: MovieWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: MovieUpdateDataInput
+  upsert: MovieUpsertNestedInput
+}
+
+input MovieUpsertNestedInput {
+  update: MovieUpdateDataInput!
+  create: MovieCreateInput!
 }
 
 input MovieWhereInput {
@@ -2268,6 +2501,36 @@ input MovieWhereInput {
 
   """All values greater than or equal the given value."""
   year_gte: Int
+  genre1: MovieGenre
+
+  """All values that are not equal to given value."""
+  genre1_not: MovieGenre
+
+  """All values that are contained in given list."""
+  genre1_in: [MovieGenre!]
+
+  """All values that are not contained in given list."""
+  genre1_not_in: [MovieGenre!]
+  genre2: MovieGenre
+
+  """All values that are not equal to given value."""
+  genre2_not: MovieGenre
+
+  """All values that are contained in given list."""
+  genre2_in: [MovieGenre!]
+
+  """All values that are not contained in given list."""
+  genre2_not_in: [MovieGenre!]
+  genre3: MovieGenre
+
+  """All values that are not equal to given value."""
+  genre3_not: MovieGenre
+
+  """All values that are contained in given list."""
+  genre3_in: [MovieGenre!]
+
+  """All values that are not contained in given list."""
+  genre3_not_in: [MovieGenre!]
   length: Int
 
   """All values that are not equal to given value."""
@@ -2454,16 +2717,6 @@ input MovieWhereInput {
 
   """All values not ending with the given string."""
   largeImage_not_ends_with: String
-  status: MovieStatus
-
-  """All values that are not equal to given value."""
-  status_not: MovieStatus
-
-  """All values that are contained in given list."""
-  status_in: [MovieStatus!]
-
-  """All values that are not contained in given list."""
-  status_not_in: [MovieStatus!]
   user: UserWhereInput
 }
 
@@ -2472,53 +2725,83 @@ input MovieWhereUniqueInput {
 }
 
 type Mutation {
-  createMovie(data: MovieCreateInput!): Movie!
-  createBook(data: BookCreateInput!): Book!
-  createGame(data: GameCreateInput!): Game!
   createCartItem(data: CartItemCreateInput!): CartItem!
+  createToWatchItem(data: ToWatchItemCreateInput!): ToWatchItem!
+  createSeenItItem(data: SeenItItemCreateInput!): SeenItItem!
+  createToReadItem(data: ToReadItemCreateInput!): ToReadItem!
+  createReadItItem(data: ReadItItemCreateInput!): ReadItItem!
+  createToPlayItem(data: ToPlayItemCreateInput!): ToPlayItem!
+  createPlayedItItem(data: PlayedItItemCreateInput!): PlayedItItem!
   createOrder(data: OrderCreateInput!): Order!
+  createGame(data: GameCreateInput!): Game!
   createItem(data: ItemCreateInput!): Item!
+  createMovie(data: MovieCreateInput!): Movie!
   createOrderItem(data: OrderItemCreateInput!): OrderItem!
+  createBook(data: BookCreateInput!): Book!
   createUser(data: UserCreateInput!): User!
-  updateMovie(data: MovieUpdateInput!, where: MovieWhereUniqueInput!): Movie
-  updateBook(data: BookUpdateInput!, where: BookWhereUniqueInput!): Book
-  updateGame(data: GameUpdateInput!, where: GameWhereUniqueInput!): Game
   updateCartItem(data: CartItemUpdateInput!, where: CartItemWhereUniqueInput!): CartItem
+  updateToWatchItem(data: ToWatchItemUpdateInput!, where: ToWatchItemWhereUniqueInput!): ToWatchItem
+  updateSeenItItem(data: SeenItItemUpdateInput!, where: SeenItItemWhereUniqueInput!): SeenItItem
+  updateToReadItem(data: ToReadItemUpdateInput!, where: ToReadItemWhereUniqueInput!): ToReadItem
+  updateReadItItem(data: ReadItItemUpdateInput!, where: ReadItItemWhereUniqueInput!): ReadItItem
+  updateToPlayItem(data: ToPlayItemUpdateInput!, where: ToPlayItemWhereUniqueInput!): ToPlayItem
+  updatePlayedItItem(data: PlayedItItemUpdateInput!, where: PlayedItItemWhereUniqueInput!): PlayedItItem
   updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
+  updateGame(data: GameUpdateInput!, where: GameWhereUniqueInput!): Game
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
+  updateMovie(data: MovieUpdateInput!, where: MovieWhereUniqueInput!): Movie
   updateOrderItem(data: OrderItemUpdateInput!, where: OrderItemWhereUniqueInput!): OrderItem
+  updateBook(data: BookUpdateInput!, where: BookWhereUniqueInput!): Book
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  deleteMovie(where: MovieWhereUniqueInput!): Movie
-  deleteBook(where: BookWhereUniqueInput!): Book
-  deleteGame(where: GameWhereUniqueInput!): Game
   deleteCartItem(where: CartItemWhereUniqueInput!): CartItem
+  deleteToWatchItem(where: ToWatchItemWhereUniqueInput!): ToWatchItem
+  deleteSeenItItem(where: SeenItItemWhereUniqueInput!): SeenItItem
+  deleteToReadItem(where: ToReadItemWhereUniqueInput!): ToReadItem
+  deleteReadItItem(where: ReadItItemWhereUniqueInput!): ReadItItem
+  deleteToPlayItem(where: ToPlayItemWhereUniqueInput!): ToPlayItem
+  deletePlayedItItem(where: PlayedItItemWhereUniqueInput!): PlayedItItem
   deleteOrder(where: OrderWhereUniqueInput!): Order
+  deleteGame(where: GameWhereUniqueInput!): Game
   deleteItem(where: ItemWhereUniqueInput!): Item
+  deleteMovie(where: MovieWhereUniqueInput!): Movie
   deleteOrderItem(where: OrderItemWhereUniqueInput!): OrderItem
+  deleteBook(where: BookWhereUniqueInput!): Book
   deleteUser(where: UserWhereUniqueInput!): User
-  upsertMovie(where: MovieWhereUniqueInput!, create: MovieCreateInput!, update: MovieUpdateInput!): Movie!
-  upsertBook(where: BookWhereUniqueInput!, create: BookCreateInput!, update: BookUpdateInput!): Book!
-  upsertGame(where: GameWhereUniqueInput!, create: GameCreateInput!, update: GameUpdateInput!): Game!
   upsertCartItem(where: CartItemWhereUniqueInput!, create: CartItemCreateInput!, update: CartItemUpdateInput!): CartItem!
+  upsertToWatchItem(where: ToWatchItemWhereUniqueInput!, create: ToWatchItemCreateInput!, update: ToWatchItemUpdateInput!): ToWatchItem!
+  upsertSeenItItem(where: SeenItItemWhereUniqueInput!, create: SeenItItemCreateInput!, update: SeenItItemUpdateInput!): SeenItItem!
+  upsertToReadItem(where: ToReadItemWhereUniqueInput!, create: ToReadItemCreateInput!, update: ToReadItemUpdateInput!): ToReadItem!
+  upsertReadItItem(where: ReadItItemWhereUniqueInput!, create: ReadItItemCreateInput!, update: ReadItItemUpdateInput!): ReadItItem!
+  upsertToPlayItem(where: ToPlayItemWhereUniqueInput!, create: ToPlayItemCreateInput!, update: ToPlayItemUpdateInput!): ToPlayItem!
+  upsertPlayedItItem(where: PlayedItItemWhereUniqueInput!, create: PlayedItItemCreateInput!, update: PlayedItItemUpdateInput!): PlayedItItem!
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
+  upsertGame(where: GameWhereUniqueInput!, create: GameCreateInput!, update: GameUpdateInput!): Game!
   upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
+  upsertMovie(where: MovieWhereUniqueInput!, create: MovieCreateInput!, update: MovieUpdateInput!): Movie!
   upsertOrderItem(where: OrderItemWhereUniqueInput!, create: OrderItemCreateInput!, update: OrderItemUpdateInput!): OrderItem!
+  upsertBook(where: BookWhereUniqueInput!, create: BookCreateInput!, update: BookUpdateInput!): Book!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyMovies(data: MovieUpdateManyMutationInput!, where: MovieWhereInput): BatchPayload!
-  updateManyBooks(data: BookUpdateManyMutationInput!, where: BookWhereInput): BatchPayload!
-  updateManyGames(data: GameUpdateManyMutationInput!, where: GameWhereInput): BatchPayload!
   updateManyCartItems(data: CartItemUpdateManyMutationInput!, where: CartItemWhereInput): BatchPayload!
   updateManyOrders(data: OrderUpdateManyMutationInput!, where: OrderWhereInput): BatchPayload!
+  updateManyGames(data: GameUpdateManyMutationInput!, where: GameWhereInput): BatchPayload!
   updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
+  updateManyMovies(data: MovieUpdateManyMutationInput!, where: MovieWhereInput): BatchPayload!
   updateManyOrderItems(data: OrderItemUpdateManyMutationInput!, where: OrderItemWhereInput): BatchPayload!
+  updateManyBooks(data: BookUpdateManyMutationInput!, where: BookWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  deleteManyMovies(where: MovieWhereInput): BatchPayload!
-  deleteManyBooks(where: BookWhereInput): BatchPayload!
-  deleteManyGames(where: GameWhereInput): BatchPayload!
   deleteManyCartItems(where: CartItemWhereInput): BatchPayload!
+  deleteManyToWatchItems(where: ToWatchItemWhereInput): BatchPayload!
+  deleteManySeenItItems(where: SeenItItemWhereInput): BatchPayload!
+  deleteManyToReadItems(where: ToReadItemWhereInput): BatchPayload!
+  deleteManyReadItItems(where: ReadItItemWhereInput): BatchPayload!
+  deleteManyToPlayItems(where: ToPlayItemWhereInput): BatchPayload!
+  deleteManyPlayedItItems(where: PlayedItItemWhereInput): BatchPayload!
   deleteManyOrders(where: OrderWhereInput): BatchPayload!
+  deleteManyGames(where: GameWhereInput): BatchPayload!
   deleteManyItems(where: ItemWhereInput): BatchPayload!
+  deleteManyMovies(where: MovieWhereInput): BatchPayload!
   deleteManyOrderItems(where: OrderItemWhereInput): BatchPayload!
+  deleteManyBooks(where: BookWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
@@ -2535,6 +2818,7 @@ interface Node {
 }
 
 enum NumPlayers {
+  UNSELECTED
   SINGLE_PLAYER_OFFLINE
   MULTI_PLAYER_OFFLINE
   SINGLE_PLAYER_ONLINE
@@ -3532,30 +3816,276 @@ enum Permission {
   PERMISSIONUPDATE
 }
 
+type PlayedItItem implements Node {
+  id: ID!
+  game: Game
+  user: User!
+}
+
+"""A connection to a list of items."""
+type PlayedItItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PlayedItItemEdge]!
+  aggregate: AggregatePlayedItItem!
+}
+
+input PlayedItItemCreateInput {
+  id: ID
+  game: GameCreateOneInput
+  user: UserCreateOneWithoutPlayedItInput!
+}
+
+input PlayedItItemCreateManyWithoutUserInput {
+  create: [PlayedItItemCreateWithoutUserInput!]
+  connect: [PlayedItItemWhereUniqueInput!]
+}
+
+input PlayedItItemCreateWithoutUserInput {
+  id: ID
+  game: GameCreateOneInput
+}
+
+"""An edge in a connection."""
+type PlayedItItemEdge {
+  """The item at the end of the edge."""
+  node: PlayedItItem!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PlayedItItemOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type PlayedItItemPreviousValues {
+  id: ID!
+}
+
+input PlayedItItemScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PlayedItItemScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PlayedItItemScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PlayedItItemScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
+type PlayedItItemSubscriptionPayload {
+  mutation: MutationType!
+  node: PlayedItItem
+  updatedFields: [String!]
+  previousValues: PlayedItItemPreviousValues
+}
+
+input PlayedItItemSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PlayedItItemSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PlayedItItemSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PlayedItItemSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PlayedItItemWhereInput
+}
+
+input PlayedItItemUpdateInput {
+  game: GameUpdateOneInput
+  user: UserUpdateOneRequiredWithoutPlayedItInput
+}
+
+input PlayedItItemUpdateManyWithoutUserInput {
+  create: [PlayedItItemCreateWithoutUserInput!]
+  connect: [PlayedItItemWhereUniqueInput!]
+  set: [PlayedItItemWhereUniqueInput!]
+  disconnect: [PlayedItItemWhereUniqueInput!]
+  delete: [PlayedItItemWhereUniqueInput!]
+  update: [PlayedItItemUpdateWithWhereUniqueWithoutUserInput!]
+  deleteMany: [PlayedItItemScalarWhereInput!]
+  upsert: [PlayedItItemUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input PlayedItItemUpdateWithoutUserDataInput {
+  game: GameUpdateOneInput
+}
+
+input PlayedItItemUpdateWithWhereUniqueWithoutUserInput {
+  where: PlayedItItemWhereUniqueInput!
+  data: PlayedItItemUpdateWithoutUserDataInput!
+}
+
+input PlayedItItemUpsertWithWhereUniqueWithoutUserInput {
+  where: PlayedItItemWhereUniqueInput!
+  update: PlayedItItemUpdateWithoutUserDataInput!
+  create: PlayedItItemCreateWithoutUserInput!
+}
+
+input PlayedItItemWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PlayedItItemWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PlayedItItemWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PlayedItItemWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  game: GameWhereInput
+  user: UserWhereInput
+}
+
+input PlayedItItemWhereUniqueInput {
+  id: ID
+}
+
 type Query {
-  movies(where: MovieWhereInput, orderBy: MovieOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Movie]!
-  books(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Book]!
-  games(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Game]!
   cartItems(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem]!
+  toWatchItems(where: ToWatchItemWhereInput, orderBy: ToWatchItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ToWatchItem]!
+  seenItItems(where: SeenItItemWhereInput, orderBy: SeenItItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SeenItItem]!
+  toReadItems(where: ToReadItemWhereInput, orderBy: ToReadItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ToReadItem]!
+  readItItems(where: ReadItItemWhereInput, orderBy: ReadItItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ReadItItem]!
+  toPlayItems(where: ToPlayItemWhereInput, orderBy: ToPlayItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ToPlayItem]!
+  playedItItems(where: PlayedItItemWhereInput, orderBy: PlayedItItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PlayedItItem]!
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
+  games(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Game]!
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
+  movies(where: MovieWhereInput, orderBy: MovieOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Movie]!
   orderItems(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderItem]!
+  books(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Book]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  movie(where: MovieWhereUniqueInput!): Movie
-  book(where: BookWhereUniqueInput!): Book
-  game(where: GameWhereUniqueInput!): Game
   cartItem(where: CartItemWhereUniqueInput!): CartItem
+  toWatchItem(where: ToWatchItemWhereUniqueInput!): ToWatchItem
+  seenItItem(where: SeenItItemWhereUniqueInput!): SeenItItem
+  toReadItem(where: ToReadItemWhereUniqueInput!): ToReadItem
+  readItItem(where: ReadItItemWhereUniqueInput!): ReadItItem
+  toPlayItem(where: ToPlayItemWhereUniqueInput!): ToPlayItem
+  playedItItem(where: PlayedItItemWhereUniqueInput!): PlayedItItem
   order(where: OrderWhereUniqueInput!): Order
+  game(where: GameWhereUniqueInput!): Game
   item(where: ItemWhereUniqueInput!): Item
+  movie(where: MovieWhereUniqueInput!): Movie
   orderItem(where: OrderItemWhereUniqueInput!): OrderItem
+  book(where: BookWhereUniqueInput!): Book
   user(where: UserWhereUniqueInput!): User
-  moviesConnection(where: MovieWhereInput, orderBy: MovieOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MovieConnection!
-  booksConnection(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookConnection!
-  gamesConnection(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GameConnection!
   cartItemsConnection(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartItemConnection!
+  toWatchItemsConnection(where: ToWatchItemWhereInput, orderBy: ToWatchItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ToWatchItemConnection!
+  seenItItemsConnection(where: SeenItItemWhereInput, orderBy: SeenItItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SeenItItemConnection!
+  toReadItemsConnection(where: ToReadItemWhereInput, orderBy: ToReadItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ToReadItemConnection!
+  readItItemsConnection(where: ReadItItemWhereInput, orderBy: ReadItItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ReadItItemConnection!
+  toPlayItemsConnection(where: ToPlayItemWhereInput, orderBy: ToPlayItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ToPlayItemConnection!
+  playedItItemsConnection(where: PlayedItItemWhereInput, orderBy: PlayedItItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlayedItItemConnection!
   ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
+  gamesConnection(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GameConnection!
   itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
+  moviesConnection(where: MovieWhereInput, orderBy: MovieOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MovieConnection!
   orderItemsConnection(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderItemConnection!
+  booksConnection(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
@@ -3565,15 +4095,1161 @@ type Query {
   ): Node
 }
 
+type ReadItItem implements Node {
+  id: ID!
+  book: Book
+  user: User!
+}
+
+"""A connection to a list of items."""
+type ReadItItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ReadItItemEdge]!
+  aggregate: AggregateReadItItem!
+}
+
+input ReadItItemCreateInput {
+  id: ID
+  book: BookCreateOneInput
+  user: UserCreateOneWithoutReadItInput!
+}
+
+input ReadItItemCreateManyWithoutUserInput {
+  create: [ReadItItemCreateWithoutUserInput!]
+  connect: [ReadItItemWhereUniqueInput!]
+}
+
+input ReadItItemCreateWithoutUserInput {
+  id: ID
+  book: BookCreateOneInput
+}
+
+"""An edge in a connection."""
+type ReadItItemEdge {
+  """The item at the end of the edge."""
+  node: ReadItItem!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ReadItItemOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type ReadItItemPreviousValues {
+  id: ID!
+}
+
+input ReadItItemScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ReadItItemScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ReadItItemScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ReadItItemScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
+type ReadItItemSubscriptionPayload {
+  mutation: MutationType!
+  node: ReadItItem
+  updatedFields: [String!]
+  previousValues: ReadItItemPreviousValues
+}
+
+input ReadItItemSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ReadItItemSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ReadItItemSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ReadItItemSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ReadItItemWhereInput
+}
+
+input ReadItItemUpdateInput {
+  book: BookUpdateOneInput
+  user: UserUpdateOneRequiredWithoutReadItInput
+}
+
+input ReadItItemUpdateManyWithoutUserInput {
+  create: [ReadItItemCreateWithoutUserInput!]
+  connect: [ReadItItemWhereUniqueInput!]
+  set: [ReadItItemWhereUniqueInput!]
+  disconnect: [ReadItItemWhereUniqueInput!]
+  delete: [ReadItItemWhereUniqueInput!]
+  update: [ReadItItemUpdateWithWhereUniqueWithoutUserInput!]
+  deleteMany: [ReadItItemScalarWhereInput!]
+  upsert: [ReadItItemUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input ReadItItemUpdateWithoutUserDataInput {
+  book: BookUpdateOneInput
+}
+
+input ReadItItemUpdateWithWhereUniqueWithoutUserInput {
+  where: ReadItItemWhereUniqueInput!
+  data: ReadItItemUpdateWithoutUserDataInput!
+}
+
+input ReadItItemUpsertWithWhereUniqueWithoutUserInput {
+  where: ReadItItemWhereUniqueInput!
+  update: ReadItItemUpdateWithoutUserDataInput!
+  create: ReadItItemCreateWithoutUserInput!
+}
+
+input ReadItItemWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ReadItItemWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ReadItItemWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ReadItItemWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  book: BookWhereInput
+  user: UserWhereInput
+}
+
+input ReadItItemWhereUniqueInput {
+  id: ID
+}
+
+type SeenItItem implements Node {
+  id: ID!
+  movie: Movie
+  user: User!
+}
+
+"""A connection to a list of items."""
+type SeenItItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SeenItItemEdge]!
+  aggregate: AggregateSeenItItem!
+}
+
+input SeenItItemCreateInput {
+  id: ID
+  movie: MovieCreateOneInput
+  user: UserCreateOneWithoutSeenItInput!
+}
+
+input SeenItItemCreateManyWithoutUserInput {
+  create: [SeenItItemCreateWithoutUserInput!]
+  connect: [SeenItItemWhereUniqueInput!]
+}
+
+input SeenItItemCreateWithoutUserInput {
+  id: ID
+  movie: MovieCreateOneInput
+}
+
+"""An edge in a connection."""
+type SeenItItemEdge {
+  """The item at the end of the edge."""
+  node: SeenItItem!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SeenItItemOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type SeenItItemPreviousValues {
+  id: ID!
+}
+
+input SeenItItemScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SeenItItemScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SeenItItemScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SeenItItemScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
+type SeenItItemSubscriptionPayload {
+  mutation: MutationType!
+  node: SeenItItem
+  updatedFields: [String!]
+  previousValues: SeenItItemPreviousValues
+}
+
+input SeenItItemSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SeenItItemSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SeenItItemSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SeenItItemSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SeenItItemWhereInput
+}
+
+input SeenItItemUpdateInput {
+  movie: MovieUpdateOneInput
+  user: UserUpdateOneRequiredWithoutSeenItInput
+}
+
+input SeenItItemUpdateManyWithoutUserInput {
+  create: [SeenItItemCreateWithoutUserInput!]
+  connect: [SeenItItemWhereUniqueInput!]
+  set: [SeenItItemWhereUniqueInput!]
+  disconnect: [SeenItItemWhereUniqueInput!]
+  delete: [SeenItItemWhereUniqueInput!]
+  update: [SeenItItemUpdateWithWhereUniqueWithoutUserInput!]
+  deleteMany: [SeenItItemScalarWhereInput!]
+  upsert: [SeenItItemUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input SeenItItemUpdateWithoutUserDataInput {
+  movie: MovieUpdateOneInput
+}
+
+input SeenItItemUpdateWithWhereUniqueWithoutUserInput {
+  where: SeenItItemWhereUniqueInput!
+  data: SeenItItemUpdateWithoutUserDataInput!
+}
+
+input SeenItItemUpsertWithWhereUniqueWithoutUserInput {
+  where: SeenItItemWhereUniqueInput!
+  update: SeenItItemUpdateWithoutUserDataInput!
+  create: SeenItItemCreateWithoutUserInput!
+}
+
+input SeenItItemWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SeenItItemWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SeenItItemWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SeenItItemWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  movie: MovieWhereInput
+  user: UserWhereInput
+}
+
+input SeenItItemWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
-  movie(where: MovieSubscriptionWhereInput): MovieSubscriptionPayload
-  book(where: BookSubscriptionWhereInput): BookSubscriptionPayload
-  game(where: GameSubscriptionWhereInput): GameSubscriptionPayload
   cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
+  toWatchItem(where: ToWatchItemSubscriptionWhereInput): ToWatchItemSubscriptionPayload
+  seenItItem(where: SeenItItemSubscriptionWhereInput): SeenItItemSubscriptionPayload
+  toReadItem(where: ToReadItemSubscriptionWhereInput): ToReadItemSubscriptionPayload
+  readItItem(where: ReadItItemSubscriptionWhereInput): ReadItItemSubscriptionPayload
+  toPlayItem(where: ToPlayItemSubscriptionWhereInput): ToPlayItemSubscriptionPayload
+  playedItItem(where: PlayedItItemSubscriptionWhereInput): PlayedItItemSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
+  game(where: GameSubscriptionWhereInput): GameSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
+  movie(where: MovieSubscriptionWhereInput): MovieSubscriptionPayload
   orderItem(where: OrderItemSubscriptionWhereInput): OrderItemSubscriptionPayload
+  book(where: BookSubscriptionWhereInput): BookSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type ToPlayItem implements Node {
+  id: ID!
+  game: Game
+  user: User!
+}
+
+"""A connection to a list of items."""
+type ToPlayItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ToPlayItemEdge]!
+  aggregate: AggregateToPlayItem!
+}
+
+input ToPlayItemCreateInput {
+  id: ID
+  game: GameCreateOneInput
+  user: UserCreateOneWithoutToPlayInput!
+}
+
+input ToPlayItemCreateManyWithoutUserInput {
+  create: [ToPlayItemCreateWithoutUserInput!]
+  connect: [ToPlayItemWhereUniqueInput!]
+}
+
+input ToPlayItemCreateWithoutUserInput {
+  id: ID
+  game: GameCreateOneInput
+}
+
+"""An edge in a connection."""
+type ToPlayItemEdge {
+  """The item at the end of the edge."""
+  node: ToPlayItem!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ToPlayItemOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type ToPlayItemPreviousValues {
+  id: ID!
+}
+
+input ToPlayItemScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ToPlayItemScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ToPlayItemScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ToPlayItemScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
+type ToPlayItemSubscriptionPayload {
+  mutation: MutationType!
+  node: ToPlayItem
+  updatedFields: [String!]
+  previousValues: ToPlayItemPreviousValues
+}
+
+input ToPlayItemSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ToPlayItemSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ToPlayItemSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ToPlayItemSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ToPlayItemWhereInput
+}
+
+input ToPlayItemUpdateInput {
+  game: GameUpdateOneInput
+  user: UserUpdateOneRequiredWithoutToPlayInput
+}
+
+input ToPlayItemUpdateManyWithoutUserInput {
+  create: [ToPlayItemCreateWithoutUserInput!]
+  connect: [ToPlayItemWhereUniqueInput!]
+  set: [ToPlayItemWhereUniqueInput!]
+  disconnect: [ToPlayItemWhereUniqueInput!]
+  delete: [ToPlayItemWhereUniqueInput!]
+  update: [ToPlayItemUpdateWithWhereUniqueWithoutUserInput!]
+  deleteMany: [ToPlayItemScalarWhereInput!]
+  upsert: [ToPlayItemUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input ToPlayItemUpdateWithoutUserDataInput {
+  game: GameUpdateOneInput
+}
+
+input ToPlayItemUpdateWithWhereUniqueWithoutUserInput {
+  where: ToPlayItemWhereUniqueInput!
+  data: ToPlayItemUpdateWithoutUserDataInput!
+}
+
+input ToPlayItemUpsertWithWhereUniqueWithoutUserInput {
+  where: ToPlayItemWhereUniqueInput!
+  update: ToPlayItemUpdateWithoutUserDataInput!
+  create: ToPlayItemCreateWithoutUserInput!
+}
+
+input ToPlayItemWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ToPlayItemWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ToPlayItemWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ToPlayItemWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  game: GameWhereInput
+  user: UserWhereInput
+}
+
+input ToPlayItemWhereUniqueInput {
+  id: ID
+}
+
+type ToReadItem implements Node {
+  id: ID!
+  book: Book
+  user: User!
+}
+
+"""A connection to a list of items."""
+type ToReadItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ToReadItemEdge]!
+  aggregate: AggregateToReadItem!
+}
+
+input ToReadItemCreateInput {
+  id: ID
+  book: BookCreateOneInput
+  user: UserCreateOneWithoutToReadInput!
+}
+
+input ToReadItemCreateManyWithoutUserInput {
+  create: [ToReadItemCreateWithoutUserInput!]
+  connect: [ToReadItemWhereUniqueInput!]
+}
+
+input ToReadItemCreateWithoutUserInput {
+  id: ID
+  book: BookCreateOneInput
+}
+
+"""An edge in a connection."""
+type ToReadItemEdge {
+  """The item at the end of the edge."""
+  node: ToReadItem!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ToReadItemOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type ToReadItemPreviousValues {
+  id: ID!
+}
+
+input ToReadItemScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ToReadItemScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ToReadItemScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ToReadItemScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
+type ToReadItemSubscriptionPayload {
+  mutation: MutationType!
+  node: ToReadItem
+  updatedFields: [String!]
+  previousValues: ToReadItemPreviousValues
+}
+
+input ToReadItemSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ToReadItemSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ToReadItemSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ToReadItemSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ToReadItemWhereInput
+}
+
+input ToReadItemUpdateInput {
+  book: BookUpdateOneInput
+  user: UserUpdateOneRequiredWithoutToReadInput
+}
+
+input ToReadItemUpdateManyWithoutUserInput {
+  create: [ToReadItemCreateWithoutUserInput!]
+  connect: [ToReadItemWhereUniqueInput!]
+  set: [ToReadItemWhereUniqueInput!]
+  disconnect: [ToReadItemWhereUniqueInput!]
+  delete: [ToReadItemWhereUniqueInput!]
+  update: [ToReadItemUpdateWithWhereUniqueWithoutUserInput!]
+  deleteMany: [ToReadItemScalarWhereInput!]
+  upsert: [ToReadItemUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input ToReadItemUpdateWithoutUserDataInput {
+  book: BookUpdateOneInput
+}
+
+input ToReadItemUpdateWithWhereUniqueWithoutUserInput {
+  where: ToReadItemWhereUniqueInput!
+  data: ToReadItemUpdateWithoutUserDataInput!
+}
+
+input ToReadItemUpsertWithWhereUniqueWithoutUserInput {
+  where: ToReadItemWhereUniqueInput!
+  update: ToReadItemUpdateWithoutUserDataInput!
+  create: ToReadItemCreateWithoutUserInput!
+}
+
+input ToReadItemWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ToReadItemWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ToReadItemWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ToReadItemWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  book: BookWhereInput
+  user: UserWhereInput
+}
+
+input ToReadItemWhereUniqueInput {
+  id: ID
+}
+
+type ToWatchItem implements Node {
+  id: ID!
+  movie: Movie
+  user: User!
+}
+
+"""A connection to a list of items."""
+type ToWatchItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ToWatchItemEdge]!
+  aggregate: AggregateToWatchItem!
+}
+
+input ToWatchItemCreateInput {
+  id: ID
+  movie: MovieCreateOneInput
+  user: UserCreateOneWithoutToWatchInput!
+}
+
+input ToWatchItemCreateManyWithoutUserInput {
+  create: [ToWatchItemCreateWithoutUserInput!]
+  connect: [ToWatchItemWhereUniqueInput!]
+}
+
+input ToWatchItemCreateWithoutUserInput {
+  id: ID
+  movie: MovieCreateOneInput
+}
+
+"""An edge in a connection."""
+type ToWatchItemEdge {
+  """The item at the end of the edge."""
+  node: ToWatchItem!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ToWatchItemOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type ToWatchItemPreviousValues {
+  id: ID!
+}
+
+input ToWatchItemScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ToWatchItemScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ToWatchItemScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ToWatchItemScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
+type ToWatchItemSubscriptionPayload {
+  mutation: MutationType!
+  node: ToWatchItem
+  updatedFields: [String!]
+  previousValues: ToWatchItemPreviousValues
+}
+
+input ToWatchItemSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ToWatchItemSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ToWatchItemSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ToWatchItemSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ToWatchItemWhereInput
+}
+
+input ToWatchItemUpdateInput {
+  movie: MovieUpdateOneInput
+  user: UserUpdateOneRequiredWithoutToWatchInput
+}
+
+input ToWatchItemUpdateManyWithoutUserInput {
+  create: [ToWatchItemCreateWithoutUserInput!]
+  connect: [ToWatchItemWhereUniqueInput!]
+  set: [ToWatchItemWhereUniqueInput!]
+  disconnect: [ToWatchItemWhereUniqueInput!]
+  delete: [ToWatchItemWhereUniqueInput!]
+  update: [ToWatchItemUpdateWithWhereUniqueWithoutUserInput!]
+  deleteMany: [ToWatchItemScalarWhereInput!]
+  upsert: [ToWatchItemUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input ToWatchItemUpdateWithoutUserDataInput {
+  movie: MovieUpdateOneInput
+}
+
+input ToWatchItemUpdateWithWhereUniqueWithoutUserInput {
+  where: ToWatchItemWhereUniqueInput!
+  data: ToWatchItemUpdateWithoutUserDataInput!
+}
+
+input ToWatchItemUpsertWithWhereUniqueWithoutUserInput {
+  where: ToWatchItemWhereUniqueInput!
+  update: ToWatchItemUpdateWithoutUserDataInput!
+  create: ToWatchItemCreateWithoutUserInput!
+}
+
+input ToWatchItemWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ToWatchItemWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ToWatchItemWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ToWatchItemWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  movie: MovieWhereInput
+  user: UserWhereInput
+}
+
+input ToWatchItemWhereUniqueInput {
+  id: ID
 }
 
 type User implements Node {
@@ -3585,6 +5261,12 @@ type User implements Node {
   resetTokenExpiry: Float
   permissions: [Permission!]!
   cart(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem!]
+  toWatch(where: ToWatchItemWhereInput, orderBy: ToWatchItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ToWatchItem!]
+  seenIt(where: SeenItItemWhereInput, orderBy: SeenItItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SeenItItem!]
+  toRead(where: ToReadItemWhereInput, orderBy: ToReadItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ToReadItem!]
+  readIt(where: ReadItItemWhereInput, orderBy: ReadItItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ReadItItem!]
+  toPlay(where: ToPlayItemWhereInput, orderBy: ToPlayItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ToPlayItem!]
+  playedIt(where: PlayedItItemWhereInput, orderBy: PlayedItItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PlayedItItem!]
 }
 
 """A connection to a list of items."""
@@ -3606,6 +5288,12 @@ input UserCreateInput {
   resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
   cart: CartItemCreateManyWithoutUserInput
+  toWatch: ToWatchItemCreateManyWithoutUserInput
+  seenIt: SeenItItemCreateManyWithoutUserInput
+  toRead: ToReadItemCreateManyWithoutUserInput
+  readIt: ReadItItemCreateManyWithoutUserInput
+  toPlay: ToPlayItemCreateManyWithoutUserInput
+  playedIt: PlayedItItemCreateManyWithoutUserInput
 }
 
 input UserCreateOneInput {
@@ -3615,6 +5303,36 @@ input UserCreateOneInput {
 
 input UserCreateOneWithoutCartInput {
   create: UserCreateWithoutCartInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutPlayedItInput {
+  create: UserCreateWithoutPlayedItInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutReadItInput {
+  create: UserCreateWithoutReadItInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutSeenItInput {
+  create: UserCreateWithoutSeenItInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutToPlayInput {
+  create: UserCreateWithoutToPlayInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutToReadInput {
+  create: UserCreateWithoutToReadInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutToWatchInput {
+  create: UserCreateWithoutToWatchInput
   connect: UserWhereUniqueInput
 }
 
@@ -3630,6 +5348,108 @@ input UserCreateWithoutCartInput {
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
+  toWatch: ToWatchItemCreateManyWithoutUserInput
+  seenIt: SeenItItemCreateManyWithoutUserInput
+  toRead: ToReadItemCreateManyWithoutUserInput
+  readIt: ReadItItemCreateManyWithoutUserInput
+  toPlay: ToPlayItemCreateManyWithoutUserInput
+  playedIt: PlayedItItemCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutPlayedItInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserCreatepermissionsInput
+  cart: CartItemCreateManyWithoutUserInput
+  toWatch: ToWatchItemCreateManyWithoutUserInput
+  seenIt: SeenItItemCreateManyWithoutUserInput
+  toRead: ToReadItemCreateManyWithoutUserInput
+  readIt: ReadItItemCreateManyWithoutUserInput
+  toPlay: ToPlayItemCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutReadItInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserCreatepermissionsInput
+  cart: CartItemCreateManyWithoutUserInput
+  toWatch: ToWatchItemCreateManyWithoutUserInput
+  seenIt: SeenItItemCreateManyWithoutUserInput
+  toRead: ToReadItemCreateManyWithoutUserInput
+  toPlay: ToPlayItemCreateManyWithoutUserInput
+  playedIt: PlayedItItemCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutSeenItInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserCreatepermissionsInput
+  cart: CartItemCreateManyWithoutUserInput
+  toWatch: ToWatchItemCreateManyWithoutUserInput
+  toRead: ToReadItemCreateManyWithoutUserInput
+  readIt: ReadItItemCreateManyWithoutUserInput
+  toPlay: ToPlayItemCreateManyWithoutUserInput
+  playedIt: PlayedItItemCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutToPlayInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserCreatepermissionsInput
+  cart: CartItemCreateManyWithoutUserInput
+  toWatch: ToWatchItemCreateManyWithoutUserInput
+  seenIt: SeenItItemCreateManyWithoutUserInput
+  toRead: ToReadItemCreateManyWithoutUserInput
+  readIt: ReadItItemCreateManyWithoutUserInput
+  playedIt: PlayedItItemCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutToReadInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserCreatepermissionsInput
+  cart: CartItemCreateManyWithoutUserInput
+  toWatch: ToWatchItemCreateManyWithoutUserInput
+  seenIt: SeenItItemCreateManyWithoutUserInput
+  readIt: ReadItItemCreateManyWithoutUserInput
+  toPlay: ToPlayItemCreateManyWithoutUserInput
+  playedIt: PlayedItItemCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutToWatchInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserCreatepermissionsInput
+  cart: CartItemCreateManyWithoutUserInput
+  seenIt: SeenItItemCreateManyWithoutUserInput
+  toRead: ToReadItemCreateManyWithoutUserInput
+  readIt: ReadItItemCreateManyWithoutUserInput
+  toPlay: ToPlayItemCreateManyWithoutUserInput
+  playedIt: PlayedItItemCreateManyWithoutUserInput
 }
 
 """An edge in a connection."""
@@ -3713,6 +5533,12 @@ input UserUpdateDataInput {
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
   cart: CartItemUpdateManyWithoutUserInput
+  toWatch: ToWatchItemUpdateManyWithoutUserInput
+  seenIt: SeenItItemUpdateManyWithoutUserInput
+  toRead: ToReadItemUpdateManyWithoutUserInput
+  readIt: ReadItItemUpdateManyWithoutUserInput
+  toPlay: ToPlayItemUpdateManyWithoutUserInput
+  playedIt: PlayedItItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateInput {
@@ -3723,6 +5549,12 @@ input UserUpdateInput {
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
   cart: CartItemUpdateManyWithoutUserInput
+  toWatch: ToWatchItemUpdateManyWithoutUserInput
+  seenIt: SeenItItemUpdateManyWithoutUserInput
+  toRead: ToReadItemUpdateManyWithoutUserInput
+  readIt: ReadItItemUpdateManyWithoutUserInput
+  toPlay: ToPlayItemUpdateManyWithoutUserInput
+  playedIt: PlayedItItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -3757,6 +5589,48 @@ input UserUpdateOneRequiredWithoutCartInput {
   upsert: UserUpsertWithoutCartInput
 }
 
+input UserUpdateOneRequiredWithoutPlayedItInput {
+  create: UserCreateWithoutPlayedItInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutPlayedItDataInput
+  upsert: UserUpsertWithoutPlayedItInput
+}
+
+input UserUpdateOneRequiredWithoutReadItInput {
+  create: UserCreateWithoutReadItInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutReadItDataInput
+  upsert: UserUpsertWithoutReadItInput
+}
+
+input UserUpdateOneRequiredWithoutSeenItInput {
+  create: UserCreateWithoutSeenItInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutSeenItDataInput
+  upsert: UserUpsertWithoutSeenItInput
+}
+
+input UserUpdateOneRequiredWithoutToPlayInput {
+  create: UserCreateWithoutToPlayInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutToPlayDataInput
+  upsert: UserUpsertWithoutToPlayInput
+}
+
+input UserUpdateOneRequiredWithoutToReadInput {
+  create: UserCreateWithoutToReadInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutToReadDataInput
+  upsert: UserUpsertWithoutToReadInput
+}
+
+input UserUpdateOneRequiredWithoutToWatchInput {
+  create: UserCreateWithoutToWatchInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutToWatchDataInput
+  upsert: UserUpsertWithoutToWatchInput
+}
+
 input UserUpdatepermissionsInput {
   set: [Permission!]
 }
@@ -3768,6 +5642,102 @@ input UserUpdateWithoutCartDataInput {
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
+  toWatch: ToWatchItemUpdateManyWithoutUserInput
+  seenIt: SeenItItemUpdateManyWithoutUserInput
+  toRead: ToReadItemUpdateManyWithoutUserInput
+  readIt: ReadItItemUpdateManyWithoutUserInput
+  toPlay: ToPlayItemUpdateManyWithoutUserInput
+  playedIt: PlayedItItemUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutPlayedItDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserUpdatepermissionsInput
+  cart: CartItemUpdateManyWithoutUserInput
+  toWatch: ToWatchItemUpdateManyWithoutUserInput
+  seenIt: SeenItItemUpdateManyWithoutUserInput
+  toRead: ToReadItemUpdateManyWithoutUserInput
+  readIt: ReadItItemUpdateManyWithoutUserInput
+  toPlay: ToPlayItemUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutReadItDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserUpdatepermissionsInput
+  cart: CartItemUpdateManyWithoutUserInput
+  toWatch: ToWatchItemUpdateManyWithoutUserInput
+  seenIt: SeenItItemUpdateManyWithoutUserInput
+  toRead: ToReadItemUpdateManyWithoutUserInput
+  toPlay: ToPlayItemUpdateManyWithoutUserInput
+  playedIt: PlayedItItemUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutSeenItDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserUpdatepermissionsInput
+  cart: CartItemUpdateManyWithoutUserInput
+  toWatch: ToWatchItemUpdateManyWithoutUserInput
+  toRead: ToReadItemUpdateManyWithoutUserInput
+  readIt: ReadItItemUpdateManyWithoutUserInput
+  toPlay: ToPlayItemUpdateManyWithoutUserInput
+  playedIt: PlayedItItemUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutToPlayDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserUpdatepermissionsInput
+  cart: CartItemUpdateManyWithoutUserInput
+  toWatch: ToWatchItemUpdateManyWithoutUserInput
+  seenIt: SeenItItemUpdateManyWithoutUserInput
+  toRead: ToReadItemUpdateManyWithoutUserInput
+  readIt: ReadItItemUpdateManyWithoutUserInput
+  playedIt: PlayedItItemUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutToReadDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserUpdatepermissionsInput
+  cart: CartItemUpdateManyWithoutUserInput
+  toWatch: ToWatchItemUpdateManyWithoutUserInput
+  seenIt: SeenItItemUpdateManyWithoutUserInput
+  readIt: ReadItItemUpdateManyWithoutUserInput
+  toPlay: ToPlayItemUpdateManyWithoutUserInput
+  playedIt: PlayedItItemUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutToWatchDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserUpdatepermissionsInput
+  cart: CartItemUpdateManyWithoutUserInput
+  seenIt: SeenItItemUpdateManyWithoutUserInput
+  toRead: ToReadItemUpdateManyWithoutUserInput
+  readIt: ReadItItemUpdateManyWithoutUserInput
+  toPlay: ToPlayItemUpdateManyWithoutUserInput
+  playedIt: PlayedItItemUpdateManyWithoutUserInput
 }
 
 input UserUpsertNestedInput {
@@ -3778,6 +5748,36 @@ input UserUpsertNestedInput {
 input UserUpsertWithoutCartInput {
   update: UserUpdateWithoutCartDataInput!
   create: UserCreateWithoutCartInput!
+}
+
+input UserUpsertWithoutPlayedItInput {
+  update: UserUpdateWithoutPlayedItDataInput!
+  create: UserCreateWithoutPlayedItInput!
+}
+
+input UserUpsertWithoutReadItInput {
+  update: UserUpdateWithoutReadItDataInput!
+  create: UserCreateWithoutReadItInput!
+}
+
+input UserUpsertWithoutSeenItInput {
+  update: UserUpdateWithoutSeenItDataInput!
+  create: UserCreateWithoutSeenItInput!
+}
+
+input UserUpsertWithoutToPlayInput {
+  update: UserUpdateWithoutToPlayDataInput!
+  create: UserCreateWithoutToPlayInput!
+}
+
+input UserUpsertWithoutToReadInput {
+  update: UserUpdateWithoutToReadDataInput!
+  create: UserCreateWithoutToReadInput!
+}
+
+input UserUpsertWithoutToWatchInput {
+  update: UserUpdateWithoutToWatchDataInput!
+  create: UserCreateWithoutToWatchInput!
 }
 
 input UserWhereInput {
@@ -4014,6 +6014,24 @@ input UserWhereInput {
   cart_every: CartItemWhereInput
   cart_some: CartItemWhereInput
   cart_none: CartItemWhereInput
+  toWatch_every: ToWatchItemWhereInput
+  toWatch_some: ToWatchItemWhereInput
+  toWatch_none: ToWatchItemWhereInput
+  seenIt_every: SeenItItemWhereInput
+  seenIt_some: SeenItItemWhereInput
+  seenIt_none: SeenItItemWhereInput
+  toRead_every: ToReadItemWhereInput
+  toRead_some: ToReadItemWhereInput
+  toRead_none: ToReadItemWhereInput
+  readIt_every: ReadItItemWhereInput
+  readIt_some: ReadItItemWhereInput
+  readIt_none: ReadItItemWhereInput
+  toPlay_every: ToPlayItemWhereInput
+  toPlay_some: ToPlayItemWhereInput
+  toPlay_none: ToPlayItemWhereInput
+  playedIt_every: PlayedItItemWhereInput
+  playedIt_some: PlayedItItemWhereInput
+  playedIt_none: PlayedItItemWhereInput
 }
 
 input UserWhereUniqueInput {

@@ -18,15 +18,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! graphql-tag */ "./node_modules/graphql-tag/src/index.js");
 /* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(graphql_tag__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react_adopt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-adopt */ "./node_modules/react-adopt/dist/index.m.js");
-/* harmony import */ var _components_User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/User */ "./components/User.js");
-/* harmony import */ var _styles_CartStyles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./styles/CartStyles */ "./components/styles/CartStyles.js");
-/* harmony import */ var _styles_Supreme__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./styles/Supreme */ "./components/styles/Supreme.js");
-/* harmony import */ var _styles_CloseButton__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./styles/CloseButton */ "./components/styles/CloseButton.js");
-/* harmony import */ var _styles_SickButton__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./styles/SickButton */ "./components/styles/SickButton.js");
-/* harmony import */ var _CartItem__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./CartItem */ "./components/CartItem.js");
-/* harmony import */ var _lib_calcTotalPrice__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../lib/calcTotalPrice */ "./lib/calcTotalPrice.js");
-/* harmony import */ var _lib_formatMoney__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../lib/formatMoney */ "./lib/formatMoney.js");
-/* harmony import */ var _TakeMyMoney__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./TakeMyMoney */ "./components/TakeMyMoney.js");
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! next/link */ "./node_modules/next/link.js");
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _components_User__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/User */ "./components/User.js");
+/* harmony import */ var _styles_CartStyles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./styles/CartStyles */ "./components/styles/CartStyles.js");
+/* harmony import */ var _styles_Supreme__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./styles/Supreme */ "./components/styles/Supreme.js");
+/* harmony import */ var _styles_CloseButton__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./styles/CloseButton */ "./components/styles/CloseButton.js");
+/* harmony import */ var _styles_SickButton__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./styles/SickButton */ "./components/styles/SickButton.js");
+/* harmony import */ var _CartItem__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CartItem */ "./components/CartItem.js");
+/* harmony import */ var _lib_calcTotalPrice__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../lib/calcTotalPrice */ "./lib/calcTotalPrice.js");
+/* harmony import */ var _lib_formatMoney__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../lib/formatMoney */ "./lib/formatMoney.js");
+/* harmony import */ var _TakeMyMoney__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./TakeMyMoney */ "./components/TakeMyMoney.js");
 var _jsxFileName = "C:\\Users\\Peter\\Desktop\\websites\\culture-club\\frontend\\components\\Cart.js";
 
 function _templateObject2() {
@@ -64,6 +66,7 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
+
 var LOCAL_STATE_QUERY = graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templateObject());
 var TOGGLE_CART_MUTATION = graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templateObject2());
 /* eslint-disable */
@@ -71,10 +74,10 @@ var TOGGLE_CART_MUTATION = graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_t
 var Composed = Object(react_adopt__WEBPACK_IMPORTED_MODULE_3__["adopt"])({
   user: function user(_ref) {
     var render = _ref.render;
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_User__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_User__WEBPACK_IMPORTED_MODULE_5__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 28
+        lineNumber: 29
       },
       __self: this
     }, render);
@@ -85,7 +88,7 @@ var Composed = Object(react_adopt__WEBPACK_IMPORTED_MODULE_3__["adopt"])({
       mutation: TOGGLE_CART_MUTATION,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 30
+        lineNumber: 31
       },
       __self: this
     }, render);
@@ -96,7 +99,7 @@ var Composed = Object(react_adopt__WEBPACK_IMPORTED_MODULE_3__["adopt"])({
       query: LOCAL_STATE_QUERY,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 32
+        lineNumber: 33
       },
       __self: this
     }, render);
@@ -108,7 +111,7 @@ var Cart = function Cart() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Composed, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 38
+      lineNumber: 39
     },
     __self: this
   }, function (_ref4) {
@@ -117,125 +120,165 @@ var Cart = function Cart() {
         localState = _ref4.localState;
     var me = user.data.me;
     if (!me) return null;
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles_CartStyles__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles_CartStyles__WEBPACK_IMPORTED_MODULE_6__["default"], {
       open: localState.data.cartOpen,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 44
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
       __source: {
         fileName: _jsxFileName,
         lineNumber: 45
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles_CloseButton__WEBPACK_IMPORTED_MODULE_7__["default"], {
-      onClick: toggleCart,
-      title: "close",
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
       __source: {
         fileName: _jsxFileName,
         lineNumber: 46
       },
       __self: this
-    }, "\xD7"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles_Supreme__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles_CloseButton__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      onClick: toggleCart,
+      title: "close",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 49
+        lineNumber: 47
       },
       __self: this
-    }, me.name, "'s Lists"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    }, "\xD7"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles_Supreme__WEBPACK_IMPORTED_MODULE_7__["default"], {
       __source: {
         fileName: _jsxFileName,
         lineNumber: 50
       },
       __self: this
-    }, "You have ", me.cart.length, " Item", me.cart.length > 1 && "s", " in your cart")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, me.name, "'s Lists"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 55
+        lineNumber: 51
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, "You have ", me.cart.length, " Item", me.cart.length > 1 && "s", " in your cart")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      style: {
+        display: "flex",
+        flexDirection: "column"
+      },
       __source: {
         fileName: _jsxFileName,
         lineNumber: 56
       },
       __self: this
-    }, "movies i've watched"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_4___default.a, {
+      href: "/to-watch",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 57
       },
       __self: this
-    }, "movies to see"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       __source: {
         fileName: _jsxFileName,
         lineNumber: 58
       },
       __self: this
-    }, "books i've red"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 59
-      },
-      __self: this
-    }, "books to read"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, "Movies to see (", me.toWatch.length, ")")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_4___default.a, {
+      href: "/to-play",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 60
       },
       __self: this
-    }, "games i've got/played/beat"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       __source: {
         fileName: _jsxFileName,
         lineNumber: 61
       },
       __self: this
-    }, "games to get/play/beat"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, "Games to play (", me.toPlay.length, ")")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_4___default.a, {
+      href: "/to-read",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 62
+        lineNumber: 63
       },
       __self: this
-    }, "Custom lists")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       __source: {
         fileName: _jsxFileName,
         lineNumber: 64
       },
       __self: this
+    }, "Books to read (", me.toRead.length, ")")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_4___default.a, {
+      href: "/seen-it",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 66
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 67
+      },
+      __self: this
+    }, "Movies i've seen (", me.seenIt.length, ")")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_4___default.a, {
+      href: "/played-it",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 69
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 70
+      },
+      __self: this
+    }, "Games i've played (", me.playedIt.length, ")")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_4___default.a, {
+      href: "/read-it",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 72
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 73
+      },
+      __self: this
+    }, "Books i've read (", me.readIt.length, ")"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 76
+      },
+      __self: this
     }, me.cart.map(function (cartItem) {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CartItem__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CartItem__WEBPACK_IMPORTED_MODULE_10__["default"], {
         key: cartItem.id,
         cartItem: cartItem,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 66
+          lineNumber: 78
         },
         __self: this
       });
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 69
+        lineNumber: 81
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 70
+        lineNumber: 82
       },
       __self: this
-    }, Object(_lib_formatMoney__WEBPACK_IMPORTED_MODULE_11__["default"])(Object(_lib_calcTotalPrice__WEBPACK_IMPORTED_MODULE_10__["default"])(me.cart))), me.cart.length && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TakeMyMoney__WEBPACK_IMPORTED_MODULE_12__["default"], {
+    }, Object(_lib_formatMoney__WEBPACK_IMPORTED_MODULE_12__["default"])(Object(_lib_calcTotalPrice__WEBPACK_IMPORTED_MODULE_11__["default"])(me.cart))), me.cart.length && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TakeMyMoney__WEBPACK_IMPORTED_MODULE_13__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 73
+        lineNumber: 85
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles_SickButton__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_styles_SickButton__WEBPACK_IMPORTED_MODULE_9__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 74
+        lineNumber: 86
       },
       __self: this
     }, "Checkout"))));
@@ -616,16 +659,10 @@ var Header = function Header() {
       lineNumber: 76
     },
     __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Search__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Cart__WEBPACK_IMPORTED_MODULE_6__["default"], {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 77
-    },
-    __self: this
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Cart__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 79
     },
     __self: this
   }));
@@ -750,7 +787,7 @@ var Nav = function Nav() {
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      href: "/items",
+      href: "/movies",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 14
@@ -762,8 +799,8 @@ var Nav = function Nav() {
         lineNumber: 15
       },
       __self: this
-    }, "Shop")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      href: "/movies",
+    }, "Movies")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      href: "/books",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 17
@@ -775,8 +812,8 @@ var Nav = function Nav() {
         lineNumber: 18
       },
       __self: this
-    }, "Movies")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      href: "/books",
+    }, "Books")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      href: "/games",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 20
@@ -788,21 +825,21 @@ var Nav = function Nav() {
         lineNumber: 21
       },
       __self: this
-    }, "Books")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      href: "/games",
+    }, "Games")), me && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      href: "/sell",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 23
+        lineNumber: 25
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 24
+        lineNumber: 26
       },
       __self: this
-    }, "Games")), me && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      href: "/sell",
+    }, "Sell")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      href: "/add-movie",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 28
@@ -814,8 +851,8 @@ var Nav = function Nav() {
         lineNumber: 29
       },
       __self: this
-    }, "Sell")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      href: "/add-movie",
+    }, "Add Movie")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      href: "/add-book",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 31
@@ -827,8 +864,8 @@ var Nav = function Nav() {
         lineNumber: 32
       },
       __self: this
-    }, "Add Movie")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      href: "/add-book",
+    }, "Add Book")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      href: "/add-game",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 34
@@ -840,43 +877,17 @@ var Nav = function Nav() {
         lineNumber: 35
       },
       __self: this
-    }, "Add Book")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      href: "/add-game",
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 37
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 38
-      },
-      __self: this
-    }, "Add Game")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      href: "/me",
+    }, "Add Game")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Signout__WEBPACK_IMPORTED_MODULE_5__["default"], {
       __source: {
         fileName: _jsxFileName,
         lineNumber: 43
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 44
-      },
-      __self: this
-    }, "Account")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Signout__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 46
       },
       __self: this
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_2__["Mutation"], {
       mutation: _Cart__WEBPACK_IMPORTED_MODULE_7__["TOGGLE_CART_MUTATION"],
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 47
+        lineNumber: 44
       },
       __self: this
     }, function (toggleCart) {
@@ -884,16 +895,16 @@ var Nav = function Nav() {
         onClick: toggleCart,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 49
+          lineNumber: 46
         },
         __self: this
-      }, "My Cart", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CartCount__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      }, "My Lists", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CartCount__WEBPACK_IMPORTED_MODULE_6__["default"], {
         count: me.cart.reduce(function (tally, cartItem) {
           return tally + cartItem.quantity;
         }, 0),
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 51
+          lineNumber: 48
         },
         __self: this
       }));
@@ -901,13 +912,13 @@ var Nav = function Nav() {
       href: "/signup",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 63
+        lineNumber: 60
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 64
+        lineNumber: 61
       },
       __self: this
     }, "Sign In")));
@@ -1262,7 +1273,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  query SEARCH_ITEMS_QUERY($searchTerm: String!) {\n    items(\n      where: {\n        OR: [\n          { title_contains: $searchTerm }\n          { description_contains: $searchTerm }\n        ]\n      }\n    ) {\n      id\n      image\n      title\n    }\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  query SEARCH_MOVIES_QUERY($searchTerm: String!) {\n    movies(\n      where: {\n        OR: [\n          { title_contains: $searchTerm }\n          { description_contains: $searchTerm }\n        ]\n      }\n    ) {\n      id\n      image\n      title\n    }\n  }\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -1280,13 +1291,13 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
-var SEARCH_ITEMS_QUERY = graphql_tag__WEBPACK_IMPORTED_MODULE_5___default()(_templateObject());
+var SEARCH_MOVIES_QUERY = graphql_tag__WEBPACK_IMPORTED_MODULE_5___default()(_templateObject());
 
-function routeToItem(item) {
+function routeToMovie(movie) {
   next_router__WEBPACK_IMPORTED_MODULE_3___default.a.push({
-    pathname: "/item",
+    pathname: "/movie",
     query: {
-      id: item.id
+      id: movie.id
     }
   });
 }
@@ -1310,7 +1321,7 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(AutoComplete)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
-      items: [],
+      movies: [],
       loading: false
     });
 
@@ -1335,7 +1346,7 @@ function (_React$Component) {
 
                 _context.next = 5;
                 return client.query({
-                  query: SEARCH_ITEMS_QUERY,
+                  query: SEARCH_MOVIES_QUERY,
                   variables: {
                     searchTerm: e.target.value
                   }
@@ -1345,7 +1356,7 @@ function (_React$Component) {
                 res = _context.sent;
 
                 _this.setState({
-                  items: res.data.items,
+                  movies: res.data.movies,
                   loading: false
                 });
 
@@ -1378,9 +1389,9 @@ function (_React$Component) {
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(downshift__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        onChange: routeToItem,
-        itemToString: function itemToString(item) {
-          return item === null ? "" : item.title;
+        onChange: routeToMovie,
+        itemToString: function itemToString(movie) {
+          return movie === null ? "" : movie.title;
         },
         __source: {
           fileName: _jsxFileName,
@@ -1408,9 +1419,9 @@ function (_React$Component) {
         }, function (client) {
           return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", _extends({}, getInputProps({
             type: "search",
-            placeholder: "search for an item",
+            placeholder: "search for an movie",
             id: "search",
-            className: _this2.state.loading,
+            // className: this.state.loading,
             onChange: function onChange(e) {
               e.persist();
 
@@ -1429,11 +1440,11 @@ function (_React$Component) {
             lineNumber: 86
           },
           __self: this
-        }, _this2.state.items.map(function (item, index) {
+        }, _this2.state.movies.map(function (movie, index) {
           return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_styles_DropDown__WEBPACK_IMPORTED_MODULE_7__["DropDownItem"], _extends({}, getItemProps({
-            item: item
+            item: movie
           }), {
-            key: item.id,
+            key: movie.id,
             highlighted: index === highlightedIndex,
             __source: {
               fileName: _jsxFileName,
@@ -1442,15 +1453,15 @@ function (_React$Component) {
             __self: this
           }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
             width: "50",
-            src: item.image,
-            alt: item.title,
+            src: movie.image,
+            alt: movie.title,
             __source: {
               fileName: _jsxFileName,
               lineNumber: 93
             },
             __self: this
-          }), item.title);
-        }), !_this2.state.items.length && !_this2.state.loading && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_styles_DropDown__WEBPACK_IMPORTED_MODULE_7__["DropDownItem"], {
+          }), movie.title);
+        }), !_this2.state.movies.length && !_this2.state.loading && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_styles_DropDown__WEBPACK_IMPORTED_MODULE_7__["DropDownItem"], {
           __source: {
             fileName: _jsxFileName,
             lineNumber: 98
@@ -1760,7 +1771,7 @@ var _jsxFileName = "C:\\Users\\Peter\\Desktop\\websites\\culture-club\\frontend\
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  query {\n    me {\n      id\n      email\n      name\n      permissions\n      cart {\n        id\n        quantity\n        item {\n          id\n          price\n          image\n          title\n          description\n        }\n      }\n    }\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  query {\n    me {\n      id\n      email\n      name\n      permissions\n      toWatch {\n        id\n        movie {\n          id\n          title\n        }\n      }\n      seenIt {\n        id\n        movie {\n          id\n          title\n        }\n      }\n      toRead {\n        id\n        book {\n          id\n          title\n        }\n      }\n      readIt {\n        id\n        book {\n          id\n          title\n        }\n      }\n      toPlay {\n        id\n        game {\n          id\n          title\n        }\n      }\n      playedIt {\n        id\n        game {\n          id\n          title\n        }\n      }\n      cart {\n        id\n        quantity\n        item {\n          id\n          price\n          image\n          title\n          description\n        }\n      }\n    }\n  }\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -1781,7 +1792,7 @@ var User = function User(props) {
     query: CURRENT_USER_QUERY,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 29
+      lineNumber: 71
     },
     __self: this
   }), function (payload) {
@@ -1867,17 +1878,19 @@ var DropDownItem = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div
 })(["border-bottom:1px solid ", ";background:", ";padding:1rem;transition:all 0.2s;", ";display:flex;align-items:center;border-left:10px solid ", ";img{margin-right:10px;}"], function (props) {
   return props.theme.lightgrey;
 }, function (props) {
-  return props.highlighted ? '#f7f7f7' : 'white';
+  return props.highlighted ? "#f7f7f7" : "white";
 }, function (props) {
-  return props.highlighted ? 'padding-left: 2rem;' : null;
+  return props.highlighted ? "padding-left: 2rem;" : null;
 }, function (props) {
-  return props.highlighted ? props.theme.lightgrey : 'white';
+  return props.highlighted ? props.theme.lightgrey : "white";
 });
 var glow = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["keyframes"])(["from{box-shadow:0 0 0px yellow;}to{box-shadow:0 0 10px 1px yellow;}"]);
 var SearchStyles = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div.withConfig({
   displayName: "DropDown__SearchStyles",
   componentId: "n5d97g-2"
-})(["position:relative;input{width:100%;padding:10px;border:0;font-size:2rem;&.loading{animation:", " 0.5s ease-in-out infinite alternate;}}"], glow);
+})(["position:relative;border:1px solid ", ";border-radius:2px;input{width:100%;padding:10px;border:0;font-size:2rem;&.loading{animation:", " 0.5s ease-in-out infinite alternate;}}"], function (props) {
+  return props.theme.lightgrey;
+}, glow);
 
 
 /***/ }),
@@ -1949,7 +1962,7 @@ var Supreme = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h3.withC
 /*!*******************!*\
   !*** ./config.js ***!
   \*******************/
-/*! exports provided: endpoint, prodEndpoint, perPage, BookGenres, MovieGenres, GameGenres */
+/*! exports provided: endpoint, prodEndpoint, perPage, BookGenres, GameGenres, MovieGenres, GamePlatforms */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1958,30 +1971,209 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "prodEndpoint", function() { return prodEndpoint; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "perPage", function() { return perPage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BookGenres", function() { return BookGenres; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MovieGenres", function() { return MovieGenres; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GameGenres", function() { return GameGenres; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MovieGenres", function() { return MovieGenres; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GamePlatforms", function() { return GamePlatforms; });
 // This is client side config only - don't put anything in here that shouldn't be public!
 var endpoint = "http://localhost:4444";
 var prodEndpoint = "https://culture-club-yoga-prod.herokuapp.com/";
 var perPage = 16;
 var BookGenres = [{
-  value: "fantasy",
+  value: "UNSELECTED",
+  title: "Select a genre"
+}, {
+  value: "FANTASY",
   title: "Fantasy"
 }, {
-  value: "sci-Fi",
+  value: "SCI_FI",
   title: "Sci-Fi"
 }, {
-  value: "mystery",
+  value: "CLASSICS",
+  title: "Classics"
+}, {
+  value: "HORROR",
+  title: "Horror"
+}, {
+  value: "MYSTERY",
   title: "Mystery"
 }, {
-  value: "philosophy",
+  value: "COMIC",
+  title: "Comics"
+}, {
+  value: "PHILOSOPHY",
   title: "Philosophy"
 }, {
-  value: "history",
+  value: "HISTORY",
   title: "History"
+}, {
+  value: "MYTHOLOGY",
+  title: "Mythology"
+}, {
+  value: "BUSINESS",
+  title: "Business"
+}, {
+  value: "ECONOMICS",
+  title: "Economics"
+}, {
+  value: "SCIENCE",
+  title: "Science"
+}, {
+  value: "ROMANCE",
+  title: "Romance"
+}, {
+  value: "WESTERN",
+  title: "Western"
+}, {
+  value: "CHILDRENS",
+  title: "Children's"
+}, {
+  value: "BIOGRAPHY",
+  title: "Biography"
+}, {
+  value: "NEW_AGE",
+  title: "New Age"
+}, {
+  value: "SELF_HELP",
+  title: "Self Help"
 }];
-var MovieGenres = [];
-var GameGenres = [];
+var GameGenres = [{
+  value: "UNSELECTED",
+  title: "Select a genre"
+}, {
+  value: "RPG",
+  title: "Role Playing Game (RPG)"
+}, {
+  value: "ACTION",
+  title: "Anime"
+}, {
+  value: "FIGHTING",
+  title: "Fighting"
+}, {
+  value: "ADVENTURE",
+  title: "Adventure"
+}, {
+  value: "SIMULATION",
+  title: "Simulation"
+}, {
+  value: "SCI_FI",
+  title: "Sci-Fi"
+}, {
+  value: "SPORTS",
+  title: "Sports"
+}, {
+  value: "CARD_OR_BOARD",
+  title: "Card/Board Game"
+}, {
+  value: "PLATFORM",
+  title: "Platform"
+}, {
+  value: "STEALTH",
+  title: "Stealth"
+}, {
+  value: "SURVIVAL",
+  title: "Survival"
+}, {
+  value: "MMORPG",
+  title: "MMORPG"
+}, {
+  value: "SHOOTER",
+  title: "Shooter"
+}, {
+  value: "STRATEGY",
+  title: "Strategy"
+}, {
+  value: "VR",
+  title: "Virtual Reality"
+}];
+var MovieGenres = [{
+  value: "UNSELECTED",
+  title: "Select a genre"
+}, {
+  value: "ACTION",
+  title: "Action"
+}, {
+  value: "ANIME",
+  title: "Anime"
+}, {
+  value: "CLASSIC",
+  title: "Classic"
+}, {
+  value: "COMEDY",
+  title: "Comedy"
+}, {
+  value: "DOCUMENTARY",
+  title: "Documentary"
+}, {
+  value: "DRAMA",
+  title: "Drama"
+}, {
+  value: "HISTORY",
+  title: "History"
+}, {
+  value: "HORROR",
+  title: "Horror"
+}, {
+  value: "INDEPENDENT",
+  title: "Independent"
+}, {
+  value: "SCI_FI",
+  title: "Sci-Fi"
+}, {
+  value: "FANTASY",
+  title: "Fantasy"
+}, {
+  value: "THRILLER",
+  title: "Thriller"
+}, {
+  value: "INTERNATIONAL",
+  title: "International"
+}, {
+  value: "SPORTS",
+  title: "Sports"
+}];
+var GamePlatforms = [{
+  value: "UNSELECTED",
+  title: "Select a platform"
+}, {
+  value: "PC",
+  title: "PC"
+}, {
+  value: "SNES",
+  title: "SNES"
+}, {
+  value: "N64",
+  title: "Nintendo 64"
+}, {
+  value: "DREAMCAST",
+  title: "Dreamcast"
+}, {
+  value: "GAMECUBE",
+  title: "Gamecube"
+}, {
+  value: "WII",
+  title: "Wii"
+}, {
+  value: "XBOX",
+  title: "Xbox"
+}, {
+  value: "XBOX_360",
+  title: "Xbox 360"
+}, {
+  value: "XBOX_ONE",
+  title: "Xbox One"
+}, {
+  value: "PSX",
+  title: "Playstation"
+}, {
+  value: "PS2",
+  title: "Playstation 2"
+}, {
+  value: "PS3",
+  title: "Playstation 3"
+}, {
+  value: "PS4",
+  title: "Playstation 4"
+}];
 
 /***/ }),
 
