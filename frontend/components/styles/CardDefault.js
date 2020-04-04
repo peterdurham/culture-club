@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
 const CardDefaultStyles = styled.div`
-  height: 355px;
-  width: 190px;
-  margin: 48px 4px;
+  height: 352px;
+  width: 184px;
+  margin: 20px 8px;
+  position: relative;
   img {
     width: 100%;
     height: 275px;
@@ -13,15 +14,16 @@ const CardDefaultStyles = styled.div`
   img:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.67);
   }
-  .title {
-    font-size: 1.6rem;
-    line-height: 2.4rem;
+  .cardDefaultTitle {
+    font-size: 1.7rem;
+    line-height: 2.8rem;
+    max-height: 2.8rem;
+    overflow: hidden;
     font-weight: 700;
-    max-width: 15.6rem;
     text-align: left;
     cursor: pointer;
   }
-  .title:hover {
+  .cardDefaultTitle:hover {
     text-decoration: underline;
   }
   .buttons {
@@ -31,42 +33,59 @@ const CardDefaultStyles = styled.div`
   .buttons {
     cursor: pointer;
   }
-  .details {
-    margin: 0.4rem 0;
-    font-size: 1.4rem;
-    line-height: 2.6rem;
-  }
-  .details span {
-    cursor: pointer;
-  }
+
   .details span:hover {
     text-decoration: underline;
   }
+  .cardDefaultDetails {
+    margin-top: -6px;
+  }
   .cardDefaultGenres {
     text-align: left;
+    font-size: 1.3rem;
+    line-height: 2.1rem;
+    max-height: 2.1rem;
+    overflow: hidden;
+  }
+  .cardDefaultGenres span {
   }
   .flex-apart {
     display: flex;
     justify-content: space-between;
   }
-  .list-buttons {
+  .cardDefaultYear {
+    font-size: 1.3rem;
+    line-height: 2.1rem;
+    align-self: flex-start;
+  }
+  .cardDefaultListButtons {
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
   }
-  .list-buttons button {
-    border-radius: 4px;
+  .cardDefaultListButtons button {
     width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    line-height: 24px;
-    border: 1px solid rgb(0, 0, 0, 0.1);
     transition: all 0.3s;
   }
-  .list-buttons button:hover {
+  .cardDefaultListButtons button:not(:last-child) {
+    margin-right: 8px;
+  }
+  .cardDefaultButtons {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
+  .cardDefaultButtons button:not(:first-child) {
+    margin-top: 4px;
+  }
+
+  /* .list-buttons button:hover {
     border: 1px solid rgb(0, 0, 0, 0.25);
     background: rgb(0, 0, 0, 0.1);
-  }
+  } */
   svg {
     font-size: 1.72rem;
     margin-left: 6px;

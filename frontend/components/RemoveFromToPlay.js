@@ -19,12 +19,16 @@ class RemoveFromToPlay extends React.Component {
       <Mutation
         mutation={REMOVE_FROM_TO_PLAY_MUTATION}
         variables={{
-          id
+          id,
         }}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
         {(removeFromToPlay, { error, loading }) => (
-          <button onClick={removeFromToPlay} disabled={loading}>
+          <button
+            onClick={removeFromToPlay}
+            disabled={loading}
+            className="button upcoming"
+          >
             To Play
             {/* Remov{loading ? "ing" : "e"}  */}
             <IoMdClose />

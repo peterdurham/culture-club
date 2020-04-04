@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Router from "next/router";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import Form from "./styles/Form";
@@ -17,9 +18,9 @@ const SIGNIN_MUTATION = gql`
 class Signin extends Component {
   state = {
     password: "",
-    email: ""
+    email: "",
   };
-  saveToState = e => {
+  saveToState = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
@@ -32,10 +33,13 @@ class Signin extends Component {
         {(signin, { error, loading }) => (
           <Form
             method="post"
-            onSubmit={async e => {
+            onSubmit={async (e) => {
               e.preventDefault();
               await signin();
               this.setState({ name: "", email: "", password: "" });
+              Router.push({
+                pathname: "/",
+              });
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>

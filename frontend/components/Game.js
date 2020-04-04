@@ -17,12 +17,16 @@ import CardDefault from "./styles/CardDefault";
 import CardWide from "./styles/CardWide";
 import ListView from "./styles/ListView";
 import { TiEdit } from "react-icons/ti";
-import { GameGenres } from "../config";
+import { AiOutlineDelete } from "react-icons/ai";
+import { GameGenres, GamePlatforms, GameNumPlayers } from "../config";
 
 const GameCard = ({ game, me, view }) => {
-  const toPlayIds = me.toPlay.map((item) => item.game.id);
-  const playedItIds = me.playedIt.map((item) => item.game.id);
-
+  let toPlayIds;
+  let playedItIds;
+  if (me) {
+    toPlayIds = me.toPlay.map((item) => item.game.id);
+    playedItIds = me.playedIt.map((item) => item.game.id);
+  }
   const genres = [game.genre1, game.genre2, game.genre3];
   const genreTitles = GameGenres.map((genre) => genre.title);
   const genreValues = GameGenres.map((genre) => genre.value);
@@ -30,6 +34,24 @@ const GameCard = ({ game, me, view }) => {
   const genreLabels = genres.map((genre, index) => {
     const genreIndex = genreValues.indexOf(genre);
     return genreTitles[genreIndex];
+  });
+
+  const platforms = [game.platform1, game.platform2, game.platform3];
+  const platformTitles = GamePlatforms.map((platform) => platform.title);
+  const platformValues = GamePlatforms.map((platform) => platform.value);
+
+  const platformLabels = platforms.map((platform, index) => {
+    const platformIndex = platformValues.indexOf(platform);
+    return platformTitles[platformIndex];
+  });
+
+  const numPlayers = [game.numPlayers];
+  const numPlayersTitles = GameNumPlayers.map((numPlayers) => numPlayers.title);
+  const numPlayersValues = GameNumPlayers.map((numPlayers) => numPlayers.value);
+
+  const numPlayersLabels = numPlayers.map((numPlayers, index) => {
+    const numPlayersIndex = numPlayersValues.indexOf(numPlayers);
+    return numPlayersTitles[numPlayersIndex];
   });
 
   if (view === "default") {
@@ -44,28 +66,29 @@ const GameCard = ({ game, me, view }) => {
           <a>{game.image && <img src={game.image} alt="game poster" />}</a>
         </Link>
 
-        <div className="game-details">
-          <div className="flex-apart">
+        <div className="cardDefaultDetails">
+          <Link
+            href={{
+              pathname: "/game",
+              query: { id: game.id },
+            }}
+          >
+            <div className="cardDefaultTitle">{game.title}</div>
+          </Link>
+
+          <div className="cardDefaultButtons">
             <Link
               href={{
-                pathname: "/game",
+                pathname: "update-game",
                 query: { id: game.id },
               }}
             >
-              <span className="title">{game.title}</span>
+              <a className="button">
+                {/* <TiEdit /> */}
+                Edit
+              </a>
             </Link>
-
-            <div className="buttons">
-              <Link
-                href={{
-                  pathname: "update-game",
-                  query: { id: game.id },
-                }}
-              >
-                <TiEdit />
-              </Link>
-              <DeleteGame id={game.id}>Delete This game</DeleteGame>
-            </div>
+            <DeleteGame id={game.id}>Delete</DeleteGame>
           </div>
 
           <div className="flex-apart details">
@@ -74,20 +97,22 @@ const GameCard = ({ game, me, view }) => {
               {game.genre2 !== "UNSELECTED" && <span>, {genreLabels[1]}</span>}
               {game.genre3 !== "UNSELECTED" && <span>, {genreLabels[2]}</span>}
             </div>
-            <span>{game.year}</span>
+            <span className="cardDefaultYear">({game.year})</span>
           </div>
-          <div className="flex-apart list-buttons">
-            {toPlayIds.indexOf(game.id) > -1 ? (
-              <RemoveFromToPlay id={game.id} />
-            ) : (
-              <AddToToPlay id={game.id} />
-            )}
-            {playedItIds.indexOf(game.id) > -1 ? (
-              <RemoveFromPlayedIt id={game.id} />
-            ) : (
-              <AddToPlayedIt id={game.id} />
-            )}
-          </div>
+          {me && (
+            <div className="flex-apart cardDefaultListButtons">
+              {toPlayIds.indexOf(game.id) > -1 ? (
+                <RemoveFromToPlay id={game.id} />
+              ) : (
+                <AddToToPlay id={game.id} />
+              )}
+              {playedItIds.indexOf(game.id) > -1 ? (
+                <RemoveFromPlayedIt id={game.id} />
+              ) : (
+                <AddToPlayedIt id={game.id} />
+              )}
+            </div>
+          )}
         </div>
       </CardDefault>
     );
@@ -99,7 +124,7 @@ const GameCard = ({ game, me, view }) => {
         )}
 
         <div className="cardWideDetails flex-apart">
-          <div>
+          <div className="cardWideDetailsTop">
             <Link
               href={{
                 pathname: "/game",
@@ -108,44 +133,76 @@ const GameCard = ({ game, me, view }) => {
             >
               <a className="cardWideTitle">{game.title}</a>
             </Link>
-            <div>({game.year})</div>
-            <div className="cardWideGenres">
-              {genreLabels[0]}
-              {game.genre2 !== "UNSELECTED" && <span>, {genreLabels[1]}</span>}
-              {game.genre3 !== "UNSELECTED" && <span>, {genreLabels[2]}</span>}
+            <div className="cardWideYear">({game.year})</div>
+            {game.platform1 && (
+              <div className="cardWideGenres">
+                <span className="bold">Platforms: </span>
+                {platformLabels[0]}
+                {game.platform2 !== "UNSELECTED" && (
+                  <span>, {platformLabels[1]}</span>
+                )}
+                {game.platform3 !== "UNSELECTED" && (
+                  <span>, {platformLabels[2]}</span>
+                )}
+              </div>
+            )}
+            {game.genre1 && (
+              <div className="cardWideGenres">
+                <span className="bold">Genres: </span>
+                {genreLabels[0]}
+                {game.genre2 !== "UNSELECTED" && (
+                  <span>, {genreLabels[1]}</span>
+                )}
+                {game.genre3 !== "UNSELECTED" && (
+                  <span>, {genreLabels[2]}</span>
+                )}
+              </div>
+            )}
+            {game.developer && (
+              <div>
+                {" "}
+                <span className="bold">Developer: </span>
+                {game.developer}
+              </div>
+            )}
+            {game.numPlayers && (
+              <div>
+                <span className="bold">Players: </span>
+                {numPlayersLabels[0]}
+              </div>
+            )}
+          </div>
+          {me && (
+            <div className="cardWideListButtons list-buttons ">
+              {toPlayIds.indexOf(game.id) > -1 ? (
+                <RemoveFromToPlay id={game.id} />
+              ) : (
+                <AddToToPlay id={game.id} />
+              )}
+
+              {playedItIds.indexOf(game.id) > -1 ? (
+                <RemoveFromPlayedIt id={game.id} />
+              ) : (
+                <AddToPlayedIt id={game.id} />
+              )}
             </div>
-            <p>{game.description}</p>
-          </div>
-          <div className="list-buttons flex-apart">
-            {toPlayIds.indexOf(game.id) > -1 ? (
-              <RemoveFromToPlay id={game.id} />
-            ) : (
-              <AddToToPlay id={game.id} />
-            )}
+          )}
+          {me && me.id === game.user.id && (
+            <div className="cardWideButtonList">
+              <Link
+                href={{
+                  pathname: "update-game",
+                  query: { id: game.id },
+                }}
+              >
+                <a className="edit-link button flex-apart">Edit</a>
+              </Link>
 
-            {playedItIds.indexOf(game.id) > -1 ? (
-              <RemoveFromPlayedIt id={game.id} />
-            ) : (
-              <AddToPlayedIt id={game.id} />
-            )}
-          </div>
-          <div
-            className="buttonList"
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            <Link
-              href={{
-                pathname: "update-game",
-                query: { id: game.id },
-              }}
-            >
-              <a className="edit-link">
-                <TiEdit />
-              </a>
-            </Link>
-
-            <DeleteGame id={game.id}>Delete</DeleteGame>
-          </div>
+              <DeleteGame id={game.id} className="flex-apart">
+                Delete
+              </DeleteGame>
+            </div>
+          )}
         </div>
       </CardWide>
     );
@@ -169,19 +226,21 @@ const GameCard = ({ game, me, view }) => {
         <p className="listViewDescription">{game.description}</p>
 
         <div className="listViewButtons">
-          <div className="flex-apart">
-            {toPlayIds.indexOf(game.id) > -1 ? (
-              <RemoveFromToPlay id={game.id} />
-            ) : (
-              <AddToToPlay id={game.id} />
-            )}
+          {me && (
+            <div className="flex-apart">
+              {toPlayIds.indexOf(game.id) > -1 ? (
+                <RemoveFromToPlay id={game.id} />
+              ) : (
+                <AddToToPlay id={game.id} />
+              )}
 
-            {playedItIds.indexOf(game.id) > -1 ? (
-              <RemoveFromPlayedIt id={game.id} />
-            ) : (
-              <AddToPlayedIt id={game.id} />
-            )}
-          </div>
+              {playedItIds.indexOf(game.id) > -1 ? (
+                <RemoveFromPlayedIt id={game.id} />
+              ) : (
+                <AddToPlayedIt id={game.id} />
+              )}
+            </div>
+          )}
           <div className="flex-end">
             <Link
               href={{

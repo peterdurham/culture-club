@@ -15,12 +15,17 @@ const ALL_MOVIES_QUERY = gql`
       id
       title
       year
+      director
       description
       genre1
       genre2
       genre3
+      length
       image
       largeImage
+      user {
+        id
+      }
     }
   }
 `;
@@ -37,7 +42,6 @@ const MoviesList = styled.div`
   display: flex;
   flex-wrap: wrap;
   max-width: ${(props) => props.theme.maxWidth};
-  margin: 40px auto 100px auto;
 `;
 
 const Movies = (props) => {
@@ -51,22 +55,16 @@ const Movies = (props) => {
         return (
           <Center>
             <SearchMovies />
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "20px",
-              }}
-            >
+            <div className="cardStyleButtons">
               <button className="button" onClick={() => setView("default")}>
-                Default
+                Default View
               </button>
               <button className="button" onClick={() => setView("wide")}>
-                Wide
+                Wide View
               </button>
-              <button className="button" onClick={() => setView("list")}>
+              {/* <button className="button" onClick={() => setView("list")}>
                 List
-              </button>
+              </button> */}
             </div>
             <Pagination page={props.page} />
             <Query

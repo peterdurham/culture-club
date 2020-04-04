@@ -91,9 +91,13 @@ const SINGLE_MOVIE_QUERY = gql`
 
 class SingleMovie extends Component {
   render() {
-    const toWatchIds = this.props.me.toWatch.map((item) => item.movie.id);
-    const seenItIds = this.props.me.seenIt.map((item) => item.movie.id);
-
+    const { me } = this.props;
+    let toWatchIds;
+    let seenItIds;
+    if (me) {
+      toWatchIds = this.props.me.toWatch.map((item) => item.movie.id);
+      seenItIds = this.props.me.seenIt.map((item) => item.movie.id);
+    }
     return (
       <Query
         query={SINGLE_MOVIE_QUERY}
@@ -140,7 +144,7 @@ class SingleMovie extends Component {
                   </div>
                 </div>
                 <div className="second-line">
-                  {movie.year && <span clsasName="year">({movie.year})</span>}
+                  {movie.year && <span className="year">({movie.year})</span>}
                   {movie.length && (
                     <span className="length">{movie.length} minutes</span>
                   )}
@@ -158,20 +162,21 @@ class SingleMovie extends Component {
 
                 {movie.budget && <div>Budget: {movie.budget}</div>}
                 {movie.gross && <div>Gross: {movie.gross}</div>}
+                {me && (
+                  <div>
+                    {toWatchIds.indexOf(movie.id) > -1 ? (
+                      <RemoveFromToWatch id={movie.id} />
+                    ) : (
+                      <AddToToWatch id={movie.id} />
+                    )}
 
-                <div>
-                  {toWatchIds.indexOf(movie.id) > -1 ? (
-                    <RemoveFromToWatch id={movie.id} />
-                  ) : (
-                    <AddToToWatch id={movie.id} />
-                  )}
-
-                  {seenItIds.indexOf(movie.id) > -1 ? (
-                    <RemoveFromSeenIt id={movie.id} />
-                  ) : (
-                    <AddToSeenIt id={movie.id} />
-                  )}
-                </div>
+                    {seenItIds.indexOf(movie.id) > -1 ? (
+                      <RemoveFromSeenIt id={movie.id} />
+                    ) : (
+                      <AddToSeenIt id={movie.id} />
+                    )}
+                  </div>
+                )}
               </div>
             </DetailsPageStyles>
           );

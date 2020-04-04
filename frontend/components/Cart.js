@@ -43,34 +43,38 @@ const Cart = () => {
               <CloseButton onClick={toggleCart} title="close">
                 &times;
               </CloseButton>
-              <Supreme>{me.name}'s Lists</Supreme>
+              <h2 style={{ fontSize: "2.8rem" }}>{me.name}'s Lists</h2>
             </header>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                fontSize: "24px",
-                fontWeight: "700",
-              }}
-            >
-              <Link href="/to-watch">
-                <a>Movies To See ({me.toWatch.length})</a>
+            <div className="listLinks">
+              <Link href="/to-watch" onClick={toggleCart}>
+                <a className="blue">Movies To See ({me.toWatch.length})</a>
               </Link>
+
               <Link href="/to-play">
-                <a>Games To Play ({me.toPlay.length})</a>
+                <a onClick={toggleCart} className="blue">
+                  Games To Play ({me.toPlay.length})
+                </a>
               </Link>
               <Link href="/to-read">
-                <a>Books To Read ({me.toRead.length})</a>
+                <a onClick={toggleCart} className="blue">
+                  Books To Read ({me.toRead.length})
+                </a>
               </Link>
               <hr />
               <Link href="/seen-it">
-                <a>Movies I've Seen ({me.seenIt.length})</a>
+                <a onClick={toggleCart} className="green">
+                  Movies I've Seen ({me.seenIt.length})
+                </a>
               </Link>
               <Link href="/played-it">
-                <a>Games I've Played ({me.playedIt.length})</a>
+                <a onClick={toggleCart} className="green">
+                  Games I've Played ({me.playedIt.length})
+                </a>
               </Link>
               <Link href="/read-it">
-                <a>Books I've Read ({me.readIt.length})</a>
+                <a onClick={toggleCart} className="green">
+                  Books I've Read ({me.readIt.length})
+                </a>
               </Link>
             </div>
             <ul>

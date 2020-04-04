@@ -19,12 +19,12 @@ class AddToToPlay extends React.Component {
       <Mutation
         mutation={ADD_TO_TO_PLAY_MUTATION}
         variables={{
-          id
+          id,
         }}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
         {(addToToPlay, { error, loading }) => (
-          <button onClick={addToToPlay} disabled={loading}>
+          <button onClick={addToToPlay} disabled={loading} className="button">
             To Play
             <FaGamepad />
           </button>

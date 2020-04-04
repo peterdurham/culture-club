@@ -17,12 +17,16 @@ import CardDefault from "./styles/CardDefault";
 import CardWide from "./styles/CardWide";
 import ListView from "./styles/ListView";
 import { TiEdit } from "react-icons/ti";
+import { AiOutlineDelete } from "react-icons/ai";
 import { BookGenres } from "../config";
 
 const BookCard = ({ book, me, view }) => {
-  const toReadIds = me.toRead.map((item) => item.book.id);
-  const readItIds = me.readIt.map((item) => item.book.id);
-
+  let toReadIds;
+  let readItIds;
+  if (me) {
+    toReadIds = me.toRead.map((item) => item.book.id);
+    readItIds = me.readIt.map((item) => item.book.id);
+  }
   const genres = [book.genre1, book.genre2, book.genre3];
   const genreTitles = BookGenres.map((genre) => genre.title);
   const genreValues = BookGenres.map((genre) => genre.value);
@@ -44,28 +48,29 @@ const BookCard = ({ book, me, view }) => {
           <a>{book.image && <img src={book.image} alt="book poster" />}</a>
         </Link>
 
-        <div className="book-details">
-          <div className="flex-apart">
+        <div className="cardDefaultDetails">
+          <Link
+            href={{
+              pathname: "/book",
+              query: { id: book.id },
+            }}
+          >
+            <div className="cardDefaultTitle">{book.title}</div>
+          </Link>
+
+          <div className="cardDefaultButtons">
             <Link
               href={{
-                pathname: "/book",
+                pathname: "update-book",
                 query: { id: book.id },
               }}
             >
-              <span className="title">{book.title}</span>
+              <a className="button">
+                {/* <TiEdit /> */}
+                Edit
+              </a>
             </Link>
-
-            <div className="buttons">
-              <Link
-                href={{
-                  pathname: "update-book",
-                  query: { id: book.id },
-                }}
-              >
-                <TiEdit />
-              </Link>
-              <DeleteBook id={book.id}>Delete This book</DeleteBook>
-            </div>
+            <DeleteBook id={book.id}>Delete</DeleteBook>
           </div>
 
           <div className="flex-apart details">
@@ -74,21 +79,22 @@ const BookCard = ({ book, me, view }) => {
               {book.genre2 !== "UNSELECTED" && <span>, {genreLabels[1]}</span>}
               {book.genre3 !== "UNSELECTED" && <span>, {genreLabels[2]}</span>}
             </div>
-            <span>{book.author}</span>
-            <span>{book.year}</span>
+            <span className="cardDefaultYear">({book.year})</span>
           </div>
-          <div className="flex-apart list-buttons">
-            {toReadIds.indexOf(book.id) > -1 ? (
-              <RemoveFromToRead id={book.id} />
-            ) : (
-              <AddToToRead id={book.id} />
-            )}
-            {readItIds.indexOf(book.id) > -1 ? (
-              <RemoveFromReadIt id={book.id} />
-            ) : (
-              <AddToReadIt id={book.id} />
-            )}
-          </div>
+          {me && (
+            <div className="flex-apart cardDefaultListButtons">
+              {toReadIds.indexOf(book.id) > -1 ? (
+                <RemoveFromToRead id={book.id} />
+              ) : (
+                <AddToToRead id={book.id} />
+              )}
+              {readItIds.indexOf(book.id) > -1 ? (
+                <RemoveFromReadIt id={book.id} />
+              ) : (
+                <AddToReadIt id={book.id} />
+              )}
+            </div>
+          )}
         </div>
       </CardDefault>
     );
@@ -100,7 +106,7 @@ const BookCard = ({ book, me, view }) => {
         )}
 
         <div className="cardWideDetails flex-apart">
-          <div>
+          <div className="cardWideDetailsTop">
             <Link
               href={{
                 pathname: "/book",
@@ -109,44 +115,72 @@ const BookCard = ({ book, me, view }) => {
             >
               <a className="cardWideTitle">{book.title}</a>
             </Link>
-            <div>({book.year})</div>
-            <div className="cardWideGenres">
-              {genreLabels[0]}
-              {book.genre2 !== "UNSELECTED" && <span>, {genreLabels[1]}</span>}
-              {book.genre3 !== "UNSELECTED" && <span>, {genreLabels[2]}</span>}
+            <div className="cardWideYear">({book.year})</div>
+            {book.author && (
+              <div>
+                <span className="bold">Author: </span>
+                {book.author}
+              </div>
+            )}
+            {book.genre1 && (
+              <div className="cardWideGenres">
+                <span className="bold">Genres: </span>
+                {genreLabels[0]}
+                {book.genre2 !== "UNSELECTED" && (
+                  <span>, {genreLabels[1]}</span>
+                )}
+                {book.genre3 !== "UNSELECTED" && (
+                  <span>, {genreLabels[2]}</span>
+                )}
+              </div>
+            )}
+            {book.printLength && (
+              <div>
+                {" "}
+                <span className="bold">Length: </span>
+                {book.printLength} pages
+              </div>
+            )}
+
+            {book.pdfURL && (
+              <div>
+                {" "}
+                <span className="bold">PDF: </span>
+                {book.pdfURL}
+              </div>
+            )}
+          </div>
+          {me && (
+            <div className="cardWideListButtons list-buttons ">
+              {toReadIds.indexOf(book.id) > -1 ? (
+                <RemoveFromToRead id={book.id} />
+              ) : (
+                <AddToToRead id={book.id} />
+              )}
+
+              {readItIds.indexOf(book.id) > -1 ? (
+                <RemoveFromReadIt id={book.id} />
+              ) : (
+                <AddToReadIt id={book.id} />
+              )}
             </div>
-            <p>{book.description}</p>
-          </div>
-          <div className="list-buttons flex-apart">
-            {toReadIds.indexOf(book.id) > -1 ? (
-              <RemoveFromToRead id={book.id} />
-            ) : (
-              <AddToToRead id={book.id} />
-            )}
+          )}
+          {me && me.id === book.user.id && (
+            <div className="cardWideButtonList">
+              <Link
+                href={{
+                  pathname: "update-book",
+                  query: { id: book.id },
+                }}
+              >
+                <a className="edit-link button flex-apart">Edit</a>
+              </Link>
 
-            {readItIds.indexOf(book.id) > -1 ? (
-              <RemoveFromReadIt id={book.id} />
-            ) : (
-              <AddToReadIt id={book.id} />
-            )}
-          </div>
-          <div
-            className="buttonList"
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            <Link
-              href={{
-                pathname: "update-book",
-                query: { id: book.id },
-              }}
-            >
-              <a className="edit-link">
-                <TiEdit />
-              </a>
-            </Link>
-
-            <DeleteBook id={book.id}>Delete This book</DeleteBook>
-          </div>
+              <DeleteBook id={book.id} className="flex-apart">
+                Delete
+              </DeleteBook>
+            </div>
+          )}
         </div>
       </CardWide>
     );
@@ -170,19 +204,21 @@ const BookCard = ({ book, me, view }) => {
         <p className="listViewDescription">{book.description}</p>
 
         <div className="listViewButtons">
-          <div className="flex-apart">
-            {toReadIds.indexOf(book.id) > -1 ? (
-              <RemoveFromToRead id={book.id} />
-            ) : (
-              <AddToToRead id={book.id} />
-            )}
+          {me && (
+            <div className="flex-apart">
+              {toReadIds.indexOf(book.id) > -1 ? (
+                <RemoveFromToRead id={book.id} />
+              ) : (
+                <AddToToRead id={book.id} />
+              )}
 
-            {readItIds.indexOf(book.id) > -1 ? (
-              <RemoveFromReadIt id={book.id} />
-            ) : (
-              <AddToReadIt id={book.id} />
-            )}
-          </div>
+              {readItIds.indexOf(book.id) > -1 ? (
+                <RemoveFromReadIt id={book.id} />
+              ) : (
+                <AddToReadIt id={book.id} />
+              )}
+            </div>
+          )}
           <div className="flex-end">
             <Link
               href={{

@@ -19,7 +19,7 @@ class DeleteGame extends Component {
     console.log(data, payload);
     // 2. Filter the deleted game out of the page
     data.games = data.games.filter(
-      game => game.id !== payload.data.deleteGame.id
+      (game) => game.id !== payload.data.deleteGame.id
     );
     // 3. Put the games back!
     cache.writeQuery({ query: ALL_GAMES_QUERY, data });
@@ -33,9 +33,10 @@ class DeleteGame extends Component {
       >
         {(deleteGame, { error }) => (
           <button
+            className="button"
             onClick={() => {
               if (confirm("Are you sure you want to delete this Game?")) {
-                deleteGame().catch(err => {
+                deleteGame().catch((err) => {
                   alert(err.message);
                 });
               }

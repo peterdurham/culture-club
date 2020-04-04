@@ -20,12 +20,12 @@ class AddToSeenIt extends React.Component {
       <Mutation
         mutation={ADD_TO_SEEN_IT_MUTATION}
         variables={{
-          id
+          id,
         }}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
         {(addToSeenIt, { error, loading }) => (
-          <button onClick={addToSeenIt} disabled={loading}>
+          <button onClick={addToSeenIt} disabled={loading} className="button">
             Seen It <MdLocalMovies />
           </button>
         )}

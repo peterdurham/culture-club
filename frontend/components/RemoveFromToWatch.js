@@ -19,12 +19,16 @@ class RemoveFromToWatch extends React.Component {
       <Mutation
         mutation={REMOVE_FROM_TO_WATCH_MUTATION}
         variables={{
-          id
+          id,
         }}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
         {(removeFromToWatch, { error, loading }) => (
-          <button onClick={removeFromToWatch} disabled={loading}>
+          <button
+            onClick={removeFromToWatch}
+            disabled={loading}
+            className="button upcoming"
+          >
             To Watch
             {/* Remov{loading ? "ing" : "e"}  */}
             <IoMdClose />

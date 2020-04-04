@@ -19,12 +19,16 @@ class RemoveFromToRead extends React.Component {
       <Mutation
         mutation={REMOVE_FROM_TO_READ_MUTATION}
         variables={{
-          id
+          id,
         }}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
         {(removeFromToRead, { error, loading }) => (
-          <button onClick={removeFromToRead} disabled={loading}>
+          <button
+            onClick={removeFromToRead}
+            disabled={loading}
+            className="button upcoming"
+          >
             To Read
             {/* Remov{loading ? "ing" : "e"}  */}
             <IoMdClose />

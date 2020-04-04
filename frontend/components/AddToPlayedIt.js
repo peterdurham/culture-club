@@ -20,12 +20,12 @@ class AddToPlayedIt extends React.Component {
       <Mutation
         mutation={ADD_TO_PLAYED_IT_MUTATION}
         variables={{
-          id
+          id,
         }}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
         {(addToPlayedIt, { error, loading }) => (
-          <button onClick={addToPlayedIt} disabled={loading}>
+          <button onClick={addToPlayedIt} disabled={loading} className="button">
             Played It <FaGamepad />
           </button>
         )}

@@ -14,7 +14,7 @@ const GamesPage = (props) => {
           </a>
         </Link>
       </div>
-      <Games filter="all" />
+      <Games filter="all" page={parseFloat(props.query.page) || 1} />
     </div>
   );
 };

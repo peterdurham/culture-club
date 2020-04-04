@@ -1,20 +1,46 @@
-import Signup from '../components/Signup';
-import Signin from '../components/Signin';
-import RequestReset from '../components/RequestReset';
-import styled from 'styled-components';
+import Signup from "../components/Signup";
+import Signin from "../components/Signin";
+import RequestReset from "../components/RequestReset";
+import styled from "styled-components";
+import User from "../components/User";
 
-const Columns = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 20px;
+const LoginOptions = styled.div`
+  text-align: center;
+  .loginSignup {
+    margin: 50px 0;
+  }
+  .loginSignin {
+    margin: 50px 0;
+  }
 `;
 
-const SignupPage = props => (
-  <Columns>
-    <Signup />
-    <Signin />
-    <RequestReset />
-  </Columns>
+const SignupPage = (props) => (
+  <User>
+    {({ data: { me } }) => (
+      <LoginOptions>
+        {!me && (
+          <>
+            <div className="loginSignin">
+              {" "}
+              <Signin />
+            </div>
+            <div style={{ textAlign: "center" }}>OR</div>
+            <div className="loginSignup">
+              {" "}
+              <Signup />
+            </div>
+          </>
+        )}
+        {me && (
+          <div>
+            <h2>Welcome,</h2>
+            <h2>currently logged in as {me.name}</h2>
+          </div>
+        )}
+        {/* <RequestReset /> */}
+      </LoginOptions>
+    )}
+  </User>
 );
 
 export default SignupPage;

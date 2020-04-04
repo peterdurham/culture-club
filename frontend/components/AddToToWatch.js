@@ -20,12 +20,12 @@ class AddToToWatch extends React.Component {
       <Mutation
         mutation={ADD_TO_TO_WATCH_MUTATION}
         variables={{
-          id
+          id,
         }}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
         {(addToToWatch, { error, loading }) => (
-          <button onClick={addToToWatch} disabled={loading}>
+          <button onClick={addToToWatch} disabled={loading} className="button">
             To Watch <MdLocalMovies />
           </button>
         )}

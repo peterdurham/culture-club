@@ -20,12 +20,12 @@ class AddToReadIt extends React.Component {
       <Mutation
         mutation={ADD_TO_READ_IT_MUTATION}
         variables={{
-          id
+          id,
         }}
         refetchQueries={[{ query: CURRENT_USER_QUERY }]}
       >
         {(addToReadIt, { error, loading }) => (
-          <button onClick={addToReadIt} disabled={loading}>
+          <button onClick={addToReadIt} disabled={loading} className="button">
             Read It <GiWhiteBook />
           </button>
         )}

@@ -17,11 +17,18 @@ const ALL_GAMES_QUERY = gql`
       year
       developer
       description
+      platform1
+      platform2
+      platform3
       genre1
       genre2
       genre3
+      numPlayers
       image
       largeImage
+      user {
+        id
+      }
     }
   }
 `;
@@ -38,11 +45,11 @@ const GamesList = styled.div`
   display: flex;
   flex-wrap: wrap;
   max-width: ${(props) => props.theme.maxWidth};
-  margin: 40px auto 100px auto;
+  margin-bottom: 20px;
 `;
 
 const Games = (props) => {
-  const filters = ["all", "toWatch", "seenIt", "genre", "year"];
+  const filters = ["all", "toPlay", "playedIt", "genre", "year"];
   // const view = ["default", "wide", "list"];
   const [view, setView] = React.useState("default");
   // const view = "wide";
@@ -52,13 +59,7 @@ const Games = (props) => {
         return (
           <Center>
             <SearchGames />
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "20px",
-              }}
-            >
+            <div className="cardStyleButtons">
               <button className="button" onClick={() => setView("default")}>
                 Default
               </button>
@@ -91,15 +92,15 @@ const Games = (props) => {
                         ))}
                       </>
                     )}
-                    {props.filter === "toWatch" && (
+                    {props.filter === "toPlay" && (
                       <>
                         {data.games
                           .filter((game) => {
-                            const toWatchIds = me.toWatch.map(
+                            const toPlayIds = me.toPlay.map(
                               (item) => item.game.id
                             );
 
-                            return toWatchIds.indexOf(game.id) > -1;
+                            return toPlayIds.indexOf(game.id) > -1;
                           })
                           .map((game) => (
                             <Game
@@ -111,15 +112,15 @@ const Games = (props) => {
                           ))}
                       </>
                     )}
-                    {props.filter === "seenIt" && (
+                    {props.filter === "playedIt" && (
                       <>
                         {data.games
                           .filter((game) => {
-                            const seenItIds = me.seenIt.map(
+                            const playedItIds = me.playedIt.map(
                               (item) => item.game.id
                             );
 
-                            return seenItIds.indexOf(game.id) > -1;
+                            return playedItIds.indexOf(game.id) > -1;
                           })
                           .map((game) => (
                             <Game

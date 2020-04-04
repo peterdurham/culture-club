@@ -20,8 +20,14 @@ const ALL_BOOKS_QUERY = gql`
       genre1
       genre2
       genre3
+      printLength
+      publisher
+      pdfURL
       image
       largeImage
+      user {
+        id
+      }
     }
   }
 `;
@@ -42,7 +48,7 @@ const BooksList = styled.div`
 `;
 
 const Books = (props) => {
-  const filters = ["all", "toWatch", "seenIt", "genre", "year"];
+  const filters = ["all", "toRead", "readIt", "genre", "year"];
   // const view = ["default", "wide", "list"];
   const [view, setView] = React.useState("default");
   // const view = "wide";
@@ -52,13 +58,7 @@ const Books = (props) => {
         return (
           <Center>
             <SearchBooks />
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "20px",
-              }}
-            >
+            <div className="cardStyleButtons">
               <button className="button" onClick={() => setView("default")}>
                 Default
               </button>
@@ -91,15 +91,15 @@ const Books = (props) => {
                         ))}
                       </>
                     )}
-                    {props.filter === "toWatch" && (
+                    {props.filter === "toRead" && (
                       <>
                         {data.books
                           .filter((book) => {
-                            const toWatchIds = me.toWatch.map(
+                            const toReadIds = me.toRead.map(
                               (item) => item.book.id
                             );
 
-                            return toWatchIds.indexOf(book.id) > -1;
+                            return toReadIds.indexOf(book.id) > -1;
                           })
                           .map((book) => (
                             <Book
@@ -111,15 +111,15 @@ const Books = (props) => {
                           ))}
                       </>
                     )}
-                    {props.filter === "seenIt" && (
+                    {props.filter === "readIt" && (
                       <>
                         {data.books
                           .filter((book) => {
-                            const seenItIds = me.seenIt.map(
+                            const readItIds = me.readIt.map(
                               (item) => item.book.id
                             );
 
-                            return seenItIds.indexOf(book.id) > -1;
+                            return readItIds.indexOf(book.id) > -1;
                           })
                           .map((book) => (
                             <Book

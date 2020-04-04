@@ -17,6 +17,8 @@ import CardDefault from "./styles/CardDefault";
 import CardWide from "./styles/CardWide";
 import ListView from "./styles/ListView";
 import { TiEdit } from "react-icons/ti";
+import { AiOutlineDelete } from "react-icons/ai";
+import { GoTrashcan } from "react-icons/go";
 import { MovieGenres } from "../config";
 
 const MovieCard = ({ movie, me, view }) => {
@@ -49,28 +51,29 @@ const MovieCard = ({ movie, me, view }) => {
           <a>{movie.image && <img src={movie.image} alt="movie poster" />}</a>
         </Link>
 
-        <div className="movie-details">
-          <div className="flex-apart">
+        <div className="cardDefaultDetails">
+          <Link
+            href={{
+              pathname: "/movie",
+              query: { id: movie.id },
+            }}
+          >
+            <div className="cardDefaultTitle">{movie.title}</div>
+          </Link>
+
+          <div className="cardDefaultButtons">
             <Link
               href={{
-                pathname: "/movie",
+                pathname: "update-movie",
                 query: { id: movie.id },
               }}
             >
-              <span className="title">{movie.title}</span>
+              <a className="button">
+                {/* <TiEdit /> */}
+                Edit
+              </a>
             </Link>
-
-            <div className="buttons">
-              <Link
-                href={{
-                  pathname: "update-movie",
-                  query: { id: movie.id },
-                }}
-              >
-                <TiEdit />
-              </Link>
-              <DeleteMovie id={movie.id}>Delete This Movie</DeleteMovie>
-            </div>
+            <DeleteMovie id={movie.id}>Delete</DeleteMovie>
           </div>
 
           <div className="flex-apart details">
@@ -79,10 +82,10 @@ const MovieCard = ({ movie, me, view }) => {
               {movie.genre2 !== "UNSELECTED" && <span>, {genreLabels[1]}</span>}
               {movie.genre3 !== "UNSELECTED" && <span>, {genreLabels[2]}</span>}
             </div>
-            <span>{movie.year}</span>
+            <span className="cardDefaultYear">({movie.year})</span>
           </div>
           {me && (
-            <div className="flex-apart list-buttons">
+            <div className="flex-apart cardDefaultListButtons">
               {toWatchIds.indexOf(movie.id) > -1 ? (
                 <RemoveFromToWatch id={movie.id} />
               ) : (
@@ -106,7 +109,7 @@ const MovieCard = ({ movie, me, view }) => {
         )}
 
         <div className="cardWideDetails flex-apart">
-          <div>
+          <div className="cardWideDetailsTop">
             <Link
               href={{
                 pathname: "/movie",
@@ -115,44 +118,76 @@ const MovieCard = ({ movie, me, view }) => {
             >
               <a className="cardWideTitle">{movie.title}</a>
             </Link>
-            <div>({movie.year})</div>
-            <div className="cardWideGenres">
-              {genreLabels[0]}
-              {movie.genre2 !== "UNSELECTED" && <span>, {genreLabels[1]}</span>}
-              {movie.genre3 !== "UNSELECTED" && <span>, {genreLabels[2]}</span>}
+            <div className="cardWideYear">({movie.year})</div>
+
+            {movie.genre1 && (
+              <div className="cardWideGenres">
+                <span className="bold">Genres: </span>
+                {genreLabels[0]}
+                {movie.genre2 !== "UNSELECTED" && (
+                  <span>, {genreLabels[1]}</span>
+                )}
+                {movie.genre3 !== "UNSELECTED" && (
+                  <span>, {genreLabels[2]}</span>
+                )}
+              </div>
+            )}
+            {movie.director && (
+              <div>
+                {" "}
+                <span className="bold">director: </span>
+                {movie.director}
+              </div>
+            )}
+            {movie.length && (
+              <div>
+                {" "}
+                <span className="bold">length: </span>
+                {movie.length} minutes
+              </div>
+            )}
+            {movie.imdbURL && (
+              <div>
+                {" "}
+                <span className="bold">imdbURL: </span>
+                {movie.imdbURL}
+              </div>
+            )}
+          </div>
+          {me && (
+            <div className="cardWideListButtons list-buttons ">
+              {toWatchIds.indexOf(movie.id) > -1 ? (
+                <RemoveFromToWatch id={movie.id} />
+              ) : (
+                <AddToToWatch id={movie.id} />
+              )}
+
+              {seenItIds.indexOf(movie.id) > -1 ? (
+                <RemoveFromSeenIt id={movie.id} />
+              ) : (
+                <AddToSeenIt id={movie.id} />
+              )}
             </div>
-            <p>{movie.description}</p>
-          </div>
-          <div className="list-buttons flex-apart">
-            {toWatchIds.indexOf(movie.id) > -1 ? (
-              <RemoveFromToWatch id={movie.id} />
-            ) : (
-              <AddToToWatch id={movie.id} />
-            )}
-
-            {seenItIds.indexOf(movie.id) > -1 ? (
-              <RemoveFromSeenIt id={movie.id} />
-            ) : (
-              <AddToSeenIt id={movie.id} />
-            )}
-          </div>
-          <div
-            className="buttonList"
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            <Link
-              href={{
-                pathname: "update-movie",
-                query: { id: movie.id },
-              }}
-            >
-              <a className="edit-link">
-                <TiEdit />
-              </a>
-            </Link>
-
-            <DeleteMovie id={movie.id}>Delete This Movie</DeleteMovie>
-          </div>
+          )}
+          {me && me.id === movie.user.id && (
+            <div className="cardWideButtonList">
+              <Link
+                href={{
+                  pathname: "update-movie",
+                  query: { id: movie.id },
+                }}
+              >
+                <a className="edit-link button flex-apart">
+                  Edit
+                  {/* <TiEdit /> */}
+                </a>
+              </Link>
+              <DeleteMovie id={movie.id}>
+                Delete
+                {/* <GoTrashcan className="icon-right" /> */}
+              </DeleteMovie>
+            </div>
+          )}
         </div>
       </CardWide>
     );
@@ -176,19 +211,21 @@ const MovieCard = ({ movie, me, view }) => {
         <p className="listViewDescription">{movie.description}</p>
 
         <div className="listViewButtons">
-          <div className="flex-apart">
-            {toWatchIds.indexOf(movie.id) > -1 ? (
-              <RemoveFromToWatch id={movie.id} />
-            ) : (
-              <AddToToWatch id={movie.id} />
-            )}
+          {me && (
+            <div className="flex-apart">
+              {toWatchIds.indexOf(movie.id) > -1 ? (
+                <RemoveFromToWatch id={movie.id} />
+              ) : (
+                <AddToToWatch id={movie.id} />
+              )}
 
-            {seenItIds.indexOf(movie.id) > -1 ? (
-              <RemoveFromSeenIt id={movie.id} />
-            ) : (
-              <AddToSeenIt id={movie.id} />
-            )}
-          </div>
+              {seenItIds.indexOf(movie.id) > -1 ? (
+                <RemoveFromSeenIt id={movie.id} />
+              ) : (
+                <AddToSeenIt id={movie.id} />
+              )}
+            </div>
+          )}
           <div className="flex-end">
             <Link
               href={{

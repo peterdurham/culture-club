@@ -19,7 +19,7 @@ class DeleteBook extends Component {
     console.log(data, payload);
     // 2. Filter the deleted book out of the page
     data.books = data.books.filter(
-      book => book.id !== payload.data.deleteBook.id
+      (book) => book.id !== payload.data.deleteBook.id
     );
     // 3. Put the books back!
     cache.writeQuery({ query: ALL_BOOKS_QUERY, data });
@@ -33,9 +33,10 @@ class DeleteBook extends Component {
       >
         {(deleteBook, { error }) => (
           <button
+            className="button"
             onClick={() => {
               if (confirm("Are you sure you want to delete this book?")) {
-                deleteBook().catch(err => {
+                deleteBook().catch((err) => {
                   alert(err.message);
                 });
               }

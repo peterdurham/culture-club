@@ -3,7 +3,6 @@ import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import { ALL_MOVIES_QUERY } from "./Movies";
 import styled from "styled-components";
-import { GoTrashcan } from "react-icons/go";
 
 const DELETE_MOVIE_MUTATION = gql`
   mutation DELETE_MOVIE_MUTATION($id: ID!) {
@@ -21,7 +20,7 @@ class DeleteMovie extends Component {
     console.log(data, payload);
     // 2. Filter the deleted item out of the page
     data.movies = data.movies.filter(
-      movie => movie.id !== payload.data.deleteMovie.id
+      (movie) => movie.id !== payload.data.deleteMovie.id
     );
     // 3. Put the items back!
     cache.writeQuery({ query: ALL_MOVIES_QUERY, data });
@@ -35,15 +34,16 @@ class DeleteMovie extends Component {
       >
         {(deleteMovie, { error }) => (
           <button
+            className="button"
             onClick={() => {
               if (confirm("Are you sure you want to delete this Movie?")) {
-                deleteMovie().catch(err => {
+                deleteMovie().catch((err) => {
                   alert(err.message);
                 });
               }
             }}
           >
-            <GoTrashcan />
+            {this.props.children}
           </button>
         )}
       </Mutation>

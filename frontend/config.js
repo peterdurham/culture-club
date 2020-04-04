@@ -81,72 +81,6 @@ export const BookGenres = [
     title: "Self Help",
   },
 ];
-export const GameGenres = [
-  {
-    value: "UNSELECTED",
-    title: "Select a genre",
-  },
-  {
-    value: "RPG",
-    title: "Role Playing Game (RPG)",
-  },
-  {
-    value: "ACTION",
-    title: "Anime",
-  },
-  {
-    value: "FIGHTING",
-    title: "Fighting",
-  },
-  {
-    value: "ADVENTURE",
-    title: "Adventure",
-  },
-  {
-    value: "SIMULATION",
-    title: "Simulation",
-  },
-  {
-    value: "SCI_FI",
-    title: "Sci-Fi",
-  },
-  {
-    value: "SPORTS",
-    title: "Sports",
-  },
-  {
-    value: "CARD_OR_BOARD",
-    title: "Card/Board Game",
-  },
-  {
-    value: "PLATFORM",
-    title: "Platform",
-  },
-  {
-    value: "STEALTH",
-    title: "Stealth",
-  },
-  {
-    value: "SURVIVAL",
-    title: "Survival",
-  },
-  {
-    value: "MMORPG",
-    title: "MMORPG",
-  },
-  {
-    value: "SHOOTER",
-    title: "Shooter",
-  },
-  {
-    value: "STRATEGY",
-    title: "Strategy",
-  },
-  {
-    value: "VR",
-    title: "Virtual Reality",
-  },
-];
 
 export const MovieGenres = [
   {
@@ -210,7 +144,72 @@ export const MovieGenres = [
     title: "Sports",
   },
 ];
-
+export const GameGenres = [
+  {
+    value: "UNSELECTED",
+    title: "Select a genre",
+  },
+  {
+    value: "RPG",
+    title: "RPG",
+  },
+  {
+    value: "ACTION",
+    title: "Anime",
+  },
+  {
+    value: "FIGHTING",
+    title: "Fighting",
+  },
+  {
+    value: "ADVENTURE",
+    title: "Adventure",
+  },
+  {
+    value: "SIMULATION",
+    title: "Simulation",
+  },
+  {
+    value: "SCI_FI",
+    title: "Sci-Fi",
+  },
+  {
+    value: "SPORTS",
+    title: "Sports",
+  },
+  {
+    value: "CARD_OR_BOARD",
+    title: "Card/Board",
+  },
+  {
+    value: "PLATFORM",
+    title: "Platform",
+  },
+  {
+    value: "STEALTH",
+    title: "Stealth",
+  },
+  {
+    value: "SURVIVAL",
+    title: "Survival",
+  },
+  {
+    value: "MMORPG",
+    title: "MMORPG",
+  },
+  {
+    value: "SHOOTER",
+    title: "Shooter",
+  },
+  {
+    value: "STRATEGY",
+    title: "Strategy",
+  },
+  {
+    value: "VR",
+    title: "VR",
+  },
+];
 export const GamePlatforms = [
   {
     value: "UNSELECTED",
@@ -226,7 +225,7 @@ export const GamePlatforms = [
   },
   {
     value: "N64",
-    title: "Nintendo 64",
+    title: "N64",
   },
   {
     value: "DREAMCAST",
@@ -254,18 +253,36 @@ export const GamePlatforms = [
   },
   {
     value: "PSX",
-    title: "Playstation",
+    title: "PSX",
   },
   {
     value: "PS2",
-    title: "Playstation 2",
+    title: "PS2",
   },
   {
     value: "PS3",
-    title: "Playstation 3",
+    title: "PS3",
   },
   {
     value: "PS4",
-    title: "Playstation 4",
+    title: "PS4",
+  },
+];
+export const GameNumPlayers = [
+  {
+    value: "SINGLE_PLAYER_OFFLINE",
+    title: "Single player offline ",
+  },
+  {
+    value: "MULTI_PLAYER_OFFLINE",
+    title: "Multiplayer online",
+  },
+  {
+    value: "SINGLE_PLAYER_ONLINE",
+    title: "Single player offline",
+  },
+  {
+    value: "MULTI_PLAYER_ONLINE",
+    title: "Multiplayer online",
   },
 ];
