@@ -117,6 +117,7 @@ class CreateBook extends Component {
           >
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
+              <h2>Add Book</h2>
               <label htmlFor="file">
                 Image*
                 <input

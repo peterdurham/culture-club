@@ -1,271 +1,271 @@
 // This is client side config only - don't put anything in here that shouldn't be public!
 export const endpoint = `http://localhost:4444`;
 export const prodEndpoint = `https://culture-club-yoga-prod.herokuapp.com/`;
-export const perPage = 16;
+export const perPage = 8;
 
 export const BookGenres = [
   {
     value: "UNSELECTED",
-    title: "Select a genre"
+    title: "Select a genre",
   },
   {
     value: "FANTASY",
-    title: "Fantasy"
+    title: "Fantasy",
   },
   {
     value: "SCI_FI",
-    title: "Sci-Fi"
+    title: "Sci-Fi",
   },
   {
     value: "CLASSICS",
-    title: "Classics"
+    title: "Classics",
   },
   {
     value: "HORROR",
-    title: "Horror"
+    title: "Horror",
   },
   {
     value: "MYSTERY",
-    title: "Mystery"
+    title: "Mystery",
   },
   {
     value: "COMIC",
-    title: "Comics"
+    title: "Comics",
   },
   {
     value: "PHILOSOPHY",
-    title: "Philosophy"
+    title: "Philosophy",
   },
   {
     value: "HISTORY",
-    title: "History"
+    title: "History",
   },
   {
     value: "MYTHOLOGY",
-    title: "Mythology"
+    title: "Mythology",
   },
   {
     value: "BUSINESS",
-    title: "Business"
+    title: "Business",
   },
   {
     value: "ECONOMICS",
-    title: "Economics"
+    title: "Economics",
   },
   {
     value: "SCIENCE",
-    title: "Science"
+    title: "Science",
   },
   {
     value: "ROMANCE",
-    title: "Romance"
+    title: "Romance",
   },
   {
     value: "WESTERN",
-    title: "Western"
+    title: "Western",
   },
   {
     value: "CHILDRENS",
-    title: "Children's"
+    title: "Children's",
   },
   {
     value: "BIOGRAPHY",
-    title: "Biography"
+    title: "Biography",
   },
   {
     value: "NEW_AGE",
-    title: "New Age"
+    title: "New Age",
   },
   {
     value: "SELF_HELP",
-    title: "Self Help"
-  }
+    title: "Self Help",
+  },
 ];
 export const GameGenres = [
   {
     value: "UNSELECTED",
-    title: "Select a genre"
+    title: "Select a genre",
   },
   {
     value: "RPG",
-    title: "Role Playing Game (RPG)"
+    title: "Role Playing Game (RPG)",
   },
   {
     value: "ACTION",
-    title: "Anime"
+    title: "Anime",
   },
   {
     value: "FIGHTING",
-    title: "Fighting"
+    title: "Fighting",
   },
   {
     value: "ADVENTURE",
-    title: "Adventure"
+    title: "Adventure",
   },
   {
     value: "SIMULATION",
-    title: "Simulation"
+    title: "Simulation",
   },
   {
     value: "SCI_FI",
-    title: "Sci-Fi"
+    title: "Sci-Fi",
   },
   {
     value: "SPORTS",
-    title: "Sports"
+    title: "Sports",
   },
   {
     value: "CARD_OR_BOARD",
-    title: "Card/Board Game"
+    title: "Card/Board Game",
   },
   {
     value: "PLATFORM",
-    title: "Platform"
+    title: "Platform",
   },
   {
     value: "STEALTH",
-    title: "Stealth"
+    title: "Stealth",
   },
   {
     value: "SURVIVAL",
-    title: "Survival"
+    title: "Survival",
   },
   {
     value: "MMORPG",
-    title: "MMORPG"
+    title: "MMORPG",
   },
   {
     value: "SHOOTER",
-    title: "Shooter"
+    title: "Shooter",
   },
   {
     value: "STRATEGY",
-    title: "Strategy"
+    title: "Strategy",
   },
   {
     value: "VR",
-    title: "Virtual Reality"
-  }
+    title: "Virtual Reality",
+  },
 ];
 
 export const MovieGenres = [
   {
     value: "UNSELECTED",
-    title: "Select a genre"
+    title: "Select a genre",
   },
   {
     value: "ACTION",
-    title: "Action"
+    title: "Action",
   },
   {
     value: "ANIME",
-    title: "Anime"
+    title: "Anime",
   },
   {
     value: "CLASSIC",
-    title: "Classic"
+    title: "Classic",
   },
   {
     value: "COMEDY",
-    title: "Comedy"
+    title: "Comedy",
   },
   {
     value: "DOCUMENTARY",
-    title: "Documentary"
+    title: "Documentary",
   },
   {
     value: "DRAMA",
-    title: "Drama"
+    title: "Drama",
   },
   {
     value: "HISTORY",
-    title: "History"
+    title: "History",
   },
   {
     value: "HORROR",
-    title: "Horror"
+    title: "Horror",
   },
   {
     value: "INDEPENDENT",
-    title: "Independent"
+    title: "Independent",
   },
   {
     value: "SCI_FI",
-    title: "Sci-Fi"
+    title: "Sci-Fi",
   },
   {
     value: "FANTASY",
-    title: "Fantasy"
+    title: "Fantasy",
   },
   {
     value: "THRILLER",
-    title: "Thriller"
+    title: "Thriller",
   },
   {
     value: "INTERNATIONAL",
-    title: "International"
+    title: "International",
   },
   {
     value: "SPORTS",
-    title: "Sports"
-  }
+    title: "Sports",
+  },
 ];
 
 export const GamePlatforms = [
   {
     value: "UNSELECTED",
-    title: "Select a platform"
+    title: "Select a platform",
   },
   {
     value: "PC",
-    title: "PC"
+    title: "PC",
   },
   {
     value: "SNES",
-    title: "SNES"
+    title: "SNES",
   },
   {
     value: "N64",
-    title: "Nintendo 64"
+    title: "Nintendo 64",
   },
   {
     value: "DREAMCAST",
-    title: "Dreamcast"
+    title: "Dreamcast",
   },
   {
     value: "GAMECUBE",
-    title: "Gamecube"
+    title: "Gamecube",
   },
   {
     value: "WII",
-    title: "Wii"
+    title: "Wii",
   },
   {
     value: "XBOX",
-    title: "Xbox"
+    title: "Xbox",
   },
   {
     value: "XBOX_360",
-    title: "Xbox 360"
+    title: "Xbox 360",
   },
   {
     value: "XBOX_ONE",
-    title: "Xbox One"
+    title: "Xbox One",
   },
   {
     value: "PSX",
-    title: "Playstation"
+    title: "Playstation",
   },
   {
     value: "PS2",
-    title: "Playstation 2"
+    title: "Playstation 2",
   },
   {
     value: "PS3",
-    title: "Playstation 3"
+    title: "Playstation 3",
   },
   {
     value: "PS4",
-    title: "Playstation 4"
-  }
+    title: "Playstation 4",
+  },
 ];

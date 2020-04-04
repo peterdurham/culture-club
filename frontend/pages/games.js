@@ -1,9 +1,19 @@
 import Games from "../components/Games";
+import Link from "next/link";
+import { GoPlus } from "react-icons/go";
 
-const GamesPage = props => {
+const GamesPage = (props) => {
   return (
     <div>
-      <h1>Games Page</h1>
+      <div className="flex-apart">
+        <h1>Games Page</h1>
+        <Link href="/add-game">
+          <a className="button">
+            <GoPlus />
+            Add Game
+          </a>
+        </Link>
+      </div>
       <Games filter="all" />
     </div>
   );

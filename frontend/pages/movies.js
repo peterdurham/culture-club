@@ -1,10 +1,20 @@
 import Movies from "../components/Movies";
+import Link from "next/link";
+import { GoPlus } from "react-icons/go";
 
-const MoviesPage = props => {
+const MoviesPage = (props) => {
   return (
     <div>
-      <h1>Movies Page</h1>
-      <Movies filter="all" />
+      <div className="flex-apart">
+        <h1>Movies Page</h1>
+        <Link href="/add-movie">
+          <a className="button">
+            <GoPlus />
+            Add Movie
+          </a>
+        </Link>
+      </div>
+      <Movies filter="all" page={parseFloat(props.query.page) || 1} />
     </div>
   );
 };

@@ -16,6 +16,9 @@ const ALL_MOVIES_QUERY = gql`
       title
       year
       description
+      genre1
+      genre2
+      genre3
       image
       largeImage
     }
@@ -27,108 +30,122 @@ const Center = styled.div`
 `;
 
 const MoviesList = styled.div`
-  display: grid;
+  /* display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-gap: 40px;
-  max-width: ${props => props.theme.maxWidth};
+  grid-gap: 40px; */
+
+  display: flex;
+  flex-wrap: wrap;
+  max-width: ${(props) => props.theme.maxWidth};
   margin: 40px auto 100px auto;
 `;
 
-class Movies extends Component {
-  render() {
-    const filters = ["all", "toWatch", "seenIt", "genre", "year"];
-    return (
-      <User>
-        {({ data: { me } }) => {
-          return (
-            <Center>
-              <SearchMovies />
-              <Pagination page={this.props.page} />
-              <Query
-                query={ALL_MOVIES_QUERY}
-                // fetchPolicy="network-only"
-                variables={{
-                  skip: this.props.page * perPage - perPage,
-                  first: perPage
-                }}
-              >
-                {({ data, error, loading }) => {
-                  if (loading) return <p>Loading...</p>;
-                  if (error) return <p>Error: {error.message}</p>;
+const Movies = (props) => {
+  const filters = ["all", "toWatch", "seenIt", "genre", "year"];
+  // const view = ["default", "wide", "list"];
+  const [view, setView] = React.useState("default");
+  // const view = "wide";
+  return (
+    <User>
+      {({ data: { me } }) => {
+        return (
+          <Center>
+            <SearchMovies />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "20px",
+              }}
+            >
+              <button className="button" onClick={() => setView("default")}>
+                Default
+              </button>
+              <button className="button" onClick={() => setView("wide")}>
+                Wide
+              </button>
+              <button className="button" onClick={() => setView("list")}>
+                List
+              </button>
+            </div>
+            <Pagination page={props.page} />
+            <Query
+              query={ALL_MOVIES_QUERY}
+              // fetchPolicy="network-only"
+              variables={{
+                skip: props.page * perPage - perPage,
+                first: perPage,
+              }}
+            >
+              {({ data, error, loading }) => {
+                if (loading) return <p>Loading...</p>;
+                if (error) return <p>Error: {error.message}</p>;
 
-                  return (
-                    <MoviesList>
-                      {this.props.filter === "all" && (
-                        <>
-                          {data.movies.map(movie => (
-                            <MovieCard movie={movie} key={movie.id} me={me} />
-                          ))}
-                        </>
-                      )}
-                      {this.props.filter === "toWatch" && (
-                        <>
-                          {data.movies
-                            .filter(movie => {
-                              const toWatchIds = me.toWatch.map(
-                                item => item.movie.id
-                              );
-
-                              return toWatchIds.indexOf(movie.id) > -1;
-                            })
-                            .map(movie => (
-                              <MovieCard movie={movie} key={movie.id} me={me} />
-                            ))}
-                        </>
-                      )}
-                      {this.props.filter === "seenIt" && (
-                        <>
-                          {data.movies
-                            .filter(movie => {
-                              const seenItIds = me.seenIt.map(
-                                item => item.movie.id
-                              );
-
-                              return seenItIds.indexOf(movie.id) > -1;
-                            })
-                            .map(movie => (
-                              <MovieCard movie={movie} key={movie.id} me={me} />
-                            ))}
-                        </>
-                      )}
-                      {/* {this.props.filter === "genre" && (
-                        <>
+                return (
+                  <MoviesList>
+                    {props.filter === "all" && (
+                      <>
+                        {data.movies.map((movie) => (
+                          <MovieCard
+                            movie={movie}
+                            key={movie.id}
+                            me={me}
+                            view={view}
+                          />
+                        ))}
+                      </>
+                    )}
+                    {props.filter === "toWatch" && (
+                      <>
                         {data.movies
-                          .filter(movie => {
+                          .filter((movie) => {
+                            const toWatchIds = me.toWatch.map(
+                              (item) => item.movie.id
+                            );
+
+                            return toWatchIds.indexOf(movie.id) > -1;
+                          })
+                          .map((movie) => (
+                            <MovieCard
+                              movie={movie}
+                              key={movie.id}
+                              me={me}
+                              view={view}
+                            />
+                          ))}
+                      </>
+                    )}
+                    {props.filter === "seenIt" && (
+                      <>
+                        {data.movies
+                          .filter((movie) => {
                             const seenItIds = me.seenIt.map(
-                              item => item.movie.id
+                              (item) => item.movie.id
                             );
 
                             return seenItIds.indexOf(movie.id) > -1;
                           })
-                          .map(movie => (
-                            <MovieCard movie={movie} key={movie.id} me={me} />
+                          .map((movie) => (
+                            <MovieCard
+                              movie={movie}
+                              key={movie.id}
+                              me={me}
+                              view={view}
+                            />
                           ))}
                       </>
-                      )}
-                      {this.props.filter === "year" && (
-                        <>
-                          {data.movies.map(movie => (
-                            <MovieCard movie={movie} key={movie.id} me={me} />
-                          ))}
-                        </>
-                      )} */}
-                    </MoviesList>
-                  );
-                }}
-              </Query>
-              <Pagination page={this.props.page} />
-            </Center>
-          );
-        }}
-      </User>
-    );
-  }
-}
+                    )}
+                  </MoviesList>
+                );
+              }}
+            </Query>
+            <Pagination page={props.page} />
+          </Center>
+        );
+      }}
+    </User>
+  );
+};
 
 export default Movies;
 export { ALL_MOVIES_QUERY };

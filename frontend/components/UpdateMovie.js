@@ -72,7 +72,7 @@ const UPDATE_MOVIE_MUTATION = gql`
 
 class UpdateMovie extends Component {
   state = {};
-  handleChange = e => {
+  handleChange = (e) => {
     const { name, type, value } = e.target;
     const val = type === "number" ? parseFloat(value) : value;
     this.setState({ [name]: val });
@@ -84,8 +84,8 @@ class UpdateMovie extends Component {
     const res = await updateMovieMutation({
       variables: {
         id: this.props.id,
-        ...this.state
-      }
+        ...this.state,
+      },
     });
     console.log("Updated!!");
   };
@@ -95,7 +95,7 @@ class UpdateMovie extends Component {
       <Query
         query={SINGLE_MOVIE_QUERY}
         variables={{
-          id: this.props.id
+          id: this.props.id,
         }}
       >
         {({ data, loading }) => {
@@ -104,7 +104,7 @@ class UpdateMovie extends Component {
           return (
             <Mutation mutation={UPDATE_MOVIE_MUTATION} variables={this.state}>
               {(updateMovie, { loading, error }) => (
-                <Form onSubmit={e => this.updateMovie(e, updateMovie)}>
+                <Form onSubmit={(e) => this.updateMovie(e, updateMovie)}>
                   <Error error={error} />
                   <fieldset disabled={loading} aria-busy={loading}>
                     <label htmlFor="title">
@@ -168,27 +168,6 @@ class UpdateMovie extends Component {
                       />
                     </label>
 
-                    <label htmlFor="budget">
-                      Budget
-                      <textarea
-                        id="budget"
-                        name="budget"
-                        placeholder="Budget"
-                        defaultValue={data.movie.budget}
-                        onChange={this.handleChange}
-                      />
-                    </label>
-
-                    <label htmlFor="gross">
-                      Gross
-                      <textarea
-                        id="gross"
-                        name="gross"
-                        placeholder="Gross"
-                        defaultValue={data.movie.gross}
-                        onChange={this.handleChange}
-                      />
-                    </label>
                     <label htmlFor="genre1">
                       Genre
                       <select
@@ -197,7 +176,7 @@ class UpdateMovie extends Component {
                         onChange={this.handleChange}
                         defaultValue={data.movie.genre1}
                       >
-                        {MovieGenres.map(genre => {
+                        {MovieGenres.map((genre) => {
                           return (
                             <option value={genre.value} key={genre.value}>
                               {genre.title}
@@ -215,7 +194,7 @@ class UpdateMovie extends Component {
                           onChange={this.handleChange}
                           defaultValue={data.movie.genre2}
                         >
-                          {MovieGenres.map(genre => {
+                          {MovieGenres.map((genre) => {
                             return (
                               <option value={genre.value} key={genre.value}>
                                 {genre.title}
@@ -235,7 +214,7 @@ class UpdateMovie extends Component {
                             onChange={this.handleChange}
                             defaultValue={data.movie.genre3}
                           >
-                            {MovieGenres.map(genre => {
+                            {MovieGenres.map((genre) => {
                               return (
                                 <option value={genre.value} key={genre.value}>
                                   {genre.title}
@@ -252,6 +231,27 @@ class UpdateMovie extends Component {
                         name="imdbURL"
                         placeholder="IMDB URL"
                         defaultValue={data.movie.imdbURL}
+                        onChange={this.handleChange}
+                      />
+                    </label>
+                    <label htmlFor="budget">
+                      Budget
+                      <textarea
+                        id="budget"
+                        name="budget"
+                        placeholder="Budget"
+                        defaultValue={data.movie.budget}
+                        onChange={this.handleChange}
+                      />
+                    </label>
+
+                    <label htmlFor="gross">
+                      Gross
+                      <textarea
+                        id="gross"
+                        name="gross"
+                        placeholder="Gross"
+                        defaultValue={data.movie.gross}
                         onChange={this.handleChange}
                       />
                     </label>

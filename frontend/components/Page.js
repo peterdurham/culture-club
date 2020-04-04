@@ -11,18 +11,18 @@ const theme = {
   lightgrey: "#e1e1e1",
   offWhite: "#ededed",
   maxWidth: "1240px",
-  bs: "0 12px 24px 0 rgba(0, 0, 0, 0.09)"
+  bs: "0 12px 24px 0 rgba(0, 0, 0, 0.09)",
 };
 
 const StyledPage = styled.div`
   background: white;
-  color: ${props => props.theme.black};
+  color: ${(props) => props.theme.black};
 `;
 
 const Inner = styled.div`
-  max-width: ${props => props.theme.maxWidth};
+  max-width: ${(props) => props.theme.maxWidth};
   margin: 0 auto;
-  background: ${props => props.theme.white};
+  background: ${(props) => props.theme.white};
   padding: 2rem;
 `;
 
@@ -62,6 +62,31 @@ font-family: 'Fira Sans Condensed', sans-serif;
       text-decoration: none;
       color: ${theme.black};
   }
+  .button {
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: rgb(60,66,87);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 14px;
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(60, 66, 87, 0.16) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(60, 66, 87, 0.12) 0px 2px 5px 0px;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+}
+.button:hover {
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(60, 66, 87, 0.16) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(60, 66, 87, .12) 0px 3px 9px 0px, rgba(60, 66, 87, 0.12) 0px 2px 5px 0px;
+}
+.button svg {
+  margin-right: 4px;
+}
+.flex-apart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 `;
 
 class Page extends Component {

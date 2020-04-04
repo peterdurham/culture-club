@@ -7,11 +7,7 @@ import User from "../components/User";
 import CartStyles from "./styles/CartStyles";
 import Supreme from "./styles/Supreme";
 import CloseButton from "./styles/CloseButton";
-import SickButton from "./styles/SickButton";
 import CartItem from "./CartItem";
-import calcTotalPrice from "../lib/calcTotalPrice";
-import formatMoney from "../lib/formatMoney";
-import TakeMyMoney from "./TakeMyMoney";
 
 const LOCAL_STATE_QUERY = gql`
   query {
@@ -30,7 +26,7 @@ const Composed = adopt({
   toggleCart: ({ render }) => (
     <Mutation mutation={TOGGLE_CART_MUTATION}>{render}</Mutation>
   ),
-  localState: ({ render }) => <Query query={LOCAL_STATE_QUERY}>{render}</Query>
+  localState: ({ render }) => <Query query={LOCAL_STATE_QUERY}>{render}</Query>,
 });
 /* eslint-enable */
 
@@ -48,45 +44,40 @@ const Cart = () => {
                 &times;
               </CloseButton>
               <Supreme>{me.name}'s Lists</Supreme>
-              <p>
-                You have {me.cart.length} Item
-                {me.cart.length > 1 && "s"} in your cart
-              </p>
             </header>
-            <div style={{ display: "flex", flexDirection: "column" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                fontSize: "24px",
+                fontWeight: "700",
+              }}
+            >
               <Link href="/to-watch">
-                <a>Movies to see ({me.toWatch.length})</a>
+                <a>Movies To See ({me.toWatch.length})</a>
               </Link>
               <Link href="/to-play">
-                <a>Games to play ({me.toPlay.length})</a>
+                <a>Games To Play ({me.toPlay.length})</a>
               </Link>
               <Link href="/to-read">
-                <a>Books to read ({me.toRead.length})</a>
+                <a>Books To Read ({me.toRead.length})</a>
               </Link>
+              <hr />
               <Link href="/seen-it">
-                <a>Movies i've seen ({me.seenIt.length})</a>
+                <a>Movies I've Seen ({me.seenIt.length})</a>
               </Link>
               <Link href="/played-it">
-                <a>Games i've played ({me.playedIt.length})</a>
+                <a>Games I've Played ({me.playedIt.length})</a>
               </Link>
               <Link href="/read-it">
-                <a>Books i've read ({me.readIt.length})</a>
+                <a>Books I've Read ({me.readIt.length})</a>
               </Link>
             </div>
             <ul>
-              {me.cart.map(cartItem => (
+              {me.cart.map((cartItem) => (
                 <CartItem key={cartItem.id} cartItem={cartItem} />
               ))}
             </ul>
-            <footer>
-              <p>{formatMoney(calcTotalPrice(me.cart))}</p>
-
-              {me.cart.length && (
-                <TakeMyMoney>
-                  <SickButton>Checkout</SickButton>
-                </TakeMyMoney>
-              )}
-            </footer>
           </CartStyles>
         );
       }}

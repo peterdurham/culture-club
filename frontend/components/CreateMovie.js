@@ -57,15 +57,15 @@ class CreateMovie extends Component {
     genre2: "UNSELECTED",
     genre3: "UNSELECTED",
     image: "",
-    largeImage: ""
+    largeImage: "",
   };
-  handleChange = e => {
+  handleChange = (e) => {
     const { name, type, value } = e.target;
     const val = type === "number" ? parseFloat(value) : value;
     this.setState({ [name]: val });
   };
 
-  uploadFile = async e => {
+  uploadFile = async (e) => {
     console.log("uploading file...");
     const files = e.target.files;
     const data = new FormData();
@@ -76,14 +76,14 @@ class CreateMovie extends Component {
       "https://api.cloudinary.com/v1_1/peterdurham/image/upload",
       {
         method: "POST",
-        body: data
+        body: data,
       }
     );
     const file = await res.json();
     console.log(file);
     this.setState({
       image: file.secure_url,
-      largeImage: file.eager[0].secure_url
+      largeImage: file.eager[0].secure_url,
     });
   };
   render() {
@@ -91,7 +91,7 @@ class CreateMovie extends Component {
       <Mutation mutation={CREATE_MOVIE_MUTATION} variables={this.state}>
         {(createMovie, { loading, error }) => (
           <Form
-            onSubmit={async e => {
+            onSubmit={async (e) => {
               // Stop the form from submitting
               e.preventDefault();
               // call the mutation
@@ -100,12 +100,13 @@ class CreateMovie extends Component {
               console.log(res);
               Router.push({
                 pathname: "/movie",
-                query: { id: res.data.createMovie.id }
+                query: { id: res.data.createMovie.id },
               });
             }}
           >
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
+              <h2>Add Movie</h2>
               <label htmlFor="file">
                 Image*
                 <input
@@ -187,6 +188,74 @@ class CreateMovie extends Component {
                 />
               </label>
 
+              <label htmlFor="genre1">
+                Genre
+                <select
+                  id="genre1"
+                  name="genre1"
+                  onChange={this.handleChange}
+                  defaultValue="UNSELECTED"
+                >
+                  {MovieGenres.map((genre) => {
+                    return (
+                      <option value={genre.value} key={genre.value}>
+                        {genre.title}
+                      </option>
+                    );
+                  })}
+                </select>
+              </label>
+              {this.state.genre1 !== "UNSELECTED" && (
+                <label htmlFor="genre2">
+                  Genre 2
+                  <select
+                    id="genre2"
+                    name="genre2"
+                    onChange={this.handleChange}
+                    defaultValue="UNSELECTED"
+                  >
+                    {MovieGenres.map((genre) => {
+                      return (
+                        <option value={genre.value} key={genre.value}>
+                          {genre.title}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </label>
+              )}
+              {this.state.genre2 !== "UNSELECTED" &&
+                this.state.genre1 !== "UNSELECTED" && (
+                  <label htmlFor="genre3">
+                    Genre 3
+                    <select
+                      id="genre3"
+                      name="genre3"
+                      onChange={this.handleChange}
+                      defaultValue="UNSELECTED"
+                    >
+                      {MovieGenres.map((genre) => {
+                        return (
+                          <option value={genre.value} key={genre.value}>
+                            {genre.title}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </label>
+                )}
+
+              <label htmlFor="imdbURL">
+                imdb URL
+                <input
+                  type="text"
+                  id="imdbURL"
+                  name="imdbURL"
+                  placeholder="imdb URL"
+                  value={this.state.imdbURL}
+                  onChange={this.handleChange}
+                />
+              </label>
               <label htmlFor="budget">
                 Budget ($)
                 <input
@@ -210,75 +279,6 @@ class CreateMovie extends Component {
                   onChange={this.handleChange}
                 />
               </label>
-
-              <label htmlFor="imdbURL">
-                imdb URL
-                <input
-                  type="text"
-                  id="imdbURL"
-                  name="imdbURL"
-                  placeholder="imdb URL"
-                  value={this.state.imdbURL}
-                  onChange={this.handleChange}
-                />
-              </label>
-              <label htmlFor="genre1">
-                Genre
-                <select
-                  id="genre1"
-                  name="genre1"
-                  onChange={this.handleChange}
-                  defaultValue="UNSELECTED"
-                >
-                  {MovieGenres.map(genre => {
-                    return (
-                      <option value={genre.value} key={genre.value}>
-                        {genre.title}
-                      </option>
-                    );
-                  })}
-                </select>
-              </label>
-              {this.state.genre1 !== "UNSELECTED" && (
-                <label htmlFor="genre2">
-                  Genre 2
-                  <select
-                    id="genre2"
-                    name="genre2"
-                    onChange={this.handleChange}
-                    defaultValue="UNSELECTED"
-                  >
-                    {MovieGenres.map(genre => {
-                      return (
-                        <option value={genre.value} key={genre.value}>
-                          {genre.title}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </label>
-              )}
-              {this.state.genre2 !== "UNSELECTED" &&
-                this.state.genre1 !== "UNSELECTED" && (
-                  <label htmlFor="genre3">
-                    Genre 3
-                    <select
-                      id="genre3"
-                      name="genre3"
-                      onChange={this.handleChange}
-                      defaultValue="UNSELECTED"
-                    >
-                      {MovieGenres.map(genre => {
-                        return (
-                          <option value={genre.value} key={genre.value}>
-                            {genre.title}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </label>
-                )}
-
               <button type="submit">Submit</button>
             </fieldset>
           </Form>

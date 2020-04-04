@@ -1,10 +1,13 @@
 import SingleMovie from "../components/SingleMovie";
+import User from "../components/User";
 
-const Movie = props => {
+const Movie = (props) => {
   return (
-    <div>
-      <SingleMovie id={props.query.id} />
-    </div>
+    <User>
+      {({ data: { me } }) => {
+        return <SingleMovie id={props.query.id} me={me} />;
+      }}
+    </User>
   );
 };
 
