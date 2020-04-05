@@ -1,5 +1,5 @@
-# source: https://us1.prisma.sh/peter-durham-ae1855/culture-club/dev
-# timestamp: Sat Apr 04 2020 17:51:07 GMT-0700 (Pacific Daylight Time)
+# source: https://culture-club-prod-6ac1562427.herokuapp.com/culture-club-production/prod
+# timestamp: Sun Apr 05 2020 13:53:15 GMT-0700 (Pacific Daylight Time)
 
 type AggregateBook {
   count: Int!
@@ -66,7 +66,7 @@ type Book implements Node {
   id: ID!
   title: String!
   author: String!
-  description: String!
+  description: String
   year: Int!
   genre1: BookGenre!
   genre2: BookGenre
@@ -93,7 +93,7 @@ input BookCreateInput {
   id: ID
   title: String!
   author: String!
-  description: String!
+  description: String
   year: Int!
   genre1: BookGenre!
   genre2: BookGenre
@@ -182,7 +182,7 @@ type BookPreviousValues {
   id: ID!
   title: String!
   author: String!
-  description: String!
+  description: String
   year: Int!
   genre1: BookGenre!
   genre2: BookGenre
@@ -1004,7 +1004,7 @@ type Game implements Node {
   id: ID!
   title: String!
   developer: String
-  description: String!
+  description: String
   year: Int!
   numPlayers: NumPlayers
   genre1: GameGenre!
@@ -1033,7 +1033,7 @@ input GameCreateInput {
   id: ID
   title: String!
   developer: String
-  description: String!
+  description: String
   year: Int!
   numPlayers: NumPlayers
   genre1: GameGenre!
@@ -1066,9 +1066,9 @@ enum GameGenre {
   UNSELECTED
   ACTION
   ADVENTURE
-  FIGHTING
   BOARD
   CARD
+  FIGHTING
   MMORPG
   PLATFORM
   PUZZLE
@@ -1143,7 +1143,7 @@ type GamePreviousValues {
   id: ID!
   title: String!
   developer: String
-  description: String!
+  description: String
   year: Int!
   numPlayers: NumPlayers
   genre1: GameGenre!
@@ -2097,7 +2097,7 @@ scalar Long
 type Movie implements Node {
   id: ID!
   title: String!
-  description: String!
+  description: String
   director: String
   year: Int!
   genre1: MovieGenre!
@@ -2125,7 +2125,7 @@ type MovieConnection {
 input MovieCreateInput {
   id: ID
   title: String!
-  description: String!
+  description: String
   director: String
   year: Int!
   genre1: MovieGenre!
@@ -2216,7 +2216,7 @@ enum MovieOrderByInput {
 type MoviePreviousValues {
   id: ID!
   title: String!
-  description: String!
+  description: String
   director: String
   year: Int!
   genre1: MovieGenre!

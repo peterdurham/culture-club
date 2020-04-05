@@ -12,67 +12,7 @@ import DeleteBook from "./DeleteBook";
 import Error from "./ErrorMessage";
 import { TiEdit } from "react-icons/ti";
 import { BookGenres } from "../config";
-
-const DetailsPageStyles = styled.div`
-  max-width: 960px;
-  margin: 2rem auto;
-  /* box-shadow: ${(props) => props.theme.bs}; */
-
-  display: flex;
-  min-height: 800px;
-  padding: 0 4rem;
-  position:relative;
-
-.singleImageContainer {
-  width: 200px;
-    height: 300px;
-}
-  .singleImageContainer img {
-    width: 200px;
-    height: 300px;
-    object-fit: contain;
-  }
-  .singleButtons {
-    display: flex;
-
-  }
-  .singleButtons button {
-    margin-right: 8px;
-  }
-  .singleDetails {
-    padding: 4px 24px;
-  }
-  .singleActions {
-    position:absolute;
-    top: 12px;
-    left: 186px;
-  }
-  .singleTitle {
-    font-size: 3.5rem;
-    line-height: 4.7rem;
-  }
- 
-  .singleEdit {
-    display: inline-block;
-    width: 46.55px;
-  }
-  .description {
-    width: 70%;
-  }
-  .genre {
-    font-size: 14.4px;
-    color: #000;
-    display: inline-block;
-    cursor: pointer;
-  }
-  .genre:hover {
-    text-decoration: underline;
-  }
-  h2,
-  h4 {
-    margin: 0;
-  }
-`;
+import DetailsPageStyles from "./styles/DetailsPage";
 
 const SINGLE_BOOK_QUERY = gql`
   query SINGLE_BOOK_QUERY($id: ID!) {
@@ -156,7 +96,20 @@ class SingleBook extends Component {
               <div className="singleDetails">
                 <div>
                   <h2 className="singleTitle">{book.title} </h2>
-                  <div className="singleYear">({book.year})</div>
+
+                  <div className="singleYear">
+                    <Link
+                      href={{
+                        pathname: "/year",
+                        query: {
+                          type: "book",
+                          year: book.year,
+                        },
+                      }}
+                    >
+                      <a>({book.year})</a>
+                    </Link>
+                  </div>
                   <div className="singleActions">
                     <Link
                       href={{
@@ -170,20 +123,71 @@ class SingleBook extends Component {
                     <DeleteBook id={book.id}>Delete</DeleteBook>
                   </div>
                 </div>
+
                 {book.author && (
                   <div>
-                    <span className="bold">Author: </span> {book.author}
+                    <Link
+                      href={{
+                        pathname: "/author",
+                        query: {
+                          type: "book",
+                          author: book.author,
+                        },
+                      }}
+                    >
+                      <a>
+                        <span className="bold">Author: </span> {book.author}
+                      </a>
+                    </Link>
                   </div>
                 )}
                 <div className="singleGenres">
                   <span className="bold">Genres: </span>
-                  <span>{genreLabels[0]}</span>
-                  {book.genre2 !== "UNSELECTED" && (
-                    <span>, {genreLabels[1]}</span>
-                  )}
-                  {book.genre3 !== "UNSELECTED" && (
-                    <span>, {genreLabels[2]}</span>
-                  )}
+
+                  <Link
+                    href={{
+                      pathname: "/genre",
+                      query: {
+                        type: "book",
+                        genre: book.genre1.toLowerCase(),
+                      },
+                    }}
+                  >
+                    <a>
+                      <span>{genreLabels[0]}</span>
+                    </a>
+                  </Link>
+                  <Link
+                    href={{
+                      pathname: "/genre",
+                      query: {
+                        type: "book",
+                        genre: book.genre2.toLowerCase(),
+                      },
+                    }}
+                  >
+                    <a>
+                      {book.genre2 !== "UNSELECTED" && (
+                        <span>, {genreLabels[1]}</span>
+                      )}
+                    </a>
+                  </Link>
+
+                  <Link
+                    href={{
+                      pathname: "/genre",
+                      query: {
+                        type: "book",
+                        genre: book.genre3.toLowerCase(),
+                      },
+                    }}
+                  >
+                    <a>
+                      {book.genre3 !== "UNSELECTED" && (
+                        <span>, {genreLabels[2]}</span>
+                      )}
+                    </a>
+                  </Link>
                 </div>
                 {book.printLength && (
                   <div>
@@ -193,7 +197,20 @@ class SingleBook extends Component {
                 )}
                 {book.publisher && (
                   <div>
-                    <span className="bold">publisher: </span> {book.publisher}
+                    <Link
+                      href={{
+                        pathname: "/publisher",
+                        query: {
+                          type: "book",
+                          publisher: book.publisher,
+                        },
+                      }}
+                    >
+                      <a>
+                        <span className="bold">publisher: </span>{" "}
+                        {book.publisher}
+                      </a>
+                    </Link>
                   </div>
                 )}
                 {book.pdfURL && (

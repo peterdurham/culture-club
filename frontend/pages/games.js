@@ -8,9 +8,9 @@ const GamesPage = (props) => {
       <div className="flex-apart">
         <h1>Games Page</h1>
         <Link href="/add-game">
-          <a className="button">
-            <GoPlus />
+          <a className="button new-button">
             Add Game
+            <GoPlus />
           </a>
         </Link>
       </div>

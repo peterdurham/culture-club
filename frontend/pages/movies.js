@@ -8,9 +8,9 @@ const MoviesPage = (props) => {
       <div className="flex-apart">
         <h1>Movies Page</h1>
         <Link href="/add-movie">
-          <a className="button">
-            <GoPlus />
+          <a className="button new-button">
             Add Movie
+            <GoPlus />
           </a>
         </Link>
       </div>

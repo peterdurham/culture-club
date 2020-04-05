@@ -51,12 +51,26 @@ const Games = (props) => {
   const filters = ["all", "toPlay", "playedIt", "genre", "year"];
   // const view = ["default", "wide", "list"];
 
-  // const view = "wide";
   return (
     <User>
       {({ data: { me } }) => {
         return (
           <Center>
+            {props.genre && (
+              <h1 className="page-header">{props.genreLabel} Games</h1>
+            )}
+            {props.platform && (
+              <h1 className="page-header">{props.platformLabel} Games</h1>
+            )}
+            {props.year && (
+              <h1 className="page-header">Games from {props.year}</h1>
+            )}
+            {props.developer && (
+              <h1 className="page-header">Games by {props.developer}</h1>
+            )}
+            {props.players && (
+              <h1 className="page-header">{props.playersLabel} Games</h1>
+            )}
             <SearchGames />
             <div className="cardStyleButtons">
               <button
@@ -131,6 +145,92 @@ const Games = (props) => {
                             );
 
                             return playedItIds.indexOf(game.id) > -1;
+                          })
+                          .map((game) => (
+                            <Game
+                              game={game}
+                              key={game.id}
+                              me={me}
+                              cardView={props.cardView}
+                            />
+                          ))}
+                      </>
+                    )}
+                    {props.filter === "genre" && (
+                      <>
+                        {data.games
+                          .filter((game) => {
+                            const first = game.genre1 === props.genre;
+                            const second = game.genre2 === props.genre;
+                            const third = game.genre3 === props.genre;
+                            return first || second || third;
+                          })
+                          .map((game) => (
+                            <Game
+                              game={game}
+                              key={game.id}
+                              me={me}
+                              cardView={props.cardView}
+                            />
+                          ))}
+                      </>
+                    )}
+                    {props.filter === "platform" && (
+                      <>
+                        {data.games
+                          .filter((game) => {
+                            const first = game.platform1 === props.platform;
+                            const second = game.platform2 === props.platform;
+                            const third = game.platform3 === props.platform;
+                            return first || second || third;
+                          })
+                          .map((game) => (
+                            <Game
+                              game={game}
+                              key={game.id}
+                              me={me}
+                              cardView={props.cardView}
+                            />
+                          ))}
+                      </>
+                    )}
+                    {props.filter === "year" && (
+                      <>
+                        {data.games
+                          .filter((game) => {
+                            return game.year === Number(props.year);
+                          })
+                          .map((game) => (
+                            <Game
+                              game={game}
+                              key={game.id}
+                              me={me}
+                              cardView={props.cardView}
+                            />
+                          ))}
+                      </>
+                    )}
+                    {props.filter === "developer" && (
+                      <>
+                        {data.games
+                          .filter((game) => {
+                            return game.developer === props.developer;
+                          })
+                          .map((game) => (
+                            <Game
+                              game={game}
+                              key={game.id}
+                              me={me}
+                              cardView={props.cardView}
+                            />
+                          ))}
+                      </>
+                    )}
+                    {props.filter === "players" && (
+                      <>
+                        {data.games
+                          .filter((game) => {
+                            return game.numPlayers === props.players;
                           })
                           .map((game) => (
                             <Game

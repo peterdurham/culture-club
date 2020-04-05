@@ -12,67 +12,7 @@ import DeleteGame from "./DeleteGame";
 import Error from "./ErrorMessage";
 import { TiEdit } from "react-icons/ti";
 import { GameGenres, GamePlatforms, GameNumPlayers } from "../config";
-
-const DetailsPageStyles = styled.div`
-  max-width: 960px;
-  margin: 2rem auto;
-  /* box-shadow: ${(props) => props.theme.bs}; */
-
-  display: flex;
-  min-height: 800px;
-  padding: 0 4rem;
-  position:relative;
-
-.singleImageContainer {
-  width: 200px;
-    height: 300px;
-}
-  .singleImageContainer img {
-    width: 200px;
-    height: 300px;
-    object-fit: contain;
-  }
-  .singleButtons {
-    display: flex;
-
-  }
-  .singleButtons button {
-    margin-right: 8px;
-  }
-  .singleDetails {
-    padding: 4px 24px;
-  }
-  .singleActions {
-    position:absolute;
-    top: 12px;
-    left: 186px;
-  }
-  .singleTitle {
-    font-size: 3.5rem;
-    line-height: 4.7rem;
-  }
- 
-  .singleEdit {
-    display: inline-block;
-    width: 46.55px;
-  }
-  .description {
-    width: 70%;
-  }
-  .genre {
-    font-size: 14.4px;
-    color: #000;
-    display: inline-block;
-    cursor: pointer;
-  }
-  .genre:hover {
-    text-decoration: underline;
-  }
-  h2,
-  h4 {
-    margin: 0;
-  }
-`;
+import DetailsPageStyles from "./styles/DetailsPage";
 
 const SINGLE_GAME_QUERY = gql`
   query SINGLE_GAME_QUERY($id: ID!) {
@@ -183,7 +123,20 @@ class SingleGame extends Component {
               <div className="singleDetails">
                 <div>
                   <h2 className="singleTitle">{game.title} </h2>
-                  <div className="singleYear">({game.year})</div>
+
+                  <div className="singleYear">
+                    <Link
+                      href={{
+                        pathname: "/year",
+                        query: {
+                          type: "game",
+                          year: game.year,
+                        },
+                      }}
+                    >
+                      <a>({game.year})</a>
+                    </Link>
+                  </div>
                   <div className="singleActions">
                     <Link
                       href={{
@@ -200,28 +153,114 @@ class SingleGame extends Component {
 
                 <div className="singleGenres">
                   <span className="bold">Genres: </span>
-                  <span>{genreLabels[0]}</span>
-                  {game.genre2 !== "UNSELECTED" && (
-                    <span>, {genreLabels[1]}</span>
-                  )}
-                  {game.genre3 !== "UNSELECTED" && (
-                    <span>, {genreLabels[2]}</span>
-                  )}
+
+                  <Link
+                    href={{
+                      pathname: "/genre",
+                      query: {
+                        type: "game",
+                        genre: game.genre1.toLowerCase(),
+                      },
+                    }}
+                  >
+                    <a>
+                      <span>{genreLabels[0]}</span>
+                    </a>
+                  </Link>
+                  <Link
+                    href={{
+                      pathname: "/genre",
+                      query: {
+                        type: "game",
+                        genre: game.genre2.toLowerCase(),
+                      },
+                    }}
+                  >
+                    <a>
+                      {game.genre2 !== "UNSELECTED" && (
+                        <span>, {genreLabels[1]}</span>
+                      )}
+                    </a>
+                  </Link>
+                  <Link
+                    href={{
+                      pathname: "/genre",
+                      query: {
+                        type: "game",
+                        genre: game.genre3.toLowerCase(),
+                      },
+                    }}
+                  >
+                    <a>
+                      {game.genre3 !== "UNSELECTED" && (
+                        <span>, {genreLabels[2]}</span>
+                      )}
+                    </a>
+                  </Link>
                 </div>
                 <div className="singlePlatforms">
                   <span className="bold">Platforms: </span>
-                  <span>{platformLabels[0]}</span>
+                  <Link
+                    href={{
+                      pathname: "/platform",
+                      query: {
+                        type: "game",
+                        platform: game.platform1.toLowerCase(),
+                      },
+                    }}
+                  >
+                    <a>
+                      <span>{platformLabels[0]}</span>
+                    </a>
+                  </Link>
+
                   {game.platform2 !== "UNSELECTED" && (
-                    <span>, {platformLabels[1]}</span>
+                    <Link
+                      href={{
+                        pathname: "/platform",
+                        query: {
+                          type: "game",
+                          platform: game.platform3.toLowerCase(),
+                        },
+                      }}
+                    >
+                      <a>
+                        <span>, {platformLabels[1]}</span>
+                      </a>
+                    </Link>
                   )}
                   {game.platform3 !== "UNSELECTED" && (
-                    <span>, {platformLabels[2]}</span>
+                    <Link
+                      href={{
+                        pathname: "/platform",
+                        query: {
+                          type: "game",
+                          platform: game.platform3.toLowerCase(),
+                        },
+                      }}
+                    >
+                      <a>
+                        <span>, {platformLabels[2]}</span>
+                      </a>
+                    </Link>
                   )}
                 </div>
                 {game.developer && (
                   <div>
-                    <span className="bold">Developer: </span>
-                    {game.developer}
+                    <Link
+                      href={{
+                        pathname: "/developer",
+                        query: {
+                          type: "game",
+                          developer: game.developer,
+                        },
+                      }}
+                    >
+                      <a>
+                        <span className="bold">Developer: </span>
+                        {game.developer}
+                      </a>
+                    </Link>
                   </div>
                 )}
 

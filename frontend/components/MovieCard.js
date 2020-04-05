@@ -78,11 +78,63 @@ const MovieCard = ({ movie, me, cardView }) => {
 
           <div className="flex-apart details">
             <div className="cardDefaultGenres">
-              <span>{genreLabels[0]}</span>
-              {movie.genre2 !== "UNSELECTED" && <span>, {genreLabels[1]}</span>}
-              {movie.genre3 !== "UNSELECTED" && <span>, {genreLabels[2]}</span>}
+              <Link
+                href={{
+                  pathname: "/genre",
+                  query: {
+                    type: "movie",
+                    genre: movie.genre1,
+                  },
+                }}
+              >
+                <a>
+                  <span>{genreLabels[0]}</span>
+                </a>
+              </Link>
+              <Link
+                href={{
+                  pathname: "/genre",
+                  query: {
+                    type: "movie",
+                    genre: movie.genre2,
+                  },
+                }}
+              >
+                <a>
+                  {movie.genre2 !== "UNSELECTED" && (
+                    <span>, {genreLabels[1]}</span>
+                  )}
+                </a>
+              </Link>
+              <Link
+                href={{
+                  pathname: "/genre",
+                  query: {
+                    type: "movie",
+                    genre: movie.genre3,
+                  },
+                }}
+              >
+                <a>
+                  {movie.genre3 !== "UNSELECTED" && (
+                    <span>, {genreLabels[2]}</span>
+                  )}
+                </a>
+              </Link>
             </div>
-            <span className="cardDefaultYear">({movie.year})</span>
+            <Link
+              href={{
+                pathname: "/year",
+                query: {
+                  type: "movie",
+                  year: movie.year,
+                },
+              }}
+            >
+              <a className="cardDefaultYear">
+                <span>({movie.year})</span>
+              </a>
+            </Link>
           </div>
           {me && (
             <div className="flex-apart cardDefaultListButtons">
@@ -118,31 +170,89 @@ const MovieCard = ({ movie, me, cardView }) => {
             >
               <a className="cardWideTitle">{movie.title}</a>
             </Link>
-            <div className="cardWideYear">({movie.year})</div>
+            <div className="cardWideYear">
+              <Link
+                href={{
+                  pathname: "/year",
+                  query: {
+                    type: "movie",
+                    year: movie.year,
+                  },
+                }}
+              >
+                <a>({movie.year})</a>
+              </Link>
+            </div>
 
             {movie.genre1 && (
               <div className="cardWideGenres">
-                <span className="bold">Genres: </span>
-                {genreLabels[0]}
+                <Link
+                  href={{
+                    pathname: "/genre",
+                    query: {
+                      type: "movie",
+                      genre: movie.genre1,
+                    },
+                  }}
+                >
+                  <a>
+                    <span className="bold">Genres: </span>
+                    {genreLabels[0]}
+                  </a>
+                </Link>
                 {movie.genre2 !== "UNSELECTED" && (
-                  <span>, {genreLabels[1]}</span>
+                  <Link
+                    href={{
+                      pathname: "/genre",
+                      query: {
+                        type: "movie",
+                        genre: movie.genre2,
+                      },
+                    }}
+                  >
+                    <a>
+                      <span>, {genreLabels[1]}</span>
+                    </a>
+                  </Link>
                 )}
                 {movie.genre3 !== "UNSELECTED" && (
-                  <span>, {genreLabels[2]}</span>
+                  <Link
+                    href={{
+                      pathname: "/genre",
+                      query: {
+                        type: "movie",
+                        genre: movie.genre3,
+                      },
+                    }}
+                  >
+                    <a>
+                      <span>, {genreLabels[2]}</span>
+                    </a>
+                  </Link>
                 )}
               </div>
             )}
             {movie.director && (
               <div>
                 {" "}
-                <span className="bold">director: </span>
-                {movie.director}
+                <span className="bold">Director: </span>
+                <Link
+                  href={{
+                    pathname: "/director",
+                    query: {
+                      type: "movie",
+                      director: movie.director,
+                    },
+                  }}
+                >
+                  <a>{movie.director}</a>
+                </Link>
               </div>
             )}
             {movie.length && (
               <div>
                 {" "}
-                <span className="bold">length: </span>
+                <span className="bold">Length: </span>
                 {movie.length} minutes
               </div>
             )}

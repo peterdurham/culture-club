@@ -75,11 +75,63 @@ const BookCard = ({ book, me, cardView }) => {
 
           <div className="flex-apart details">
             <div className="cardDefaultGenres">
-              <span>{genreLabels[0]}</span>
-              {book.genre2 !== "UNSELECTED" && <span>, {genreLabels[1]}</span>}
-              {book.genre3 !== "UNSELECTED" && <span>, {genreLabels[2]}</span>}
+              <Link
+                href={{
+                  pathname: "/genre",
+                  query: {
+                    type: "book",
+                    genre: book.genre1,
+                  },
+                }}
+              >
+                <a>
+                  <span>{genreLabels[0]}</span>
+                </a>
+              </Link>
+              <Link
+                href={{
+                  pathname: "/genre",
+                  query: {
+                    type: "book",
+                    genre: book.genre2,
+                  },
+                }}
+              >
+                <a>
+                  {book.genre2 !== "UNSELECTED" && (
+                    <span>, {genreLabels[1]}</span>
+                  )}
+                </a>
+              </Link>
+              <Link
+                href={{
+                  pathname: "/genre",
+                  query: {
+                    type: "book",
+                    genre: book.genre3,
+                  },
+                }}
+              >
+                <a>
+                  {book.genre3 !== "UNSELECTED" && (
+                    <span>, {genreLabels[2]}</span>
+                  )}
+                </a>
+              </Link>
             </div>
-            <span className="cardDefaultYear">({book.year})</span>
+            <Link
+              href={{
+                pathname: "/year",
+                query: {
+                  type: "book",
+                  year: book.year,
+                },
+              }}
+            >
+              <a className="cardDefaultYear">
+                <span>({book.year})</span>
+              </a>
+            </Link>
           </div>
           {me && (
             <div className="flex-apart cardDefaultListButtons">
@@ -115,22 +167,81 @@ const BookCard = ({ book, me, cardView }) => {
             >
               <a className="cardWideTitle">{book.title}</a>
             </Link>
-            <div className="cardWideYear">({book.year})</div>
+
+            <div className="cardWideYear">
+              <Link
+                href={{
+                  pathname: "/year",
+                  query: {
+                    type: "book",
+                    year: book.year,
+                  },
+                }}
+              >
+                <a>({book.year})</a>
+              </Link>
+            </div>
             {book.author && (
               <div>
                 <span className="bold">Author: </span>
-                {book.author}
+                <Link
+                  href={{
+                    pathname: "/author",
+                    query: {
+                      type: "book",
+                      author: book.author,
+                    },
+                  }}
+                >
+                  <a>{book.author}</a>
+                </Link>
               </div>
             )}
             {book.genre1 && (
               <div className="cardWideGenres">
-                <span className="bold">Genres: </span>
-                {genreLabels[0]}
+                <Link
+                  href={{
+                    pathname: "/genre",
+                    query: {
+                      type: "book",
+                      genre: book.genre1,
+                    },
+                  }}
+                >
+                  <a>
+                    <span className="bold">Genres: </span>
+                    {genreLabels[0]}
+                  </a>
+                </Link>
                 {book.genre2 !== "UNSELECTED" && (
-                  <span>, {genreLabels[1]}</span>
+                  <Link
+                    href={{
+                      pathname: "/genre",
+                      query: {
+                        type: "book",
+                        genre: book.genre2,
+                      },
+                    }}
+                  >
+                    <a>
+                      <span>, {genreLabels[1]}</span>
+                    </a>
+                  </Link>
                 )}
                 {book.genre3 !== "UNSELECTED" && (
-                  <span>, {genreLabels[2]}</span>
+                  <Link
+                    href={{
+                      pathname: "/genre",
+                      query: {
+                        type: "book",
+                        genre: book.genre3,
+                      },
+                    }}
+                  >
+                    <a>
+                      <span>, {genreLabels[2]}</span>
+                    </a>
+                  </Link>
                 )}
               </div>
             )}

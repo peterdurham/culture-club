@@ -49,12 +49,23 @@ const Movies = (props) => {
   // const view = ["default", "wide", "list"];
 
   // const view = "wide";
-  console.log(props.cardView, "CARDVIEW");
+
   return (
     <User>
       {({ data: { me } }) => {
         return (
           <Center>
+            {props.genre && (
+              <h1 className="page-header">{props.genreLabel} Movies</h1>
+            )}
+            {props.year && (
+              <h1 className="page-header">Movies from {props.year}</h1>
+            )}
+            {props.director && (
+              <h1 className="page-header">
+                Movies directed by {props.director}
+              </h1>
+            )}
             <SearchMovies />
             <div className="cardStyleButtons">
               <button
@@ -129,6 +140,60 @@ const Movies = (props) => {
                             );
 
                             return seenItIds.indexOf(movie.id) > -1;
+                          })
+                          .map((movie) => (
+                            <MovieCard
+                              movie={movie}
+                              key={movie.id}
+                              me={me}
+                              cardView={props.cardView}
+                            />
+                          ))}
+                      </>
+                    )}
+                    {props.filter === "genre" && (
+                      <>
+                        {data.movies
+                          .filter((movie) => {
+                            const first =
+                              movie.genre1.toLowerCase() === props.genre;
+                            const second =
+                              movie.genre2.toLowerCase() === props.genre;
+                            const third =
+                              movie.genre3.toLowerCase() === props.genre;
+                            return first || second || third;
+                          })
+                          .map((movie) => (
+                            <MovieCard
+                              movie={movie}
+                              key={movie.id}
+                              me={me}
+                              cardView={props.cardView}
+                            />
+                          ))}
+                      </>
+                    )}
+                    {props.filter === "year" && (
+                      <>
+                        {data.movies
+                          .filter((movie) => {
+                            return movie.year === Number(props.year);
+                          })
+                          .map((movie) => (
+                            <MovieCard
+                              movie={movie}
+                              key={movie.id}
+                              me={me}
+                              cardView={props.cardView}
+                            />
+                          ))}
+                      </>
+                    )}
+                    {props.filter === "director" && (
+                      <>
+                        {data.movies
+                          .filter((movie) => {
+                            return movie.director === props.director;
                           })
                           .map((movie) => (
                             <MovieCard

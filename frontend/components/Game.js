@@ -93,11 +93,63 @@ const GameCard = ({ game, me, cardView }) => {
 
           <div className="flex-apart details">
             <div className="cardDefaultGenres">
-              <span>{genreLabels[0]}</span>
-              {game.genre2 !== "UNSELECTED" && <span>, {genreLabels[1]}</span>}
-              {game.genre3 !== "UNSELECTED" && <span>, {genreLabels[2]}</span>}
+              <Link
+                href={{
+                  pathname: "/genre",
+                  query: {
+                    type: "game",
+                    genre: game.genre1,
+                  },
+                }}
+              >
+                <a>
+                  <span>{genreLabels[0]}</span>
+                </a>
+              </Link>
+              <Link
+                href={{
+                  pathname: "/genre",
+                  query: {
+                    type: "game",
+                    genre: game.genre2,
+                  },
+                }}
+              >
+                <a>
+                  {game.genre2 !== "UNSELECTED" && (
+                    <span>, {genreLabels[1]}</span>
+                  )}
+                </a>
+              </Link>
+              <Link
+                href={{
+                  pathname: "/genre",
+                  query: {
+                    type: "game",
+                    genre: game.genre3,
+                  },
+                }}
+              >
+                <a>
+                  {game.genre3 !== "UNSELECTED" && (
+                    <span>, {genreLabels[2]}</span>
+                  )}
+                </a>
+              </Link>
             </div>
-            <span className="cardDefaultYear">({game.year})</span>
+            <Link
+              href={{
+                pathname: "/year",
+                query: {
+                  type: "game",
+                  year: game.year,
+                },
+              }}
+            >
+              <a className="cardDefaultYear">
+                <span>({game.year})</span>
+              </a>
+            </Link>
           </div>
           {me && (
             <div className="flex-apart cardDefaultListButtons">
@@ -133,28 +185,115 @@ const GameCard = ({ game, me, cardView }) => {
             >
               <a className="cardWideTitle">{game.title}</a>
             </Link>
-            <div className="cardWideYear">({game.year})</div>
+
+            <div className="cardWideYear">
+              <Link
+                href={{
+                  pathname: "/year",
+                  query: {
+                    type: "game",
+                    year: game.year,
+                  },
+                }}
+              >
+                <a>({game.year})</a>
+              </Link>
+            </div>
+
             {game.platform1 && (
               <div className="cardWideGenres">
                 <span className="bold">Platforms: </span>
-                {platformLabels[0]}
+
+                <Link
+                  href={{
+                    pathname: "/platform",
+                    query: {
+                      type: "game",
+                      platform: game.platform1,
+                    },
+                  }}
+                >
+                  <a>{platformLabels[0]}</a>
+                </Link>
+
                 {game.platform2 !== "UNSELECTED" && (
-                  <span>, {platformLabels[1]}</span>
+                  <Link
+                    href={{
+                      pathname: "/platform",
+                      query: {
+                        type: "game",
+                        platform: game.platform2,
+                      },
+                    }}
+                  >
+                    <a>
+                      <span>, {platformLabels[1]}</span>{" "}
+                    </a>
+                  </Link>
                 )}
+
                 {game.platform3 !== "UNSELECTED" && (
-                  <span>, {platformLabels[2]}</span>
+                  <Link
+                    href={{
+                      pathname: "/platform",
+                      query: {
+                        type: "game",
+                        platform: game.platform3,
+                      },
+                    }}
+                  >
+                    <a>
+                      <span>, {platformLabels[2]}</span>
+                    </a>
+                  </Link>
                 )}
               </div>
             )}
             {game.genre1 && (
               <div className="cardWideGenres">
-                <span className="bold">Genres: </span>
-                {genreLabels[0]}
+                <Link
+                  href={{
+                    pathname: "/genre",
+                    query: {
+                      type: "game",
+                      genre: game.genre1,
+                    },
+                  }}
+                >
+                  <a>
+                    <span className="bold">Genres: </span>
+                    {genreLabels[0]}
+                  </a>
+                </Link>
                 {game.genre2 !== "UNSELECTED" && (
-                  <span>, {genreLabels[1]}</span>
+                  <Link
+                    href={{
+                      pathname: "/genre",
+                      query: {
+                        type: "game",
+                        genre: game.genre2,
+                      },
+                    }}
+                  >
+                    <a>
+                      <span>, {genreLabels[1]}</span>
+                    </a>
+                  </Link>
                 )}
                 {game.genre3 !== "UNSELECTED" && (
-                  <span>, {genreLabels[2]}</span>
+                  <Link
+                    href={{
+                      pathname: "/genre",
+                      query: {
+                        type: "game",
+                        genre: game.genre3,
+                      },
+                    }}
+                  >
+                    <a>
+                      <span>, {genreLabels[2]}</span>
+                    </a>
+                  </Link>
                 )}
               </div>
             )}
@@ -162,13 +301,34 @@ const GameCard = ({ game, me, cardView }) => {
               <div>
                 {" "}
                 <span className="bold">Developer: </span>
-                {game.developer}
+                <Link
+                  href={{
+                    pathname: "/developer",
+                    query: {
+                      type: "game",
+                      developer: game.developer,
+                    },
+                  }}
+                >
+                  <a>{game.developer}</a>
+                </Link>
               </div>
             )}
             {game.numPlayers && (
               <div>
                 <span className="bold">Players: </span>
-                {numPlayersLabels[0]}
+
+                <Link
+                  href={{
+                    pathname: "/players",
+                    query: {
+                      type: "game",
+                      players: game.numPlayers,
+                    },
+                  }}
+                >
+                  <a>{numPlayersLabels[0]}</a>
+                </Link>
               </div>
             )}
           </div>

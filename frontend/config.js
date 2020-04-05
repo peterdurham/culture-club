@@ -3,85 +3,6 @@ export const endpoint = `http://localhost:4444`;
 export const prodEndpoint = `https://culture-club-yoga-prod.herokuapp.com/`;
 export const perPage = 8;
 
-export const BookGenres = [
-  {
-    value: "UNSELECTED",
-    title: "Select a genre",
-  },
-  {
-    value: "FANTASY",
-    title: "Fantasy",
-  },
-  {
-    value: "SCI_FI",
-    title: "Sci-Fi",
-  },
-  {
-    value: "CLASSICS",
-    title: "Classics",
-  },
-  {
-    value: "HORROR",
-    title: "Horror",
-  },
-  {
-    value: "MYSTERY",
-    title: "Mystery",
-  },
-  {
-    value: "COMIC",
-    title: "Comics",
-  },
-  {
-    value: "PHILOSOPHY",
-    title: "Philosophy",
-  },
-  {
-    value: "HISTORY",
-    title: "History",
-  },
-  {
-    value: "MYTHOLOGY",
-    title: "Mythology",
-  },
-  {
-    value: "BUSINESS",
-    title: "Business",
-  },
-  {
-    value: "ECONOMICS",
-    title: "Economics",
-  },
-  {
-    value: "SCIENCE",
-    title: "Science",
-  },
-  {
-    value: "ROMANCE",
-    title: "Romance",
-  },
-  {
-    value: "WESTERN",
-    title: "Western",
-  },
-  {
-    value: "CHILDRENS",
-    title: "Children's",
-  },
-  {
-    value: "BIOGRAPHY",
-    title: "Biography",
-  },
-  {
-    value: "NEW_AGE",
-    title: "New Age",
-  },
-  {
-    value: "SELF_HELP",
-    title: "Self Help",
-  },
-];
-
 export const MovieGenres = [
   {
     value: "UNSELECTED",
@@ -92,8 +13,16 @@ export const MovieGenres = [
     title: "Action",
   },
   {
-    value: "ANIME",
+    value: "ADVENTURE",
+    title: "Adventure",
+  },
+  {
+    value: "ANIMATION",
     title: "Anime",
+  },
+  {
+    value: "BIOGRAPHY",
+    title: "Biography",
   },
   {
     value: "CLASSIC",
@@ -104,12 +33,28 @@ export const MovieGenres = [
     title: "Comedy",
   },
   {
+    value: "CRIME",
+    title: "Crime",
+  },
+  {
+    value: "CULT",
+    title: "Cult",
+  },
+  {
     value: "DOCUMENTARY",
     title: "Documentary",
   },
   {
     value: "DRAMA",
     title: "Drama",
+  },
+  {
+    value: "FAMILY",
+    title: "Family",
+  },
+  {
+    value: "FANTASY",
+    title: "Fantasy",
   },
   {
     value: "HISTORY",
@@ -124,86 +69,228 @@ export const MovieGenres = [
     title: "Independent",
   },
   {
+    value: "INTERNATIONAL",
+    title: "International",
+  },
+  {
+    value: "MUSIC",
+    title: "Music",
+  },
+  {
+    value: "MYSTERY",
+    title: "Mystery",
+  },
+  {
+    value: "NATURE",
+    title: "Nature",
+  },
+  {
+    value: "ROMANCE",
+    title: "Romance",
+  },
+  {
     value: "SCI_FI",
     title: "Sci-Fi",
   },
   {
+    value: "SCIENCE",
+    title: "Science",
+  },
+
+  {
+    value: "SPORTS",
+    title: "Sports",
+  },
+  {
+    value: "THRILLER",
+    title: "Thriller",
+  },
+];
+
+export const BookGenres = [
+  {
+    value: "UNSELECTED",
+    title: "Select a genre",
+  },
+  {
+    value: "ART",
+    title: "Art",
+  },
+  {
+    value: "BIOGRAPHY",
+    title: "Biography",
+  },
+  {
+    value: "BUSINESS",
+    title: "Business",
+  },
+  {
+    value: "CHILDRENS",
+    title: "Children's",
+  },
+  {
+    value: "CLASSICS",
+    title: "Classics",
+  },
+  {
+    value: "COMIC",
+    title: "Comics",
+  },
+  {
+    value: "COOKBOOK",
+    title: "Cookbook",
+  },
+  {
+    value: "ECONOMICS",
+    title: "Economics",
+  },
+  {
     value: "FANTASY",
     title: "Fantasy",
+  },
+
+  {
+    value: "HISTORY",
+    title: "History",
+  },
+  {
+    value: "HORROR",
+    title: "Horror",
+  },
+  {
+    value: "MYSTERY",
+    title: "Mystery",
+  },
+  {
+    value: "MUSIC",
+    title: "Music",
+  },
+  {
+    value: "NEW_AGE",
+    title: "New Age",
+  },
+  {
+    value: "PHILOSOPHY",
+    title: "Philosophy",
+  },
+  {
+    value: "POETRY",
+    title: "Poetry",
+  },
+  {
+    value: "MYTHOLOGY",
+    title: "Mythology",
+  },
+  {
+    value: "ROMANCE",
+    title: "Romance",
+  },
+  {
+    value: "RELIGION",
+    title: "Religion",
+  },
+  {
+    value: "SCI_FI",
+    title: "Sci-Fi",
+  },
+  {
+    value: "SCIENCE",
+    title: "Science",
+  },
+  {
+    value: "SELF_HELP",
+    title: "Self Help",
   },
   {
     value: "THRILLER",
     title: "Thriller",
   },
   {
-    value: "INTERNATIONAL",
-    title: "International",
+    value: "TRAVEL",
+    title: "Travel",
   },
   {
-    value: "SPORTS",
-    title: "Sports",
+    value: "WESTERN",
+    title: "Western",
   },
 ];
+
 export const GameGenres = [
   {
     value: "UNSELECTED",
     title: "Select a genre",
   },
   {
-    value: "RPG",
-    title: "RPG",
-  },
-  {
     value: "ACTION",
     title: "Anime",
-  },
-  {
-    value: "FIGHTING",
-    title: "Fighting",
   },
   {
     value: "ADVENTURE",
     title: "Adventure",
   },
   {
-    value: "SIMULATION",
-    title: "Simulation",
+    value: "BOARD",
+    title: "Board",
   },
   {
-    value: "SCI_FI",
-    title: "Sci-Fi",
+    value: "CARD",
+    title: "Card",
   },
   {
-    value: "SPORTS",
-    title: "Sports",
-  },
-  {
-    value: "CARD_OR_BOARD",
-    title: "Card/Board",
-  },
-  {
-    value: "PLATFORM",
-    title: "Platform",
-  },
-  {
-    value: "STEALTH",
-    title: "Stealth",
-  },
-  {
-    value: "SURVIVAL",
-    title: "Survival",
+    value: "FIGHTING",
+    title: "Fighting",
   },
   {
     value: "MMORPG",
     title: "MMORPG",
   },
   {
+    value: "PLATFORM",
+    title: "Platform",
+  },
+  {
+    value: "PUZZLE",
+    title: "Puzzle",
+  },
+  {
+    value: "RACING",
+    title: "Racing",
+  },
+  {
+    value: "RPG",
+    title: "RPG",
+  },
+  {
+    value: "RTS",
+    title: "RTS",
+  },
+  {
+    value: "SCI_FI",
+    title: "Sci-Fi",
+  },
+  {
     value: "SHOOTER",
     title: "Shooter",
   },
   {
+    value: "SIMULATION",
+    title: "Simulation",
+  },
+  {
+    value: "SPORTS",
+    title: "Sports",
+  },
+  {
+    value: "STEALTH",
+    title: "Stealth",
+  },
+  {
     value: "STRATEGY",
     title: "Strategy",
+  },
+  {
+    value: "SURVIVAL",
+    title: "Survival",
   },
   {
     value: "VR",

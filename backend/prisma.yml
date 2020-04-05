@@ -1,5 +1,5 @@
-endpoint: ${env:PRISMA_ENDPOINT}
-# endpoint: https://culture-club-prod-6ac1562427.herokuapp.com/culture-club-production/prod
+# endpoint: ${env:PRISMA_ENDPOINT}
+endpoint: https://culture-club-prod-6ac1562427.herokuapp.com/culture-club-production/prod
 datamodel: datamodel.prisma
 secret: ${env:PRISMA_SECRET}
 hooks:

@@ -118,6 +118,12 @@ button.upcoming, a.upcoming {
 .icon-left {
   margin-right: 4px;
 }
+.page-header {
+  text-align: left;
+}
+.new-button svg {
+  margin-left: 4px;
+}
 .listLinks {
   display: flex;
   flex-direction: column;

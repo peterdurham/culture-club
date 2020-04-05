@@ -32,10 +32,6 @@ const ALL_BOOKS_QUERY = gql`
   }
 `;
 
-const Center = styled.div`
-  text-align: center;
-`;
-
 const BooksList = styled.div`
   /* display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -55,7 +51,21 @@ const Books = (props) => {
     <User>
       {({ data: { me } }) => {
         return (
-          <Center>
+          <div>
+            {props.genre && (
+              <h1 className="page-header">{props.genreLabel} Books</h1>
+            )}
+            {props.year && (
+              <h1 className="page-header">Books from {props.year}</h1>
+            )}
+            {props.author && (
+              <h1 className="page-header">Books by {props.author}</h1>
+            )}
+            {props.publisher && (
+              <h1 className="page-header">
+                Books published by {props.publisher}
+              </h1>
+            )}
             <SearchBooks />
             <div className="cardStyleButtons">
               <button
@@ -138,12 +148,79 @@ const Books = (props) => {
                           ))}
                       </>
                     )}
+                    {props.filter === "genre" && (
+                      <>
+                        {data.books
+                          .filter((book) => {
+                            const first = book.genre1 === props.genre;
+                            const second = book.genre2 === props.genre;
+                            const third = book.genre3 === props.genre;
+                            return first || second || third;
+                          })
+                          .map((book) => (
+                            <Book
+                              book={book}
+                              key={book.id}
+                              me={me}
+                              cardView={props.cardView}
+                            />
+                          ))}
+                      </>
+                    )}
+                    {props.filter === "year" && (
+                      <>
+                        {data.books
+                          .filter((book) => {
+                            return book.year === Number(props.year);
+                          })
+                          .map((book) => (
+                            <Book
+                              book={book}
+                              key={book.id}
+                              me={me}
+                              cardView={props.cardView}
+                            />
+                          ))}
+                      </>
+                    )}
+                    {props.filter === "author" && (
+                      <>
+                        {data.books
+                          .filter((book) => {
+                            return book.author === props.author;
+                          })
+                          .map((book) => (
+                            <Book
+                              book={book}
+                              key={book.id}
+                              me={me}
+                              cardView={props.cardView}
+                            />
+                          ))}
+                      </>
+                    )}
+                    {props.filter === "publisher" && (
+                      <>
+                        {data.books
+                          .filter((book) => {
+                            return book.publisher === props.publisher;
+                          })
+                          .map((book) => (
+                            <Book
+                              book={book}
+                              key={book.id}
+                              me={me}
+                              cardView={props.cardView}
+                            />
+                          ))}
+                      </>
+                    )}
                   </BooksList>
                 );
               }}
             </Query>
             <Pagination page={props.page} />
-          </Center>
+          </div>
         );
       }}
     </User>

@@ -13,67 +13,7 @@ import Error from "./ErrorMessage";
 import { TiEdit } from "react-icons/ti";
 import { MovieGenres } from "../config";
 import formatMoney from "../lib/formatMoney";
-
-const DetailsPageStyles = styled.div`
-  max-width: 960px;
-  margin: 2rem auto;
-  /* box-shadow: ${(props) => props.theme.bs}; */
-
-  display: flex;
-  min-height: 800px;
-  padding: 0 4rem;
-  position:relative;
-
-.singleImageContainer {
-  width: 200px;
-    height: 300px;
-}
-  .singleImageContainer img {
-    width: 200px;
-    height: 300px;
-    object-fit: contain;
-  }
-  .singleButtons {
-    display: flex;
-
-  }
-  .singleButtons button {
-    margin-right: 8px;
-  }
-  .singleDetails {
-    padding: 4px 24px;
-  }
-  .singleActions {
-    position:absolute;
-    top: 12px;
-    left: 186px;
-  }
-  .singleTitle {
-    font-size: 3.5rem;
-    line-height: 4.7rem;
-  }
- 
-  .singleEdit {
-    display: inline-block;
-    width: 46.55px;
-  }
-  .description {
-    width: 70%;
-  }
-  .genre {
-    font-size: 14.4px;
-    color: #000;
-    display: inline-block;
-    cursor: pointer;
-  }
-  .genre:hover {
-    text-decoration: underline;
-  }
-  h2,
-  h4 {
-    margin: 0;
-  }
-`;
+import DetailsPageStyles from "./styles/DetailsPage";
 
 const SINGLE_MOVIE_QUERY = gql`
   query SINGLE_MOVIE_QUERY($id: ID!) {
@@ -100,9 +40,10 @@ class SingleMovie extends Component {
     const { me } = this.props;
     let toWatchIds;
     let seenItIds;
+
     if (me) {
-      toWatchIds = this.props.me.toWatch.map((item) => item.movie.id);
-      seenItIds = this.props.me.seenIt.map((item) => item.movie.id);
+      toWatchIds = me.toWatch.map((item) => item.movie.id);
+      seenItIds = me.seenIt.map((item) => item.movie.id);
     }
     return (
       <Query
@@ -155,7 +96,19 @@ class SingleMovie extends Component {
               <div className="singleDetails">
                 <div>
                   <h2 className="singleTitle">{movie.title} </h2>
-                  <div className="singleYear">({movie.year})</div>
+                  <div className="singleYear">
+                    <Link
+                      href={{
+                        pathname: "/year",
+                        query: {
+                          type: "movie",
+                          year: movie.year,
+                        },
+                      }}
+                    >
+                      <a>({movie.year})</a>
+                    </Link>
+                  </div>
                   <div className="singleActions">
                     <Link
                       href={{
@@ -172,17 +125,68 @@ class SingleMovie extends Component {
 
                 <div className="singleGenres">
                   <span className="bold">Genres: </span>
-                  <span>{genreLabels[0]}</span>
+                  <Link
+                    href={{
+                      pathname: "/genre",
+                      query: {
+                        type: "movie",
+                        genre: movie.genre1.toLowerCase(),
+                      },
+                    }}
+                  >
+                    <a>
+                      <span>{genreLabels[0]}</span>
+                    </a>
+                  </Link>
+
                   {movie.genre2 !== "UNSELECTED" && (
-                    <span>, {genreLabels[1]}</span>
+                    <Link
+                      href={{
+                        pathname: "/genre",
+                        query: {
+                          type: "movie",
+                          genre: movie.genre2.toLowerCase(),
+                        },
+                      }}
+                    >
+                      <a>
+                        <span>, {genreLabels[1]}</span>
+                      </a>
+                    </Link>
                   )}
+
                   {movie.genre3 !== "UNSELECTED" && (
-                    <span>, {genreLabels[2]}</span>
+                    <Link
+                      href={{
+                        pathname: "/genre",
+                        query: {
+                          type: "movie",
+                          genre: movie.genre3.toLowerCase(),
+                        },
+                      }}
+                    >
+                      <a>
+                        <span>, {genreLabels[2]}</span>
+                      </a>
+                    </Link>
                   )}
                 </div>
                 {movie.director && (
                   <div>
-                    <span className="bold">Director: </span> {movie.director}
+                    <Link
+                      href={{
+                        pathname: "/director",
+                        query: {
+                          type: "movie",
+                          director: movie.director,
+                        },
+                      }}
+                    >
+                      <a>
+                        <span className="bold">Director: </span>{" "}
+                        {movie.director}
+                      </a>
+                    </Link>
                   </div>
                 )}
                 <div className="singleLength">

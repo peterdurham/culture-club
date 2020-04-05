@@ -8,9 +8,9 @@ const BooksPage = (props) => {
       <div className="flex-apart">
         <h1>Books Page</h1>
         <Link href="/add-book">
-          <a className="button">
-            <GoPlus />
+          <a className="button new-button">
             Add Book
+            <GoPlus />
           </a>
         </Link>
       </div>

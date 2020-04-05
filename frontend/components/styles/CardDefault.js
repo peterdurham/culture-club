@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const CardDefaultStyles = styled.div`
-  height: 352px;
+  height: 373px;
   width: 184px;
   margin: 20px 8px;
   position: relative;
@@ -33,7 +33,9 @@ const CardDefaultStyles = styled.div`
   .buttons {
     cursor: pointer;
   }
-
+  .details {
+    justify-content: flex-start;
+  }
   .details span:hover {
     text-decoration: underline;
   }
@@ -44,7 +46,8 @@ const CardDefaultStyles = styled.div`
     text-align: left;
     font-size: 1.3rem;
     line-height: 2.1rem;
-    max-height: 2.1rem;
+    max-height: 4.2rem;
+
     overflow: hidden;
   }
   .cardDefaultGenres span {
