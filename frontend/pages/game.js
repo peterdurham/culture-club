@@ -1,10 +1,13 @@
 import SingleGame from "../components/SingleGame";
+import User from "../components/User";
 
-const Game = props => {
+const Game = (props) => {
   return (
-    <div>
-      <SingleGame id={props.query.id} />
-    </div>
+    <User>
+      {({ data: { me } }) => {
+        return <SingleGame id={props.query.id} me={me} />;
+      }}
+    </User>
   );
 };
 

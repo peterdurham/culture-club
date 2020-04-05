@@ -20,7 +20,7 @@ import { TiEdit } from "react-icons/ti";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BookGenres } from "../config";
 
-const BookCard = ({ book, me, view }) => {
+const BookCard = ({ book, me, cardView }) => {
   let toReadIds;
   let readItIds;
   if (me) {
@@ -36,7 +36,7 @@ const BookCard = ({ book, me, view }) => {
     return genreTitles[genreIndex];
   });
 
-  if (view === "default") {
+  if (cardView === "default") {
     return (
       <CardDefault>
         <Link
@@ -98,7 +98,7 @@ const BookCard = ({ book, me, view }) => {
         </div>
       </CardDefault>
     );
-  } else if (view === "wide") {
+  } else if (cardView === "wide") {
     return (
       <CardWide>
         {book.image && (
@@ -184,7 +184,7 @@ const BookCard = ({ book, me, view }) => {
         </div>
       </CardWide>
     );
-  } else if (view === "list") {
+  } else if (cardView === "list") {
     return (
       <ListView>
         <Link

@@ -45,13 +45,12 @@ const GamesList = styled.div`
   display: flex;
   flex-wrap: wrap;
   max-width: ${(props) => props.theme.maxWidth};
-  margin-bottom: 20px;
 `;
 
 const Games = (props) => {
   const filters = ["all", "toPlay", "playedIt", "genre", "year"];
   // const view = ["default", "wide", "list"];
-  const [view, setView] = React.useState("default");
+
   // const view = "wide";
   return (
     <User>
@@ -60,15 +59,21 @@ const Games = (props) => {
           <Center>
             <SearchGames />
             <div className="cardStyleButtons">
-              <button className="button" onClick={() => setView("default")}>
-                Default
+              <button
+                className="button"
+                onClick={() => props.setCardView("default")}
+              >
+                Default View
               </button>
-              <button className="button" onClick={() => setView("wide")}>
-                Wide
+              <button
+                className="button"
+                onClick={() => props.setCardView("wide")}
+              >
+                Wide View
               </button>
-              <button className="button" onClick={() => setView("list")}>
+              {/* <button className="button" onClick={() => setView("list")}>
                 List
-              </button>
+              </button> */}
             </div>
             <Pagination page={props.page} />
             <Query
@@ -88,7 +93,12 @@ const Games = (props) => {
                     {props.filter === "all" && (
                       <>
                         {data.games.map((game) => (
-                          <Game game={game} key={game.id} me={me} view={view} />
+                          <Game
+                            game={game}
+                            key={game.id}
+                            me={me}
+                            cardView={props.cardView}
+                          />
                         ))}
                       </>
                     )}
@@ -107,7 +117,7 @@ const Games = (props) => {
                               game={game}
                               key={game.id}
                               me={me}
-                              view={view}
+                              cardView={props.cardView}
                             />
                           ))}
                       </>
@@ -127,7 +137,7 @@ const Games = (props) => {
                               game={game}
                               key={game.id}
                               me={me}
-                              view={view}
+                              cardView={props.cardView}
                             />
                           ))}
                       </>

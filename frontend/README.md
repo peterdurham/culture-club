@@ -1,3 +1,3 @@
-# Advanced-React
+# Culture Club
 
-frontend
+Keep track of movies, books, and games

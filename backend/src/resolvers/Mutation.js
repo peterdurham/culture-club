@@ -9,14 +9,13 @@ const stripe = require("../stripe");
 
 const Mutations = {
   async createItem(parent, args, ctx, info) {
-    // TODO: Check if they are logged in
     if (!ctx.request.userId) {
       throw new Error("You must be logged in to do that!");
     }
     const item = await ctx.db.mutation.createItem(
       {
         data: {
-          // this is how we create a relationship between the Item and the User
+          // Item User Relationship
           user: {
             connect: {
               id: ctx.request.userId
@@ -31,11 +30,9 @@ const Mutations = {
     return item;
   },
   updateItem(parent, args, ctx, info) {
-    // first take a copy of the updates
     const updates = { ...args };
-    // remove the ID from the updates
+    // remove the ID
     delete updates.id;
-    // run the update method
     return ctx.db.mutation.updateItem(
       {
         data: updates,
@@ -71,7 +68,7 @@ const Mutations = {
     const movie = await ctx.db.mutation.createMovie(
       {
         data: {
-          // this is how we create a relationship between the Item and the User
+          // Item User Relationship
           user: {
             connect: {
               id: ctx.request.userId

@@ -14,7 +14,12 @@ const GamesPage = (props) => {
           </a>
         </Link>
       </div>
-      <Games filter="all" page={parseFloat(props.query.page) || 1} />
+      <Games
+        filter="all"
+        page={parseFloat(props.query.page) || 1}
+        cardView={props.cardView}
+        setCardView={props.setCardView}
+      />
     </div>
   );
 };

@@ -90,12 +90,5 @@ const CardDefaultStyles = styled.div`
     font-size: 1.72rem;
     margin-left: 6px;
   }
-  button {
-    background: #fff;
-    border: none;
-    padding: 0 0 0 4px;
-
-    cursor: pointer;
-  }
 `;
 export default CardDefaultStyles;

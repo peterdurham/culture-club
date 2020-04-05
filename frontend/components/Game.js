@@ -20,7 +20,7 @@ import { TiEdit } from "react-icons/ti";
 import { AiOutlineDelete } from "react-icons/ai";
 import { GameGenres, GamePlatforms, GameNumPlayers } from "../config";
 
-const GameCard = ({ game, me, view }) => {
+const GameCard = ({ game, me, cardView }) => {
   let toPlayIds;
   let playedItIds;
   if (me) {
@@ -54,7 +54,7 @@ const GameCard = ({ game, me, view }) => {
     return numPlayersTitles[numPlayersIndex];
   });
 
-  if (view === "default") {
+  if (cardView === "default") {
     return (
       <CardDefault>
         <Link
@@ -116,7 +116,7 @@ const GameCard = ({ game, me, view }) => {
         </div>
       </CardDefault>
     );
-  } else if (view === "wide") {
+  } else if (cardView === "wide") {
     return (
       <CardWide>
         {game.image && (
@@ -206,7 +206,7 @@ const GameCard = ({ game, me, view }) => {
         </div>
       </CardWide>
     );
-  } else if (view === "list") {
+  } else if (cardView === "list") {
     return (
       <ListView>
         <Link

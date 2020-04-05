@@ -1,10 +1,13 @@
 import SingleBook from "../components/SingleBook";
+import User from "../components/User";
 
-const Book = props => {
+const Book = (props) => {
   return (
-    <div>
-      <SingleBook id={props.query.id} />
-    </div>
+    <User>
+      {({ data: { me } }) => {
+        return <SingleBook id={props.query.id} me={me} />;
+      }}
+    </User>
   );
 };
 

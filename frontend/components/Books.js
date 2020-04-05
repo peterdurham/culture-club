@@ -44,13 +44,12 @@ const BooksList = styled.div`
   display: flex;
   flex-wrap: wrap;
   max-width: ${(props) => props.theme.maxWidth};
-  margin: 40px auto 100px auto;
 `;
 
 const Books = (props) => {
   const filters = ["all", "toRead", "readIt", "genre", "year"];
   // const view = ["default", "wide", "list"];
-  const [view, setView] = React.useState("default");
+
   // const view = "wide";
   return (
     <User>
@@ -59,14 +58,17 @@ const Books = (props) => {
           <Center>
             <SearchBooks />
             <div className="cardStyleButtons">
-              <button className="button" onClick={() => setView("default")}>
-                Default
+              <button
+                className="button"
+                onClick={() => props.setCardView("default")}
+              >
+                Default View
               </button>
-              <button className="button" onClick={() => setView("wide")}>
-                Wide
-              </button>
-              <button className="button" onClick={() => setView("list")}>
-                List
+              <button
+                className="button"
+                onClick={() => props.setCardView("wide")}
+              >
+                Wide View
               </button>
             </div>
             <Pagination page={props.page} />
@@ -87,7 +89,12 @@ const Books = (props) => {
                     {props.filter === "all" && (
                       <>
                         {data.books.map((book) => (
-                          <Book book={book} key={book.id} me={me} view={view} />
+                          <Book
+                            book={book}
+                            key={book.id}
+                            me={me}
+                            cardView={props.cardView}
+                          />
                         ))}
                       </>
                     )}
@@ -106,7 +113,7 @@ const Books = (props) => {
                               book={book}
                               key={book.id}
                               me={me}
-                              view={view}
+                              cardView={props.cardView}
                             />
                           ))}
                       </>
@@ -126,7 +133,7 @@ const Books = (props) => {
                               book={book}
                               key={book.id}
                               me={me}
-                              view={view}
+                              cardView={props.cardView}
                             />
                           ))}
                       </>

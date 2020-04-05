@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/peter-durham-ae1855/culture-club/dev
-# timestamp: Thu Apr 02 2020 21:54:31 GMT-0700 (Pacific Daylight Time)
+# timestamp: Sat Apr 04 2020 17:51:07 GMT-0700 (Pacific Daylight Time)
 
 type AggregateBook {
   count: Int!
@@ -122,24 +122,31 @@ type BookEdge {
 
 enum BookGenre {
   UNSELECTED
-  FANTASY
-  SCI_FI
+  ART
+  BIOGRAPHY
+  BUSINESS
+  CHILDRENS
   CLASSICS
+  COMIC
+  COOKBOOK
+  ECONOMICS
+  FANTASY
+  HISTORY
   HORROR
   MYSTERY
-  COMIC
-  PHILOSOPHY
-  HISTORY
-  MYTHOLOGY
-  BUSINESS
-  ECONOMICS
-  SCIENCE
-  ROMANCE
-  WESTERN
-  CHILDRENS
-  BIOGRAPHY
+  MUSIC
   NEW_AGE
+  PHILOSOPHY
+  POETRY
+  MYTHOLOGY
+  ROMANCE
+  RELIGION
+  SCI_FI
+  SCIENCE
   SELF_HELP
+  THRILLER
+  TRAVEL
+  WESTERN
 }
 
 enum BookOrderByInput {
@@ -1057,20 +1064,24 @@ type GameEdge {
 
 enum GameGenre {
   UNSELECTED
-  RPG
   ACTION
-  FIGHTING
   ADVENTURE
-  SIMULATION
-  SCI_FI
-  SPORTS
-  CARD_OR_BOARD
-  PLATFORM
-  STEALTH
-  SURVIVAL
+  FIGHTING
+  BOARD
+  CARD
   MMORPG
+  PLATFORM
+  PUZZLE
+  RACING
+  RPG
+  RTS
+  SCI_FI
   SHOOTER
+  SIMULATION
+  SPORTS
+  STEALTH
   STRATEGY
+  SURVIVAL
   VR
 }
 
@@ -1113,17 +1124,19 @@ enum GamePlatform {
   NES
   SNES
   N64
-  DREAMCAST
   GAMECUBE
   WII
   SWITCH
-  XBOX
-  XBOX_360
-  XBOX_ONE
   PSX
   PS2
   PS3
   PS4
+  XBOX
+  XBOX_360
+  XBOX_ONE
+  DREAMCAST
+  MOBILE
+  OTHER
 }
 
 type GamePreviousValues {
@@ -2144,19 +2157,29 @@ type MovieEdge {
 enum MovieGenre {
   UNSELECTED
   ACTION
-  ANIME
+  ADVENTURE
+  ANIMATION
+  BIOGRAPHY
   CLASSIC
   COMEDY
+  CRIME
+  CULT
   DOCUMENTARY
   DRAMA
+  FAMILY
+  FANTASY
   HISTORY
   HORROR
   INDEPENDENT
-  SCI_FI
-  FANTASY
-  THRILLER
   INTERNATIONAL
+  MUSIC
+  MYSTERY
+  NATURE
+  ROMANCE
+  SCI_FI
+  SCIENCE
   SPORTS
+  THRILLER
 }
 
 enum MovieOrderByInput {

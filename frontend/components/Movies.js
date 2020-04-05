@@ -47,8 +47,9 @@ const MoviesList = styled.div`
 const Movies = (props) => {
   const filters = ["all", "toWatch", "seenIt", "genre", "year"];
   // const view = ["default", "wide", "list"];
-  const [view, setView] = React.useState("default");
+
   // const view = "wide";
+  console.log(props.cardView, "CARDVIEW");
   return (
     <User>
       {({ data: { me } }) => {
@@ -56,10 +57,16 @@ const Movies = (props) => {
           <Center>
             <SearchMovies />
             <div className="cardStyleButtons">
-              <button className="button" onClick={() => setView("default")}>
+              <button
+                className="button"
+                onClick={() => props.setCardView("default")}
+              >
                 Default View
               </button>
-              <button className="button" onClick={() => setView("wide")}>
+              <button
+                className="button"
+                onClick={() => props.setCardView("wide")}
+              >
                 Wide View
               </button>
               {/* <button className="button" onClick={() => setView("list")}>
@@ -88,7 +95,7 @@ const Movies = (props) => {
                             movie={movie}
                             key={movie.id}
                             me={me}
-                            view={view}
+                            cardView={props.cardView}
                           />
                         ))}
                       </>
@@ -108,7 +115,7 @@ const Movies = (props) => {
                               movie={movie}
                               key={movie.id}
                               me={me}
-                              view={view}
+                              cardView={props.cardView}
                             />
                           ))}
                       </>
@@ -128,7 +135,7 @@ const Movies = (props) => {
                               movie={movie}
                               key={movie.id}
                               me={me}
-                              view={view}
+                              cardView={props.cardView}
                             />
                           ))}
                       </>

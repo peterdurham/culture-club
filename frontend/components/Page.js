@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import styled, { ThemeProvider, injectGlobal } from "styled-components";
 import Header from "../components/Header";
@@ -136,21 +136,18 @@ button.upcoming, a.upcoming {
 } 
 `;
 
-class Page extends Component {
-  render() {
-    const { children } = this.props;
+const Page = ({ children }) => {
+  return (
+    <ThemeProvider theme={theme}>
+      <StyledPage>
+        <div>
+          <Meta />
+          <Header />
+          <Inner>{children}</Inner>
+        </div>
+      </StyledPage>
+    </ThemeProvider>
+  );
+};
 
-    return (
-      <ThemeProvider theme={theme}>
-        <StyledPage>
-          <div>
-            <Meta />
-            <Header />
-            <Inner>{children}</Inner>
-          </div>
-        </StyledPage>
-      </ThemeProvider>
-    );
-  }
-}
 export default Page;

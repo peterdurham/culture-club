@@ -21,7 +21,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { GoTrashcan } from "react-icons/go";
 import { MovieGenres } from "../config";
 
-const MovieCard = ({ movie, me, view }) => {
+const MovieCard = ({ movie, me, cardView }) => {
   let toWatchIds;
   let seenItIds;
 
@@ -39,7 +39,7 @@ const MovieCard = ({ movie, me, view }) => {
     return genreTitles[genreIndex];
   });
 
-  if (view === "default") {
+  if (cardView === "default") {
     return (
       <CardDefault>
         <Link
@@ -101,7 +101,7 @@ const MovieCard = ({ movie, me, view }) => {
         </div>
       </CardDefault>
     );
-  } else if (view === "wide") {
+  } else if (cardView === "wide") {
     return (
       <CardWide>
         {movie.image && (
@@ -191,7 +191,7 @@ const MovieCard = ({ movie, me, view }) => {
         </div>
       </CardWide>
     );
-  } else if (view === "list") {
+  } else if (cardView === "list") {
     return (
       <ListView>
         <Link

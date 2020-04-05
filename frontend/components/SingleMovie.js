@@ -12,44 +12,50 @@ import DeleteMovie from "./DeleteMovie";
 import Error from "./ErrorMessage";
 import { TiEdit } from "react-icons/ti";
 import { MovieGenres } from "../config";
+import formatMoney from "../lib/formatMoney";
 
 const DetailsPageStyles = styled.div`
-  max-width: 1200px;
+  max-width: 960px;
   margin: 2rem auto;
-  box-shadow: ${(props) => props.theme.bs};
+  /* box-shadow: ${(props) => props.theme.bs}; */
 
   display: flex;
   min-height: 800px;
   padding: 0 4rem;
-  img {
-    width: 300px;
-    height: 450px;
+  position:relative;
+
+.singleImageContainer {
+  width: 200px;
+    height: 300px;
+}
+  .singleImageContainer img {
+    width: 200px;
+    height: 300px;
     object-fit: contain;
   }
-  h2 {
-    font-size: 2.8rem;
-    line-height: 3.6rem;
-  }
-  .details {
-    margin: 1rem 4rem;
-    font-size: 1.4rem;
+  .singleButtons {
+    display: flex;
 
-    h3 {
-      margin: 0;
-    }
   }
-  .length {
-    display: flex;
+  .singleButtons button {
+    margin-right: 8px;
   }
-  .first-line {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  .singleDetails {
+    padding: 4px 24px;
   }
-  .second-line {
-    width: 160px;
-    display: flex;
-    justify-content: space-between;
+  .singleActions {
+    position:absolute;
+    top: 12px;
+    left: 186px;
+  }
+  .singleTitle {
+    font-size: 3.5rem;
+    line-height: 4.7rem;
+  }
+ 
+  .singleEdit {
+    display: inline-block;
+    width: 46.55px;
   }
   .description {
     width: 70%;
@@ -124,46 +130,14 @@ class SingleMovie extends Component {
               <Head>
                 <title>Culture Club | {movie.title}</title>
               </Head>
-              <img src={movie.largeImage} alt={movie.title} />
-              <div className="details">
-                <div className="first-line">
-                  <h2>Viewing {movie.title} </h2>
-                  <div>
-                    <Link
-                      href={{
-                        pathname: "update-movie",
-                        query: { id: movie.id },
-                      }}
-                    >
-                      <a className="edit-link">
-                        <TiEdit />
-                      </a>
-                    </Link>
-
-                    <DeleteMovie id={movie.id}>Delete This Movie</DeleteMovie>
-                  </div>
-                </div>
-                <div className="second-line">
-                  {movie.year && <span className="year">({movie.year})</span>}
-                  {movie.length && (
-                    <span className="length">{movie.length} minutes</span>
-                  )}
-                </div>
-                <div>
-                  <span>{genreLabels[0]}</span>
-                  {movie.genre2 !== "UNSELECTED" && (
-                    <span>, {genreLabels[1]}</span>
-                  )}
-                  {movie.genre3 !== "UNSELECTED" && (
-                    <span>, {genreLabels[2]}</span>
-                  )}
-                </div>
-                <p className="description">{movie.description}</p>
-
-                {movie.budget && <div>Budget: {movie.budget}</div>}
-                {movie.gross && <div>Gross: {movie.gross}</div>}
+              <div className="singleImageContainer">
+                <img
+                  src={movie.largeImage}
+                  alt={movie.title}
+                  className="singleImage"
+                />
                 {me && (
-                  <div>
+                  <div className="singleButtons">
                     {toWatchIds.indexOf(movie.id) > -1 ? (
                       <RemoveFromToWatch id={movie.id} />
                     ) : (
@@ -175,6 +149,72 @@ class SingleMovie extends Component {
                     ) : (
                       <AddToSeenIt id={movie.id} />
                     )}
+                  </div>
+                )}
+              </div>
+              <div className="singleDetails">
+                <div>
+                  <h2 className="singleTitle">{movie.title} </h2>
+                  <div className="singleYear">({movie.year})</div>
+                  <div className="singleActions">
+                    <Link
+                      href={{
+                        pathname: "update-movie",
+                        query: { id: movie.id },
+                      }}
+                    >
+                      <a className="button singleEdit">Edit</a>
+                    </Link>
+
+                    <DeleteMovie id={movie.id}>Delete</DeleteMovie>
+                  </div>
+                </div>
+
+                <div className="singleGenres">
+                  <span className="bold">Genres: </span>
+                  <span>{genreLabels[0]}</span>
+                  {movie.genre2 !== "UNSELECTED" && (
+                    <span>, {genreLabels[1]}</span>
+                  )}
+                  {movie.genre3 !== "UNSELECTED" && (
+                    <span>, {genreLabels[2]}</span>
+                  )}
+                </div>
+                {movie.director && (
+                  <div>
+                    <span className="bold">Director: </span> {movie.director}
+                  </div>
+                )}
+                <div className="singleLength">
+                  {movie.length && (
+                    <div>
+                      <span className="bold">Length: </span>
+                      <span className="length">{movie.length} minutes</span>
+                    </div>
+                  )}
+                </div>
+                <div className="singleDescription">
+                  <span className="bold">Description: </span>
+                  {movie.description}
+                </div>
+
+                {movie.imdbURL && (
+                  <div>
+                    <span className="bold">IMDB Link: </span>
+                    {movie.imdbURL}
+                  </div>
+                )}
+
+                {movie.budget && (
+                  <div>
+                    <span className="bold">Budget: </span>
+                    {formatMoney(movie.budget)}
+                  </div>
+                )}
+                {movie.gross && (
+                  <div>
+                    <span className="bold">Gross: </span>
+                    {formatMoney(movie.gross)}
                   </div>
                 )}
               </div>

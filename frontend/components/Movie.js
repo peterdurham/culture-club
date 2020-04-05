@@ -10,8 +10,8 @@ import AddToCart from "./AddToCart";
 
 const MovieStyles = styled.div`
   background: white;
-  border: 1px solid ${props => props.theme.offWhite};
-  box-shadow: ${props => props.theme.bs};
+  border: 1px solid ${(props) => props.theme.offWhite};
+  box-shadow: ${(props) => props.theme.bs};
   position: relative;
   display: flex;
   flex-direction: column;
@@ -30,10 +30,10 @@ const MovieStyles = styled.div`
   .buttonList {
     display: grid;
     width: 100%;
-    border-top: 1px solid ${props => props.theme.lightgrey};
+    border-top: 1px solid ${(props) => props.theme.lightgrey};
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     grid-gap: 1px;
-    background: ${props => props.theme.lightgrey};
+    background: ${(props) => props.theme.lightgrey};
     & > * {
       background: white;
       border: 0;
@@ -50,7 +50,7 @@ const Title = styled.h3`
   margin-top: -3rem;
   text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
   a {
-    background: ${props => props.theme.red};
+    background: ${(props) => props.theme.red};
     display: inline;
     line-height: 1.3;
     font-size: 2rem;
@@ -62,7 +62,7 @@ const Title = styled.h3`
 
 export default class Movie extends Component {
   static propTypes = {
-    movie: PropTypes.object.isRequired
+    movie: PropTypes.object.isRequired,
   };
 
   render() {
@@ -75,7 +75,7 @@ export default class Movie extends Component {
           <Link
             href={{
               pathname: "/movie",
-              query: { id: movie.id }
+              query: { id: movie.id },
             }}
           >
             <a>{movie.title}</a>
@@ -88,7 +88,7 @@ export default class Movie extends Component {
           <Link
             href={{
               pathname: "update",
-              query: { id: movie.id }
+              query: { id: movie.id },
             }}
           >
             <a>Edit ✏️</a>
