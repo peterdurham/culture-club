@@ -6,6 +6,7 @@ import Form from "../styles/Form";
 import formatMoney from "../../lib/formatMoney";
 import Error from "../ErrorMessage";
 import { GameGenres, GamePlatforms } from "../../config";
+import { ALL_GAMES_QUERY } from "./Games";
 
 const CREATE_GAME_MUTATION = gql`
   mutation CREATE_GAME_MUTATION(
@@ -91,7 +92,11 @@ class CreateGame extends Component {
   };
   render() {
     return (
-      <Mutation mutation={CREATE_GAME_MUTATION} variables={this.state}>
+      <Mutation
+        mutation={CREATE_GAME_MUTATION}
+        variables={this.state}
+        refetchQueries={[{ query: ALL_GAMES_QUERY }]}
+      >
         {(createGame, { loading, error }) => (
           <Form
             onSubmit={async (e) => {

@@ -166,6 +166,10 @@ export const BookGenres = [
     title: "Music",
   },
   {
+    value: "MYTHOLOGY",
+    title: "Mythology",
+  },
+  {
     value: "NEW_AGE",
     title: "New Age",
   },
@@ -176,10 +180,6 @@ export const BookGenres = [
   {
     value: "POETRY",
     title: "Poetry",
-  },
-  {
-    value: "MYTHOLOGY",
-    title: "Mythology",
   },
   {
     value: "ROMANCE",

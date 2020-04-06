@@ -70,7 +70,7 @@ const BookCard = ({ book, me, cardView }) => {
                 Edit
               </a>
             </Link>
-            <DeleteBook id={book.id}>Delete</DeleteBook>
+            {/* <DeleteBook id={book.id}>Delete</DeleteBook> */}
           </div>
 
           <div className="flex-apart details">
@@ -287,9 +287,9 @@ const BookCard = ({ book, me, cardView }) => {
                 <a className="edit-link button flex-apart">Edit</a>
               </Link>
 
-              <DeleteBook id={book.id} className="flex-apart">
+              {/* <DeleteBook id={book.id} className="flex-apart">
                 Delete
-              </DeleteBook>
+              </DeleteBook> */}
             </div>
           )}
         </div>

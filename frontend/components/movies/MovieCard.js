@@ -26,7 +26,10 @@ const MovieCard = ({ movie, me, cardView }) => {
   let seenItIds;
 
   if (me) {
-    toWatchIds = me.toWatch.map((item) => item.movie.id);
+    toWatchIds = me.toWatch.map((item) => {
+      console.log(item, me);
+      return item.movie.id;
+    });
     seenItIds = me.seenIt.map((item) => item.movie.id);
   }
 
@@ -73,7 +76,7 @@ const MovieCard = ({ movie, me, cardView }) => {
                 Edit
               </a>
             </Link>
-            <DeleteMovie id={movie.id}>Delete</DeleteMovie>
+            {/* <DeleteMovie id={movie.id}>Delete</DeleteMovie> */}
           </div>
 
           <div className="flex-apart details">
@@ -292,10 +295,10 @@ const MovieCard = ({ movie, me, cardView }) => {
                   {/* <TiEdit /> */}
                 </a>
               </Link>
-              <DeleteMovie id={movie.id}>
+              {/* <DeleteMovie id={movie.id}>
                 Delete
-                {/* <GoTrashcan className="icon-right" /> */}
-              </DeleteMovie>
+               
+              </DeleteMovie> */}
             </div>
           )}
         </div>

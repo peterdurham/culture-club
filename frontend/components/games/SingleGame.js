@@ -179,7 +179,7 @@ class SingleGame extends Component {
                               <a className="button singleEdit">Edit</a>
                             </Link>
 
-                            <DeleteGame id={game.id}>Delete</DeleteGame>
+                            {/* <DeleteGame id={game.id}>Delete</DeleteGame> */}
                           </div>
                         </div>
 

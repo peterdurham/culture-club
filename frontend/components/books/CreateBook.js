@@ -6,6 +6,7 @@ import Form from "../styles/Form";
 import formatMoney from "../../lib/formatMoney";
 import Error from "../ErrorMessage";
 import { BookGenres } from "../../config";
+import { ALL_BOOKS_QUERY } from "./Books";
 
 const CREATE_BOOK_MUTATION = gql`
   mutation CREATE_BOOK_MUTATION(
@@ -97,7 +98,11 @@ class CreateBook extends Component {
   };
   render() {
     return (
-      <Mutation mutation={CREATE_BOOK_MUTATION} variables={this.state}>
+      <Mutation
+        mutation={CREATE_BOOK_MUTATION}
+        variables={this.state}
+        refetchQueries={[{ query: ALL_BOOKS_QUERY }]}
+      >
         {(createBook, { loading, error }) => (
           <Form
             onSubmit={async (e) => {

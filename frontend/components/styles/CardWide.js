@@ -87,8 +87,8 @@ const CardWide = styled.div`
  
   .cardWideButtonList {
     position: absolute;
-    top: 14px;
-    left: 88px;
+    top: 12px;
+    left: 104px;
     height:4.4rem;
     display: flex;
     flex-direction: column;

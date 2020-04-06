@@ -88,7 +88,7 @@ const GameCard = ({ game, me, cardView }) => {
                 Edit
               </a>
             </Link>
-            <DeleteGame id={game.id}>Delete</DeleteGame>
+            {/* <DeleteGame id={game.id}>Delete</DeleteGame> */}
           </div>
 
           <div className="flex-apart details">
@@ -358,9 +358,9 @@ const GameCard = ({ game, me, cardView }) => {
                 <a className="edit-link button flex-apart">Edit</a>
               </Link>
 
-              <DeleteGame id={game.id} className="flex-apart">
+              {/* <DeleteGame id={game.id} className="flex-apart">
                 Delete
-              </DeleteGame>
+              </DeleteGame> */}
             </div>
           )}
         </div>

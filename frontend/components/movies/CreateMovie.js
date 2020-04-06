@@ -6,6 +6,7 @@ import Form from "../styles/Form";
 import formatMoney from "../../lib/formatMoney";
 import Error from "../ErrorMessage";
 import { MovieGenres } from "../../config";
+import { ALL_MOVIES_QUERY } from "./Movies";
 
 const CREATE_MOVIE_MUTATION = gql`
   mutation CREATE_MOVIE_MUTATION(
@@ -88,7 +89,11 @@ class CreateMovie extends Component {
   };
   render() {
     return (
-      <Mutation mutation={CREATE_MOVIE_MUTATION} variables={this.state}>
+      <Mutation
+        mutation={CREATE_MOVIE_MUTATION}
+        variables={this.state}
+        refetchQueries={[{ query: ALL_MOVIES_QUERY }]}
+      >
         {(createMovie, { loading, error }) => (
           <Form
             onSubmit={async (e) => {

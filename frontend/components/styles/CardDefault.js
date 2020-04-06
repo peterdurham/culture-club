@@ -94,8 +94,8 @@ const CardDefaultStyles = styled.div`
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 4px;
+    right: 4px;
   }
   .cardDefaultButtons button:not(:first-child) {
     margin-top: 4px;

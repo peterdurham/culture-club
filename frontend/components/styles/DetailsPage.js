@@ -45,8 +45,8 @@ const DetailsPageStyles = styled.div`
   }
   .singleActions {
     position: absolute;
-    top: 16px;
-    left: 242px;
+    top: 14px;
+    left: 248px;
     @media (max-width: 600px) {
       left: 8px;
     }

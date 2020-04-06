@@ -149,7 +149,7 @@ class SingleBook extends Component {
                               <a className="button singleEdit">Edit</a>
                             </Link>
 
-                            <DeleteBook id={book.id}>Delete</DeleteBook>
+                            {/* <DeleteBook id={book.id}>Delete</DeleteBook> */}
                           </div>
                         </div>
 

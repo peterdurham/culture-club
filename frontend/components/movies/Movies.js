@@ -101,14 +101,16 @@ const Movies = (props) => {
                   <MoviesList>
                     {props.filter === "all" && (
                       <>
-                        {data.movies.map((movie) => (
-                          <MovieCard
-                            movie={movie}
-                            key={movie.id}
-                            me={me}
-                            cardView={props.cardView}
-                          />
-                        ))}
+                        {data.movies.map((movie) => {
+                          return (
+                            <MovieCard
+                              movie={movie}
+                              key={movie.id}
+                              me={me}
+                              cardView={props.cardView}
+                            />
+                          );
+                        })}
                       </>
                     )}
                     {props.filter === "toWatch" && (
