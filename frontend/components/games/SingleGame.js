@@ -169,18 +169,18 @@ class SingleGame extends Component {
                               <a>({game.year})</a>
                             </Link>
                           </div>
-                          <div className="singleActions">
-                            <Link
-                              href={{
-                                pathname: "update-game",
-                                query: { id: game.id },
-                              }}
-                            >
-                              <a className="button singleEdit">Edit</a>
-                            </Link>
-
-                            {/* <DeleteGame id={game.id}>Delete</DeleteGame> */}
-                          </div>
+                          {me && me.id === game.user.id && (
+                            <div className="singleActions">
+                              <Link
+                                href={{
+                                  pathname: "update-game",
+                                  query: { id: game.id },
+                                }}
+                              >
+                                <a className="button singleEdit">Edit</a>
+                              </Link>
+                            </div>
+                          )}
                         </div>
 
                         <div className="singleGenres">

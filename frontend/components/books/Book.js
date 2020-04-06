@@ -59,17 +59,19 @@ const BookCard = ({ book, me, cardView }) => {
           </Link>
 
           <div className="cardDefaultButtons">
-            <Link
-              href={{
-                pathname: "update-book",
-                query: { id: book.id },
-              }}
-            >
-              <a className="button">
-                {/* <TiEdit /> */}
-                Edit
-              </a>
-            </Link>
+            {me && me.id === book.user.id && (
+              <Link
+                href={{
+                  pathname: "update-book",
+                  query: { id: book.id },
+                }}
+              >
+                <a className="button">
+                  {/* <TiEdit /> */}
+                  Edit
+                </a>
+              </Link>
+            )}
             {/* <DeleteBook id={book.id}>Delete</DeleteBook> */}
           </div>
 
@@ -278,15 +280,16 @@ const BookCard = ({ book, me, cardView }) => {
           )}
           {me && me.id === book.user.id && (
             <div className="cardWideButtonList">
-              <Link
-                href={{
-                  pathname: "update-book",
-                  query: { id: book.id },
-                }}
-              >
-                <a className="edit-link button flex-apart">Edit</a>
-              </Link>
-
+              {me && me.id === book.user.id && (
+                <Link
+                  href={{
+                    pathname: "update-book",
+                    query: { id: book.id },
+                  }}
+                >
+                  <a className="edit-link button flex-apart">Edit</a>
+                </Link>
+              )}
               {/* <DeleteBook id={book.id} className="flex-apart">
                 Delete
               </DeleteBook> */}

@@ -139,18 +139,20 @@ class SingleBook extends Component {
                               <a>({book.year})</a>
                             </Link>
                           </div>
-                          <div className="singleActions">
-                            <Link
-                              href={{
-                                pathname: "update-book",
-                                query: { id: book.id },
-                              }}
-                            >
-                              <a className="button singleEdit">Edit</a>
-                            </Link>
+                          {me && me.id === book.user.id && (
+                            <div className="singleActions">
+                              <Link
+                                href={{
+                                  pathname: "update-book",
+                                  query: { id: book.id },
+                                }}
+                              >
+                                <a className="button singleEdit">Edit</a>
+                              </Link>
 
-                            {/* <DeleteBook id={book.id}>Delete</DeleteBook> */}
-                          </div>
+                              {/* <DeleteBook id={book.id}>Delete</DeleteBook> */}
+                            </div>
+                          )}
                         </div>
 
                         {book.author && (

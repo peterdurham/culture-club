@@ -146,7 +146,6 @@ const Movies = (props) => {
                           .map((movie) => (
                             <MovieCard
                               movie={movie}
-                              movies={array}
                               key={movie.id}
                               me={me}
                               cardView={props.cardView}

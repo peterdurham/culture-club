@@ -139,18 +139,18 @@ class SingleMovie extends Component {
                               <a>({movie.year})</a>
                             </Link>
                           </div>
-                          <div className="singleActions">
-                            <Link
-                              href={{
-                                pathname: "update-movie",
-                                query: { id: movie.id },
-                              }}
-                            >
-                              <a className="button singleEdit">Edit</a>
-                            </Link>
-
-                            {/* <DeleteMovie id={movie.id}>Delete</DeleteMovie> */}
-                          </div>
+                          {me && me.id === movie.user.id && (
+                            <div className="singleActions">
+                              <Link
+                                href={{
+                                  pathname: "update-movie",
+                                  query: { id: movie.id },
+                                }}
+                              >
+                                <a className="button singleEdit">Edit</a>
+                              </Link>
+                            </div>
+                          )}
                         </div>
 
                         <div className="singleGenres">

@@ -42,6 +42,8 @@ const MovieCard = ({ movie, me, cardView }) => {
     return genreTitles[genreIndex];
   });
 
+  console.log(me);
+  console.log(movie);
   if (cardView === "default") {
     return (
       <CardDefault>
@@ -55,29 +57,30 @@ const MovieCard = ({ movie, me, cardView }) => {
         </Link>
 
         <div className="cardDefaultDetails">
-          <Link
-            href={{
-              pathname: "/movie",
-              query: { id: movie.id },
-            }}
-          >
-            <div className="cardDefaultTitle">{movie.title}</div>
-          </Link>
-
-          <div className="cardDefaultButtons">
+          <div className="cardDefaultTitle">
             <Link
               href={{
-                pathname: "update-movie",
+                pathname: "/movie",
                 query: { id: movie.id },
               }}
             >
-              <a className="button">
-                {/* <TiEdit /> */}
-                Edit
-              </a>
+              <a>{movie.title}</a>
             </Link>
-            {/* <DeleteMovie id={movie.id}>Delete</DeleteMovie> */}
           </div>
+
+          {me && me.id === movie.user.id && (
+            <div className="cardDefaultButtons">
+              <Link
+                href={{
+                  pathname: "update-movie",
+                  query: { id: movie.id },
+                }}
+              >
+                <a className="button">Edit</a>
+              </Link>
+              {/* <DeleteMovie id={movie.id}>Delete</DeleteMovie> */}
+            </div>
+          )}
 
           <div className="flex-apart details">
             <div className="cardDefaultGenres">

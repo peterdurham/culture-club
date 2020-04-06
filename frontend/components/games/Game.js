@@ -77,17 +77,19 @@ const GameCard = ({ game, me, cardView }) => {
           </Link>
 
           <div className="cardDefaultButtons">
-            <Link
-              href={{
-                pathname: "update-game",
-                query: { id: game.id },
-              }}
-            >
-              <a className="button">
-                {/* <TiEdit /> */}
-                Edit
-              </a>
-            </Link>
+            {me && me.id === game.user.id && (
+              <Link
+                href={{
+                  pathname: "update-game",
+                  query: { id: game.id },
+                }}
+              >
+                <a className="button">
+                  {/* <TiEdit /> */}
+                  Edit
+                </a>
+              </Link>
+            )}
             {/* <DeleteGame id={game.id}>Delete</DeleteGame> */}
           </div>
 

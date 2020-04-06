@@ -30,6 +30,9 @@ const Mutations = {
     return item;
   },
   updateItem(parent, args, ctx, info) {
+    if (!ctx.request.userId) {
+      throw new Error("You must be logged in to do that!");
+    }
     const updates = { ...args };
     // remove the ID
     delete updates.id;
@@ -83,6 +86,9 @@ const Mutations = {
     return movie;
   },
   updateMovie(parent, args, ctx, info) {
+    if (!ctx.request.userId) {
+      throw new Error("You must be logged in to do that!");
+    }
     // first take a copy of the updates
     const updates = { ...args };
     // remove the ID from the updates
@@ -141,6 +147,9 @@ const Mutations = {
     return book;
   },
   updateBook(parent, args, ctx, info) {
+    if (!ctx.request.userId) {
+      throw new Error("You must be logged in to do that!");
+    }
     // first take a copy of the updates
     const updates = { ...args };
     // remove the ID from the updates
@@ -311,7 +320,9 @@ const Mutations = {
       subject: "Your password reset token",
       html: makeANiceEmail(`Your Password Reset Token is here! 
       \n\n 
-      <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click here to reset</a>`),
+      <a href="${
+        process.env.FRONTEND_URL
+      }/reset?resetToken=${resetToken}">Click here to reset</a>`),
     });
     // 4. return the message
     return { message: "Thanks!" };
