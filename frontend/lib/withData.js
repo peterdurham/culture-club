@@ -6,12 +6,12 @@ import { LOCAL_STATE_QUERY } from "../components/Cart";
 function createClient({ headers }) {
   return new ApolloClient({
     uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
-    request: operation => {
+    request: (operation) => {
       operation.setContext({
-        fetchOptions: {
-          credentials: "include"
-        },
-        headers
+        // fetchOptions: {
+        //   credentials: "include"
+        // },
+        headers,
       });
     },
     // local data: apollo link state?
@@ -21,21 +21,21 @@ function createClient({ headers }) {
           toggleCart(_, variables, { cache }) {
             // read the cartOpen value from the cache
             const { cartOpen } = cache.readQuery({
-              query: LOCAL_STATE_QUERY
+              query: LOCAL_STATE_QUERY,
             });
             // write cart state to the opposite
             const data = {
-              data: { cartOpen: !cartOpen }
+              data: { cartOpen: !cartOpen },
             };
             cache.writeData(data);
             return data;
-          }
-        }
+          },
+        },
       },
       defaults: {
-        cartOpen: false
-      }
-    }
+        cartOpen: false,
+      },
+    },
   });
 }
 
