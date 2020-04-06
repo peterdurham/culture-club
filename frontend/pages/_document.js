@@ -4,7 +4,7 @@ import { ServerStyleSheet } from "styled-components";
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
     const sheet = new ServerStyleSheet();
-    const page = renderPage(App => props =>
+    const page = renderPage((App) => (props) =>
       sheet.collectStyles(<App {...props} />)
     );
     const styleTags = sheet.getStyleElement();
@@ -15,10 +15,12 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-        <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700|Sen:400,700&display=swap" rel="stylesheet">
+          <link
+            href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700|Sen:400,700&display=swap"
+            rel="stylesheet"
+          />
           {this.props.styleTags}
         </Head>
-
         <body>
           <Main />
           <NextScript />
