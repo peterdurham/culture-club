@@ -104,7 +104,8 @@ enum GamePlatform {
   XBOX_360
   XBOX_ONE
   DREAMCAST
-  MOBILE
+  OSX
+  ANDROID
   OTHER
  
 }

@@ -1,5 +1,5 @@
-# source: https://culture-club-prod-6ac1562427.herokuapp.com/culture-club-production/prod
-# timestamp: Sun Apr 05 2020 13:53:15 GMT-0700 (Pacific Daylight Time)
+# source: https://us1.prisma.sh/peter-durham-ae1855/culture-club/dev
+# timestamp: Sun Apr 05 2020 20:31:24 GMT-0700 (Pacific Daylight Time)
 
 type AggregateBook {
   count: Int!
@@ -1135,7 +1135,8 @@ enum GamePlatform {
   XBOX_360
   XBOX_ONE
   DREAMCAST
-  MOBILE
+  OSX
+  ANDROID
   OTHER
 }
 

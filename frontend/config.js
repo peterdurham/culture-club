@@ -327,6 +327,10 @@ export const GamePlatforms = [
     title: "Wii",
   },
   {
+    value: "SWITCH",
+    title: "Nintendo Switch",
+  },
+  {
     value: "XBOX",
     title: "Xbox",
   },
@@ -353,6 +357,14 @@ export const GamePlatforms = [
   {
     value: "PS4",
     title: "PS4",
+  },
+  {
+    value: "ANDROID",
+    title: "Android",
+  },
+  {
+    value: "OSX",
+    title: "OSX",
   },
 ];
 export const GameNumPlayers = [
