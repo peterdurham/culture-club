@@ -16,7 +16,7 @@ const PAGINATION_QUERY = gql`
   }
 `;
 
-const Pagination = props => {
+const Pagination = (props) => {
   return (
     <Query query={PAGINATION_QUERY}>
       {({ data, loading, error }) => {
@@ -35,7 +35,7 @@ const Pagination = props => {
               prefetch
               href={{
                 pathname: "movies",
-                query: { page: page - 1 }
+                query: { page: page - 1 },
               }}
             >
               <a className="prev" aria-disabled={page <= 1}>
@@ -50,7 +50,7 @@ const Pagination = props => {
               prefetch
               href={{
                 pathname: "movies",
-                query: { page: page + 1 }
+                query: { page: page + 1 },
               }}
             >
               <a className="next" aria-disabled={page >= pages}>

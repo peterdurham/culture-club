@@ -17,7 +17,7 @@ const CREATE_MOVIE_MUTATION = gql`
     $budget: Int
     $gross: Int
     $imdbURL: String
-    $genre1: MovieGenre
+    $genre1: MovieGenre!
     $genre2: MovieGenre
     $genre3: MovieGenre
     $image: String
@@ -165,12 +165,11 @@ class CreateMovie extends Component {
               </label>
 
               <label htmlFor="description">
-                Description*
+                Description
                 <textarea
                   id="description"
                   name="description"
                   placeholder="Enter A Description"
-                  required
                   value={this.state.description}
                   onChange={this.handleChange}
                 />
@@ -189,7 +188,7 @@ class CreateMovie extends Component {
               </label>
 
               <label htmlFor="genre1">
-                Genre
+                Genre*
                 <select
                   id="genre1"
                   name="genre1"

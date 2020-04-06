@@ -11,14 +11,14 @@ const CREATE_GAME_MUTATION = gql`
   mutation CREATE_GAME_MUTATION(
     $title: String!
     $developer: String!
-    $description: String!
+    $description: String
     $year: Int!
     $numPlayers: NumPlayers
     $websiteURL: String
-    $platform1: GamePlatform
+    $platform1: GamePlatform!
     $platform2: GamePlatform
     $platform3: GamePlatform
-    $genre1: GameGenre
+    $genre1: GameGenre!
     $genre2: GameGenre
     $genre3: GameGenre
     $image: String
@@ -60,15 +60,15 @@ class CreateGame extends Component {
     genre2: "UNSELECTED",
     genre3: "UNSELECTED",
     image: "",
-    largeImage: ""
+    largeImage: "",
   };
-  handleChange = e => {
+  handleChange = (e) => {
     const { name, type, value } = e.target;
     const val = type === "number" ? parseFloat(value) : value;
     this.setState({ [name]: val });
   };
 
-  uploadFile = async e => {
+  uploadFile = async (e) => {
     console.log("uploading file...");
     const files = e.target.files;
     const data = new FormData();
@@ -79,14 +79,14 @@ class CreateGame extends Component {
       "https://api.cloudinary.com/v1_1/peterdurham/image/upload",
       {
         method: "POST",
-        body: data
+        body: data,
       }
     );
     const file = await res.json();
     console.log(file);
     this.setState({
       image: file.secure_url,
-      largeImage: file.eager[0].secure_url
+      largeImage: file.eager[0].secure_url,
     });
   };
   render() {
@@ -94,7 +94,7 @@ class CreateGame extends Component {
       <Mutation mutation={CREATE_GAME_MUTATION} variables={this.state}>
         {(createGame, { loading, error }) => (
           <Form
-            onSubmit={async e => {
+            onSubmit={async (e) => {
               // Stop the form from submitting
               e.preventDefault();
               // call the mutation
@@ -103,7 +103,7 @@ class CreateGame extends Component {
               console.log(res);
               Router.push({
                 pathname: "/game",
-                query: { id: res.data.createGame.id }
+                query: { id: res.data.createGame.id },
               });
             }}
           >
@@ -143,13 +143,12 @@ class CreateGame extends Component {
               </label>
 
               <label htmlFor="developer">
-                Developer*
+                Developer
                 <input
                   type="text"
                   id="developer"
                   name="developer"
                   placeholder="Developer"
-                  required
                   value={this.state.developer}
                   onChange={this.handleChange}
                 />
@@ -192,14 +191,14 @@ class CreateGame extends Component {
               </label>
 
               <label htmlFor="platform1">
-                Platforms
+                Platform*
                 <select
                   id="platform1"
                   name="platform1"
                   onChange={this.handleChange}
                   defaultValue="UNSELECTED"
                 >
-                  {GamePlatforms.map(platform => {
+                  {GamePlatforms.map((platform) => {
                     return (
                       <option value={platform.value} key={platform.value}>
                         {platform.title}
@@ -217,7 +216,7 @@ class CreateGame extends Component {
                     onChange={this.handleChange}
                     defaultValue="UNSELECTED"
                   >
-                    {GamePlatforms.map(platform => {
+                    {GamePlatforms.map((platform) => {
                       return (
                         <option value={platform.value} key={platform.value}>
                           {platform.title}
@@ -237,7 +236,7 @@ class CreateGame extends Component {
                       onChange={this.handleChange}
                       defaultValue="UNSELECTED"
                     >
-                      {GamePlatforms.map(platform => {
+                      {GamePlatforms.map((platform) => {
                         return (
                           <option value={platform.value} key={platform.value}>
                             {platform.title}
@@ -249,14 +248,14 @@ class CreateGame extends Component {
                 )}
 
               <label htmlFor="genre1">
-                Genre
+                Genre*
                 <select
                   id="genre1"
                   name="genre1"
                   onChange={this.handleChange}
                   defaultValue="UNSELECTED"
                 >
-                  {GameGenres.map(genre => {
+                  {GameGenres.map((genre) => {
                     return (
                       <option value={genre.value} key={genre.value}>
                         {genre.title}
@@ -274,7 +273,7 @@ class CreateGame extends Component {
                     onChange={this.handleChange}
                     defaultValue="UNSELECTED"
                   >
-                    {GameGenres.map(genre => {
+                    {GameGenres.map((genre) => {
                       return (
                         <option value={genre.value} key={genre.value}>
                           {genre.title}
@@ -294,7 +293,7 @@ class CreateGame extends Component {
                       onChange={this.handleChange}
                       defaultValue="UNSELECTED"
                     >
-                      {GameGenres.map(genre => {
+                      {GameGenres.map((genre) => {
                         return (
                           <option value={genre.value} key={genre.value}>
                             {genre.title}
@@ -317,13 +316,12 @@ class CreateGame extends Component {
               </label>
 
               <label htmlFor="description">
-                Description*
+                Description
                 <textarea
                   id="description"
                   name="description"
                   placeholder="Enter A Description"
                   style={{ height: "100px" }}
-                  required
                   value={this.state.description}
                   onChange={this.handleChange}
                 />

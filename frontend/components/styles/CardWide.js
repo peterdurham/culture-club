@@ -10,11 +10,18 @@ const CardWide = styled.div`
   position: relative;
   display: flex;
   padding: 8px;
+
+  @media (max-width: 600px) {
+    height: 280px;
+  }
   .cardWideImage {
     min-width: 133px;
     background-size: cover;
     height: 100%;
     width: 133px;
+    @media (max-width: 600px) {
+    height: 200px;
+  }
     transition: all 0.3s;
     cursor: pointer;
   }
@@ -42,6 +49,7 @@ const CardWide = styled.div`
     font-size: 21px;
     line-height: 29px;
     font-weight: 700;
+   
   }
   .cardWideYear {
    font-size: 15px;
@@ -50,6 +58,9 @@ const CardWide = styled.div`
  
   .list-buttons button {
     transition: all 0.3s;
+    @media (max-width: 600px) {
+    height: 30px;
+  }
 
   }
   .list-buttons svg {
@@ -62,8 +73,15 @@ const CardWide = styled.div`
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    @media (max-width: 600px) {
+      position:absolute;
+      bottom: 0;
+      left: 0;
+      width: auto;
+      margin: 8px;
   }
-
+  }
+ 
   .cardWideButtonList {
     position: absolute;
     top: 14px;

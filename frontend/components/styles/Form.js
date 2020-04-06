@@ -22,6 +22,7 @@ const Form = styled.form`
   font-weight: 600;
   width: 420px;
   margin: 0 auto;
+  margin-bottom: 40px;
   label {
     display: block;
     margin-bottom: 1rem;

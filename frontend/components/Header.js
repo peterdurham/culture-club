@@ -20,10 +20,9 @@ Router.onRouteChangeError = () => {
 
 const StyledHeader = styled.header`
   .bar {
-    border-bottom: 4px solid ${(props) => props.theme.black};
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-rows: 75px;
+    grid-template-rows: 80px;
     justify-content: space-between;
     align-items: stretch;
     @media (max-width: 1300px) {
@@ -34,7 +33,6 @@ const StyledHeader = styled.header`
   .sub-bar {
     display: grid;
     grid-template-columns: 1fr auto;
-    border-bottom: 1px solid ${(props) => props.theme.lightgrey};
   }
 `;
 

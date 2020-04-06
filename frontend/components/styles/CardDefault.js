@@ -5,11 +5,19 @@ const CardDefaultStyles = styled.div`
   width: 184px;
   margin: 20px 8px;
   position: relative;
+  @media (max-width: 600px) {
+    width: 149px;
+    height: 340px;
+  }
+
   img {
     width: 100%;
     height: 275px;
     object-fit: cover;
     transition: all 0.3s;
+    @media (max-width: 600px) {
+      height: 225px;
+    }
   }
   img:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.67);
@@ -70,6 +78,9 @@ const CardDefaultStyles = styled.div`
   .cardDefaultListButtons button {
     width: 50%;
     transition: all 0.3s;
+    @media (max-width: 600px) {
+      height: 30px;
+    }
   }
   .cardDefaultListButtons button:not(:last-child) {
     margin-right: 8px;
@@ -85,10 +96,6 @@ const CardDefaultStyles = styled.div`
     margin-top: 4px;
   }
 
-  /* .list-buttons button:hover {
-    border: 1px solid rgb(0, 0, 0, 0.25);
-    background: rgb(0, 0, 0, 0.1);
-  } */
   svg {
     font-size: 1.72rem;
     margin-left: 6px;

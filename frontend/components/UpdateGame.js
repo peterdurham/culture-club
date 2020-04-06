@@ -68,7 +68,7 @@ const UPDATE_GAME_MUTATION = gql`
 
 class UpdateGame extends Component {
   state = {};
-  handleChange = e => {
+  handleChange = (e) => {
     const { name, type, value } = e.target;
     const val = type === "number" ? parseFloat(value) : value;
     this.setState({ [name]: val });
@@ -80,8 +80,8 @@ class UpdateGame extends Component {
     const res = await updateGameMutation({
       variables: {
         id: this.props.id,
-        ...this.state
-      }
+        ...this.state,
+      },
     });
     console.log("Updated!!");
   };
@@ -91,7 +91,7 @@ class UpdateGame extends Component {
       <Query
         query={SINGLE_GAME_QUERY}
         variables={{
-          id: this.props.id
+          id: this.props.id,
         }}
       >
         {({ data, loading }) => {
@@ -101,11 +101,11 @@ class UpdateGame extends Component {
           return (
             <Mutation mutation={UPDATE_GAME_MUTATION} variables={this.state}>
               {(updateGame, { loading, error }) => (
-                <Form onSubmit={e => this.updateGame(e, updateGame)}>
+                <Form onSubmit={(e) => this.updateGame(e, updateGame)}>
                   <Error error={error} />
                   <fieldset disabled={loading} aria-busy={loading}>
                     <label htmlFor="title">
-                      Title*
+                      Title
                       <input
                         type="text"
                         id="title"
@@ -117,7 +117,7 @@ class UpdateGame extends Component {
                     </label>
 
                     <label htmlFor="developer">
-                      Developer*
+                      Developer
                       <input
                         type="text"
                         id="developer"
@@ -129,7 +129,7 @@ class UpdateGame extends Component {
                     </label>
 
                     <label htmlFor="year">
-                      Year*
+                      Year
                       <input
                         type="number"
                         id="year"
@@ -173,7 +173,7 @@ class UpdateGame extends Component {
                         onChange={this.handleChange}
                         defaultValue={data.game.platform1}
                       >
-                        {GamePlatforms.map(platform => {
+                        {GamePlatforms.map((platform) => {
                           return (
                             <option value={platform.value} key={platform.value}>
                               {platform.title}
@@ -191,7 +191,7 @@ class UpdateGame extends Component {
                           onChange={this.handleChange}
                           defaultValue={data.game.platform2}
                         >
-                          {GamePlatforms.map(platform => {
+                          {GamePlatforms.map((platform) => {
                             return (
                               <option
                                 value={platform.value}
@@ -214,7 +214,7 @@ class UpdateGame extends Component {
                             onChange={this.handleChange}
                             defaultValue={data.game.platform3}
                           >
-                            {GamePlatforms.map(platform => {
+                            {GamePlatforms.map((platform) => {
                               return (
                                 <option
                                   value={platform.value}
@@ -236,7 +236,7 @@ class UpdateGame extends Component {
                         onChange={this.handleChange}
                         defaultValue={data.game.genre1}
                       >
-                        {GameGenres.map(genre => {
+                        {GameGenres.map((genre) => {
                           return (
                             <option value={genre.value} key={genre.value}>
                               {genre.title}
@@ -254,7 +254,7 @@ class UpdateGame extends Component {
                           onChange={this.handleChange}
                           defaultValue={data.game.genre2}
                         >
-                          {GameGenres.map(genre => {
+                          {GameGenres.map((genre) => {
                             return (
                               <option value={genre.value} key={genre.value}>
                                 {genre.title}
@@ -274,7 +274,7 @@ class UpdateGame extends Component {
                             onChange={this.handleChange}
                             defaultValue={data.game.genre3}
                           >
-                            {GameGenres.map(genre => {
+                            {GameGenres.map((genre) => {
                               return (
                                 <option value={genre.value} key={genre.value}>
                                   {genre.title}
@@ -297,7 +297,7 @@ class UpdateGame extends Component {
                     </label>
 
                     <label htmlFor="description">
-                      Description*
+                      Description
                       <textarea
                         id="description"
                         name="description"

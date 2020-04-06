@@ -11,14 +11,14 @@ const CREATE_BOOK_MUTATION = gql`
   mutation CREATE_BOOK_MUTATION(
     $title: String!
     $author: String!
-    $description: String!
+    $description: String
     $year: Int!
     $image: String
     $largeImage: String
     $printLength: Int
     $publisher: String
     $pdfURL: String
-    $genre1: BookGenre
+    $genre1: BookGenre!
     $genre2: BookGenre
     $genre3: BookGenre
   ) {
@@ -54,16 +54,16 @@ class CreateBook extends Component {
     genre2: "UNSELECTED",
     genre3: "UNSELECTED",
     image: "",
-    largeImage: ""
+    largeImage: "",
   };
-  handleChange = e => {
+  handleChange = (e) => {
     const { name, type, value } = e.target;
     const val = type === "number" ? parseFloat(value) : value;
 
     if (type === "checkbox" && name === "genres") {
       const genres = [];
       var genresSelected = document.querySelectorAll(".bookGenreInput");
-      genresSelected.forEach(genre => {
+      genresSelected.forEach((genre) => {
         if (genre.checked) {
           genres.push(genre.defaultValue);
         }
@@ -75,7 +75,7 @@ class CreateBook extends Component {
     }
   };
 
-  uploadFile = async e => {
+  uploadFile = async (e) => {
     console.log("uploading file...");
     const files = e.target.files;
     const data = new FormData();
@@ -86,14 +86,14 @@ class CreateBook extends Component {
       "https://api.cloudinary.com/v1_1/peterdurham/image/upload",
       {
         method: "POST",
-        body: data
+        body: data,
       }
     );
     const file = await res.json();
     console.log(file);
     this.setState({
       image: file.secure_url,
-      largeImage: file.eager[0].secure_url
+      largeImage: file.eager[0].secure_url,
     });
   };
   render() {
@@ -101,7 +101,7 @@ class CreateBook extends Component {
       <Mutation mutation={CREATE_BOOK_MUTATION} variables={this.state}>
         {(createBook, { loading, error }) => (
           <Form
-            onSubmit={async e => {
+            onSubmit={async (e) => {
               // Stop the form from submitting
               e.preventDefault();
               console.log(this.state, "STATE");
@@ -111,7 +111,7 @@ class CreateBook extends Component {
               console.log(res, "RESPOSNE");
               Router.push({
                 pathname: "/book",
-                query: { id: res.data.createBook.id }
+                query: { id: res.data.createBook.id },
               });
             }}
           >
@@ -173,12 +173,11 @@ class CreateBook extends Component {
                 />
               </label>
               <label htmlFor="description">
-                Description*
+                Description
                 <textarea
                   id="description"
                   name="description"
                   placeholder="Enter A Description"
-                  required
                   value={this.state.description}
                   onChange={this.handleChange}
                 />
@@ -207,14 +206,14 @@ class CreateBook extends Component {
               </label>
 
               <label htmlFor="genre1">
-                Genre
+                Genre*
                 <select
                   id="genre1"
                   name="genre1"
                   onChange={this.handleChange}
                   defaultValue="UNSELECTED"
                 >
-                  {BookGenres.map(genre => {
+                  {BookGenres.map((genre) => {
                     return (
                       <option value={genre.value} key={genre.value}>
                         {genre.title}
@@ -232,7 +231,7 @@ class CreateBook extends Component {
                     onChange={this.handleChange}
                     defaultValue="UNSELECTED"
                   >
-                    {BookGenres.map(genre => {
+                    {BookGenres.map((genre) => {
                       return (
                         <option value={genre.value} key={genre.value}>
                           {genre.title}
@@ -252,7 +251,7 @@ class CreateBook extends Component {
                       onChange={this.handleChange}
                       defaultValue="UNSELECTED"
                     >
-                      {BookGenres.map(genre => {
+                      {BookGenres.map((genre) => {
                         return (
                           <option value={genre.value} key={genre.value}>
                             {genre.title}

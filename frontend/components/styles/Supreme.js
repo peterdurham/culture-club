@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Supreme = styled.h3`
-  background: ${(props) => props.theme.white};
+  background: ${(props) => props.theme.green};
   color: white;
   display: inline-block;
   padding: 4px 5px;

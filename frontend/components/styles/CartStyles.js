@@ -6,7 +6,7 @@ const CartStyles = styled.div`
   background: white;
   position: fixed;
   height: 100%;
-  top: 0;
+  top: 80px;
   left: 0;
   width: 35%;
   min-width: 420px;
@@ -18,6 +18,15 @@ const CartStyles = styled.div`
   display: grid;
   grid-template-rows: auto 1fr auto;
   ${(props) => props.open && `transform: translateX(0);`};
+
+  @media (max-width: 1300px) {
+    top: 71px;
+  }
+  @media (max-width: 600px) {
+    top: 53px;
+    width: 100vw;
+    min-width: 320px;
+  }
   header {
     border-bottom: 5px solid ${(props) => props.theme.black};
     margin-bottom: 2rem;

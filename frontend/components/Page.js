@@ -3,6 +3,7 @@ import Head from "next/head";
 import styled, { ThemeProvider, injectGlobal } from "styled-components";
 import Header from "../components/Header";
 import Meta from "../components/Meta";
+import Footer from "./Footer";
 
 const theme = {
   red: "red",
@@ -28,7 +29,10 @@ const Inner = styled.div`
   max-width: ${(props) => props.theme.maxWidth};
   margin: 0 auto;
   background: ${(props) => props.theme.white};
-  padding: 2rem;
+  padding: 4rem 2rem 8rem 2rem;
+  @media (max-width: 600px) {
+    padding: 2rem 4%;
+  }
 `;
 
 injectGlobal`
@@ -45,6 +49,8 @@ injectGlobal`
   }
   *, *:before, *:after {
       box-sizing: inherit;
+      margin:0;
+      padding:0 ;
   }
   body {
       padding: 0;
@@ -79,7 +85,7 @@ injectGlobal`
     align-items: center;
     font-weight: 500;
     font-size: 10px;
- 
+    outline: 0;
     height: 20px;
     box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(60, 66, 87, 0.16) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(60, 66, 87, 0.12) 0px 2px 5px 0px;
     background: #fff;
@@ -121,6 +127,20 @@ button.upcoming, a.upcoming {
 .page-header {
   text-align: left;
 }
+.similarCardContainer {
+    display: flex;
+    
+  @media (max-width: 1100px) {
+   flex-wrap: wrap;
+  }
+  }
+  .icon-button {
+    outline: 0;
+  }
+  .icon-button svg {
+
+    font-size: 2rem;
+  }
 .new-button svg {
   margin-left: 4px;
 }
@@ -150,6 +170,7 @@ const Page = ({ children }) => {
           <Meta />
           <Header />
           <Inner>{children}</Inner>
+          <Footer />
         </div>
       </StyledPage>
     </ThemeProvider>

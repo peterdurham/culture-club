@@ -51,7 +51,7 @@ const Books = (props) => {
     <User>
       {({ data: { me } }) => {
         return (
-          <div>
+          <div style={{ textAlign: "center" }}>
             {props.genre && (
               <h1 className="page-header">{props.genreLabel} Books</h1>
             )}

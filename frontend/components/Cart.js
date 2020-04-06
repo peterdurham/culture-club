@@ -43,7 +43,9 @@ const Cart = () => {
               <CloseButton onClick={toggleCart} title="close">
                 &times;
               </CloseButton>
-              <h2 style={{ fontSize: "2.8rem" }}>{me.name}'s Lists</h2>
+              <Supreme style={{ fontSize: "2.8rem" }}>
+                {me.name}'s Lists
+              </Supreme>
             </header>
             <div className="listLinks">
               <Link href="/to-watch" onClick={toggleCart}>

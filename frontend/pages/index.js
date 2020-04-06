@@ -1,39 +1,68 @@
 import Link from "next/link";
-// import React from 'react';
+
 import Items from "../components/Items";
 import Movies from "../components/Movies";
 import Books from "../components/Books";
 import Games from "../components/Games";
+import { GoPlus } from "react-icons/go";
 
 const Home = (props) => {
   return (
     <div>
-      {/* <Items page={parseFloat(props.query.page) || 1} />
-      <Books page={parseFloat(props.query.page) || 1} />
-      <Games page={parseFloat(props.query.page) || 1} /> */}
-      {/* <Movies
-        filter="all"
-        page={parseFloat(props.query.page) || 1}
-        cardView={props.cardView}
-        setCardView={props.setCardView}
-      /> */}
       <div
         style={{
-          textAlign: "center",
           display: "flex",
           flexDirection: "column",
         }}
       >
-        <h1>Welcome to Culture Club</h1>
-        <Link href="/movies">
-          <a>Movies</a>
-        </Link>
-        <Link href="/books">
-          <a>Books</a>
-        </Link>
-        <Link href="/games">
-          <a>Games</a>
-        </Link>
+        <div className="flex-apart">
+          <h1>Movies</h1>
+          <Link href="/add-movie">
+            <a className="button new-button">
+              Add Movie
+              <GoPlus />
+            </a>
+          </Link>
+        </div>
+
+        <Movies
+          filter="all"
+          page={parseFloat(props.query.page) || 1}
+          cardView={props.cardView}
+          setCardView={props.setCardView}
+        />
+
+        <div className="flex-apart">
+          <h1>Books</h1>
+          <Link href="/add-book">
+            <a className="button new-button">
+              Add Book
+              <GoPlus />
+            </a>
+          </Link>
+        </div>
+
+        <Books
+          filter="all"
+          page={parseFloat(props.query.page) || 1}
+          cardView={props.cardView}
+          setCardView={props.setCardView}
+        />
+        <div className="flex-apart">
+          <h1>Games</h1>
+          <Link href="/add-game">
+            <a className="button new-button">
+              Add Game
+              <GoPlus />
+            </a>
+          </Link>
+        </div>
+        <Games
+          filter="all"
+          page={parseFloat(props.query.page) || 1}
+          cardView={props.cardView}
+          setCardView={props.setCardView}
+        />
       </div>
     </div>
   );

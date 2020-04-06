@@ -144,6 +144,7 @@ const Movies = (props) => {
                           .map((movie) => (
                             <MovieCard
                               movie={movie}
+                              movies={array}
                               key={movie.id}
                               me={me}
                               cardView={props.cardView}
@@ -195,7 +196,7 @@ const Movies = (props) => {
                           .filter((movie) => {
                             return movie.director === props.director;
                           })
-                          .map((movie) => (
+                          .map((movie, index, array) => (
                             <MovieCard
                               movie={movie}
                               key={movie.id}

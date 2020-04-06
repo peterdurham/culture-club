@@ -8,16 +8,52 @@ import styled from "styled-components";
 import { TOGGLE_CART_MUTATION } from "./Cart";
 import { MdWbSunny } from "react-icons/md";
 import { WiMoonAltWaningCrescent5 } from "react-icons/wi";
+import { FiMenu } from "react-icons/fi";
+import { MdClose } from "react-icons/md";
 
 const NavStyles = styled.ul`
   margin: 0;
   padding: 0;
   padding-right: 40px;
   width: 100vw;
+  position: fixed;
+  z-index: 10;
+  background: #fff;
   display: flex;
   justify-content: space-between;
+  border-bottom: 3px solid black;
   align-items: center;
   font-size: 1.6rem;
+  @media (max-width: 1300px) {
+    padding: 0;
+  }
+  .navContainer {
+    width: ${(props) => props.theme.maxWidth};
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    @media (max-width: 1300px) {
+      width: 100%;
+      padding: 0 20px;
+    }
+    @media (max-width: 600px) {
+      width: 100%;
+      padding: 0 4%;
+    }
+  }
+  .navLogo {
+    font-weight: 700;
+    min-width: 234px;
+    @media (max-width: 1300px) {
+      font-size: 2.8rem;
+    }
+    @media (max-width: 600px) {
+      font-size: 2.4rem;
+      padding: 0;
+    }
+  }
   a,
   button {
     padding: 0.5rem 1.5rem;
@@ -30,18 +66,53 @@ const NavStyles = styled.ul`
     background: none;
     border: 0;
     cursor: pointer;
+
     @media (max-width: 700px) {
-      font-size: 13px;
+      font-size: 15px;
       padding: 0 10px;
     }
   }
   .navCenter {
     display: flex;
     transform: translateX(-40px);
-    @media (max-width: 700px) {
+    @media (max-width: 1300px) {
       transform: translateX(0px);
     }
+    @media (max-width: 600px) {
+      display: none;
+    }
   }
+  .navLogin {
+    @media (max-width: 600px) {
+      display: none;
+    }
+  }
+  .navMobileButton {
+    display: none;
+    @media (max-width: 600px) {
+      display: block;
+    }
+  }
+  .navMobileMenu {
+    position: fixed;
+    top: 83px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 2rem;
+    background: #fff;
+    z-index: 5;
+
+    @media (max-width: 600px) {
+      top: 53px;
+    }
+  }
+  .navMobileMenu a,
+  .navMobileMenu button {
+    font-size: 2rem;
+    line-height: 4rem;
+  }
+
   .Nav__mode {
     background: none;
     border: none;
@@ -54,12 +125,6 @@ const NavStyles = styled.ul`
   }
   .Nav__mode:hover {
     color: ${(props) => props.theme.yellow};
-  }
-  @media (max-width: 1300px) {
-    border-top: 1px solid ${(props) => props.theme.lightgrey};
-    width: 100%;
-
-    font-size: 1.5rem;
   }
 `;
 const Logo = styled.h1`
@@ -88,15 +153,17 @@ const Logo = styled.h1`
     margin-top: 0.5rem;
   }
 `;
-class Nav extends React.Component {
-  render() {
-    return (
-      <User>
-        {({ data: { me } }) => (
-          <NavStyles>
+const Nav = () => {
+  const [navOpen, setNavOpen] = React.useState(false);
+
+  return (
+    <User>
+      {({ data: { me } }) => (
+        <NavStyles>
+          <div className="navContainer">
             <Logo>
               <Link href="/">
-                <a>Culture Club</a>
+                <a className="navLogo">Culture Club</a>
               </Link>
             </Logo>
             <div className="navCenter">
@@ -120,7 +187,7 @@ class Nav extends React.Component {
                 </>
               )}
             </div>
-            <div>
+            <div className="navLogin">
               {/* <button
                 className="Nav__mode"
                 onClick={theme.toggleDarkMode}
@@ -134,6 +201,7 @@ class Nav extends React.Component {
                   <WiMoonAltWaningCrescent5 />
                 )}
               </button> */}
+
               {!me && (
                 <Link href="/signup">
                   <a>Sign In</a>
@@ -145,10 +213,67 @@ class Nav extends React.Component {
                 </>
               )}
             </div>
-          </NavStyles>
-        )}
-      </User>
-    );
-  }
-}
+            <div className="navMobileButton">
+              {!navOpen ? (
+                <button
+                  onClick={() => setNavOpen(true)}
+                  className="icon-button"
+                >
+                  <FiMenu />
+                </button>
+              ) : (
+                <button
+                  onClick={() => setNavOpen(false)}
+                  className="icon-button"
+                >
+                  <MdClose />
+                </button>
+              )}
+            </div>
+            {navOpen && (
+              <div className="navMobileMenu">
+                <Link href="/movies">
+                  <a onClick={() => setNavOpen(false)}>Movies</a>
+                </Link>
+                <Link href="/books">
+                  <a onClick={() => setNavOpen(false)}>Books</a>
+                </Link>
+                <Link href="/games">
+                  <a onClick={() => setNavOpen(false)}>Games</a>
+                </Link>
+
+                {me && (
+                  <>
+                    <Mutation mutation={TOGGLE_CART_MUTATION}>
+                      {(toggleCart) => (
+                        <button
+                          onClick={() => {
+                            toggleCart();
+                            setNavOpen(false);
+                          }}
+                        >
+                          Lists
+                        </button>
+                      )}
+                    </Mutation>
+                  </>
+                )}
+                {!me && (
+                  <Link href="/signup">
+                    <a onClick={() => setNavOpen(false)}>Sign In</a>
+                  </Link>
+                )}
+                {me && (
+                  <>
+                    <Signout />
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+        </NavStyles>
+      )}
+    </User>
+  );
+};
 export default Nav;
