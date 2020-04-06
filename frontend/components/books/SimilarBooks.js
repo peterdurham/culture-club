@@ -37,7 +37,7 @@ const SimilarBooks = ({ me, books, genre, genreLabel, id }) => {
     <div>
       <h2 style={{ marginBottom: 0 }}>Other {genreLabel} Books</h2>
       {books && (
-        <div className="similar-card-container">
+        <div className="similarCardContainer">
           {shuffledBooks.map((book, index) => {
             if (index < 5)
               return (

@@ -36,7 +36,7 @@ const SimilarGames = ({ me, games, genre, genreLabel, id }) => {
     <div>
       <h2 style={{ marginBottom: 0 }}>Other {genreLabel} Games</h2>
       {games && (
-        <div className="similar-card-container">
+        <div className="similarCardContainer">
           {shuffledGames.map((game, index) => {
             if (index < 5)
               return (
