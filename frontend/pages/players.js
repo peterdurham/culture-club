@@ -1,6 +1,6 @@
 import User from "../components/User";
 
-import Games from "../components/Games";
+import Games from "../components/games/Games";
 import { GameNumPlayers } from "../config.js";
 
 const PlayersPage = (props) => {

@@ -1,4 +1,4 @@
-import UpdateBook from "../components/UpdateBook";
+import UpdateBook from "../components/books/UpdateBook";
 
 const UpdateBookPage = ({ query }) => (
   <div>

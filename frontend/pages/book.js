@@ -1,4 +1,4 @@
-import SingleBook from "../components/SingleBook";
+import SingleBook from "../components/books/SingleBook";
 import User from "../components/User";
 
 const Book = (props) => {

@@ -1,4 +1,4 @@
-import UpdateMovie from "../components/UpdateMovie";
+import UpdateMovie from "../components/movies/UpdateMovie";
 
 const UpdateMoviePage = ({ query }) => (
   <div>

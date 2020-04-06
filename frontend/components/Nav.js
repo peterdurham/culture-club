@@ -44,8 +44,10 @@ const NavStyles = styled.ul`
     }
   }
   .navLogo {
+    /* font-family: "Sen", sans-serif; */
     font-weight: 700;
     min-width: 234px;
+    padding: 0;
     @media (max-width: 1300px) {
       font-size: 2.8rem;
     }
@@ -74,15 +76,18 @@ const NavStyles = styled.ul`
   }
   .navCenter {
     display: flex;
-    transform: translateX(-40px);
-    @media (max-width: 1300px) {
-      transform: translateX(0px);
-    }
+
     @media (max-width: 600px) {
       display: none;
     }
   }
+  .navCenter button {
+    outline: 0;
+  }
   .navLogin {
+    width: 234px;
+    display: flex;
+    justify-content: flex-end;
     @media (max-width: 600px) {
       display: none;
     }
@@ -135,13 +140,10 @@ const Logo = styled.h1`
   position: relative;
   z-index: 2;
   font-weight: 700;
-  /* transform: skew(-7deg); */
   a {
     border-radius: 4px;
     padding: 0.5rem 1rem;
-
     color: black;
-    text-transform: uppercase;
     text-decoration: none;
     @media (max-width: 700px) {
       font-size: 17px;
@@ -247,6 +249,7 @@ const Nav = () => {
                     <Mutation mutation={TOGGLE_CART_MUTATION}>
                       {(toggleCart) => (
                         <button
+                          className="outline-none"
                           onClick={() => {
                             toggleCart();
                             setNavOpen(false);
@@ -258,16 +261,18 @@ const Nav = () => {
                     </Mutation>
                   </>
                 )}
-                {!me && (
-                  <Link href="/signup">
-                    <a onClick={() => setNavOpen(false)}>Sign In</a>
-                  </Link>
-                )}
-                {me && (
-                  <>
-                    <Signout />
-                  </>
-                )}
+                <div className="navLogin">
+                  {!me && (
+                    <Link href="/signup">
+                      <a onClick={() => setNavOpen(false)}>Sign In</a>
+                    </Link>
+                  )}
+                  {me && (
+                    <>
+                      <Signout />
+                    </>
+                  )}
+                </div>
               </div>
             )}
           </div>

@@ -7,7 +7,7 @@ const CardDefaultStyles = styled.div`
   position: relative;
   @media (max-width: 600px) {
     width: 149px;
-    height: 340px;
+    height: 330px;
   }
 
   img {
@@ -30,6 +30,11 @@ const CardDefaultStyles = styled.div`
     font-weight: 700;
     text-align: left;
     cursor: pointer;
+    @media (max-width: 1300px) {
+      font-size: 1.5rem;
+      line-height: 2.1rem;
+      max-height: 2.1rem;
+    }
   }
   .cardDefaultTitle:hover {
     text-decoration: underline;

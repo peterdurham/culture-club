@@ -23,6 +23,9 @@ const Form = styled.form`
   width: 420px;
   margin: 0 auto;
   margin-bottom: 40px;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
   label {
     display: block;
     margin-bottom: 1rem;

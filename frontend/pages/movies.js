@@ -1,4 +1,4 @@
-import Movies from "../components/Movies";
+import Movies from "../components/movies/Movies";
 import Link from "next/link";
 import { GoPlus } from "react-icons/go";
 
@@ -6,7 +6,7 @@ const MoviesPage = (props) => {
   return (
     <div>
       <div className="flex-apart">
-        <h1>Movies Page</h1>
+        <h1 className="page-header">Movies Page</h1>
         <Link href="/add-movie">
           <a className="button new-button">
             Add Movie

@@ -18,11 +18,11 @@ const Mutations = {
           // Item User Relationship
           user: {
             connect: {
-              id: ctx.request.userId
-            }
+              id: ctx.request.userId,
+            },
           },
-          ...args
-        }
+          ...args,
+        },
       },
       info
     );
@@ -37,8 +37,8 @@ const Mutations = {
       {
         data: updates,
         where: {
-          id: args.id
-        }
+          id: args.id,
+        },
       },
       info
     );
@@ -50,7 +50,7 @@ const Mutations = {
     const item = await ctx.db.query.item({ where }, `{ id title user { id }}`);
     // 2. Check if they own that item, or have the permissions
     const ownsItem = item.user.id === ctx.request.userId;
-    const hasPermissions = ctx.request.user.permissions.some(permission =>
+    const hasPermissions = ctx.request.user.permissions.some((permission) =>
       ["ADMIN", "ITEMDELETE"].includes(permission)
     );
     // error out if user doesn't have permission
@@ -71,11 +71,11 @@ const Mutations = {
           // Item User Relationship
           user: {
             connect: {
-              id: ctx.request.userId
-            }
+              id: ctx.request.userId,
+            },
           },
-          ...args
-        }
+          ...args,
+        },
       },
       info
     );
@@ -92,8 +92,8 @@ const Mutations = {
       {
         data: updates,
         where: {
-          id: args.id
-        }
+          id: args.id,
+        },
       },
       info
     );
@@ -108,7 +108,7 @@ const Mutations = {
     );
     // 2. Check if they own that item, or have the permissions
     const addedMovie = movie.user.id === ctx.request.userId;
-    const hasPermissions = ctx.request.user.permissions.some(permission =>
+    const hasPermissions = ctx.request.user.permissions.some((permission) =>
       ["ADMIN", "ITEMDELETE"].includes(permission)
     );
     // error out if user doesn't have permission
@@ -129,11 +129,11 @@ const Mutations = {
           // this is how we create a relationship between the Item and the User
           user: {
             connect: {
-              id: ctx.request.userId
-            }
+              id: ctx.request.userId,
+            },
           },
-          ...args
-        }
+          ...args,
+        },
       },
       info
     );
@@ -150,8 +150,8 @@ const Mutations = {
       {
         data: updates,
         where: {
-          id: args.id
-        }
+          id: args.id,
+        },
       },
       info
     );
@@ -163,7 +163,7 @@ const Mutations = {
     const book = await ctx.db.query.book({ where }, `{ id title user { id }}`);
     // 2. Check if they own that item, or have the permissions
     const addedBook = book.user.id === ctx.request.userId;
-    const hasPermissions = ctx.request.user.permissions.some(permission =>
+    const hasPermissions = ctx.request.user.permissions.some((permission) =>
       ["ADMIN", "ITEMDELETE"].includes(permission)
     );
     // error out if user doesn't have permission
@@ -184,11 +184,11 @@ const Mutations = {
           // this is how we create a relationship between the Item and the User
           user: {
             connect: {
-              id: ctx.request.userId
-            }
+              id: ctx.request.userId,
+            },
           },
-          ...args
-        }
+          ...args,
+        },
       },
       info
     );
@@ -199,7 +199,7 @@ const Mutations = {
     const where = { id: args.id };
     const game = await ctx.db.query.game({ where }, `{ id title user { id }}`);
     const addedGame = game.user.id === ctx.request.userId;
-    const hasPermissions = ctx.request.user.permissions.some(permission =>
+    const hasPermissions = ctx.request.user.permissions.some((permission) =>
       ["ADMIN", "ITEMUPDATE"].includes(permission)
     );
     if (!addedGame && !hasPermissions) {
@@ -214,8 +214,8 @@ const Mutations = {
       {
         data: updates,
         where: {
-          id: args.id
-        }
+          id: args.id,
+        },
       },
       info
     );
@@ -227,7 +227,7 @@ const Mutations = {
     const game = await ctx.db.query.game({ where }, `{ id title user { id }}`);
     // 2. Check if they own that item, or have the permissions
     const addedGame = game.user.id === ctx.request.userId;
-    const hasPermissions = ctx.request.user.permissions.some(permission =>
+    const hasPermissions = ctx.request.user.permissions.some((permission) =>
       ["ADMIN", "ITEMDELETE"].includes(permission)
     );
     // error out if user doesn't have permission
@@ -248,8 +248,8 @@ const Mutations = {
         data: {
           ...args,
           password,
-          permissions: { set: ["USER"] }
-        }
+          permissions: { set: ["ADMIN"] },
+        },
       },
       info
     );
@@ -258,7 +258,7 @@ const Mutations = {
     // We set the jwt as a cookie on the response
     ctx.response.cookie("token", token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year cookie
+      maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
     });
     // Finalllllly we return the user to the browser
     return user;
@@ -279,7 +279,7 @@ const Mutations = {
     // 4. set the cookie with the token
     ctx.response.cookie("token", token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 365
+      maxAge: 1000 * 60 * 60 * 24 * 365,
     });
     // 5. return the user
     return user;
@@ -301,7 +301,7 @@ const Mutations = {
     const resetTokenExpiry = Date.now() + 3600000; // 1 hour from now
     const res = await ctx.db.mutation.updateUser({
       where: { email: args.email },
-      data: { resetToken, resetTokenExpiry }
+      data: { resetToken, resetTokenExpiry },
     });
 
     // 3. email them that reset token
@@ -311,7 +311,7 @@ const Mutations = {
       subject: "Your password reset token",
       html: makeANiceEmail(`Your Password Reset Token is here! 
       \n\n 
-      <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click here to reset</a>`)
+      <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click here to reset</a>`),
     });
     // 4. return the message
     return { message: "Thanks!" };
@@ -326,8 +326,8 @@ const Mutations = {
     const [user] = await ctx.db.query.users({
       where: {
         resetToken: args.resetToken,
-        resetTokenExpiry_gte: Date.now() - 3600000
-      }
+        resetTokenExpiry_gte: Date.now() - 3600000,
+      },
     });
     if (!user) {
       throw new Error("this token is either invalid or expired");
@@ -340,8 +340,8 @@ const Mutations = {
       data: {
         password,
         resetToken: null,
-        resetTokenExpiry: null
-      }
+        resetTokenExpiry: null,
+      },
     });
     // 6. generate JWT
     const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET);
@@ -349,7 +349,7 @@ const Mutations = {
     // 7. set the JWT cookie
     ctx.response.cookie("token", token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 365
+      maxAge: 1000 * 60 * 60 * 24 * 365,
     });
     // 8. return the new user
     return updatedUser;
@@ -363,8 +363,8 @@ const Mutations = {
     const currentUser = await ctx.db.query.user(
       {
         where: {
-          id: ctx.request.userId
-        }
+          id: ctx.request.userId,
+        },
       },
       info
     );
@@ -375,12 +375,12 @@ const Mutations = {
       {
         data: {
           permissions: {
-            set: args.permissions
-          }
+            set: args.permissions,
+          },
         },
         where: {
-          id: args.userId
-        }
+          id: args.userId,
+        },
       },
       info
     );
@@ -395,8 +395,8 @@ const Mutations = {
     const [existingCartItem] = await ctx.db.query.cartItems({
       where: {
         user: { id: userId },
-        item: { id: args.id }
-      }
+        item: { id: args.id },
+      },
     });
     // 3. check if that item is already in their cart and increment by 1 if it is
     if (existingCartItem) {
@@ -404,7 +404,7 @@ const Mutations = {
       return ctx.db.mutation.updateCartItem(
         {
           where: { id: existingCartItem.id },
-          data: { quantity: existingCartItem.quantity + 1 }
+          data: { quantity: existingCartItem.quantity + 1 },
         },
         info
       );
@@ -414,12 +414,12 @@ const Mutations = {
       {
         data: {
           user: {
-            connect: { id: userId }
+            connect: { id: userId },
           },
           item: {
-            connect: { id: args.id }
-          }
-        }
+            connect: { id: args.id },
+          },
+        },
       },
       info
     );
@@ -429,8 +429,8 @@ const Mutations = {
     const cartItem = await ctx.db.query.cartItem(
       {
         where: {
-          id: args.id
-        }
+          id: args.id,
+        },
       },
       `{ id, user { id }}`
     );
@@ -444,8 +444,8 @@ const Mutations = {
     return ctx.db.mutation.deleteCartItem(
       {
         where: {
-          id: args.id
-        }
+          id: args.id,
+        },
       },
       info
     );
@@ -459,8 +459,8 @@ const Mutations = {
     const [existingToWatchItem] = await ctx.db.query.toWatchItems({
       where: {
         user: { id: userId },
-        movie: { id: args.id }
-      }
+        movie: { id: args.id },
+      },
     });
 
     if (existingToWatchItem) {
@@ -472,12 +472,12 @@ const Mutations = {
       {
         data: {
           user: {
-            connect: { id: userId }
+            connect: { id: userId },
           },
           movie: {
-            connect: { id: args.id }
-          }
-        }
+            connect: { id: args.id },
+          },
+        },
       },
       info
     );
@@ -488,8 +488,8 @@ const Mutations = {
     const [existingToWatchItem] = await ctx.db.query.toWatchItems({
       where: {
         user: { id: userId },
-        movie: { id: args.id }
-      }
+        movie: { id: args.id },
+      },
     });
     // 1.5 make sure we found an item
     if (!existingToWatchItem) throw new Error("no toWatchItem found!");
@@ -501,8 +501,8 @@ const Mutations = {
     return ctx.db.mutation.deleteToWatchItem(
       {
         where: {
-          id: existingToWatchItem.id
-        }
+          id: existingToWatchItem.id,
+        },
       },
       info
     );
@@ -516,8 +516,8 @@ const Mutations = {
     const [existingSeenItItem] = await ctx.db.query.seenItItems({
       where: {
         user: { id: userId },
-        movie: { id: args.id }
-      }
+        movie: { id: args.id },
+      },
     });
 
     if (existingSeenItItem) {
@@ -529,12 +529,12 @@ const Mutations = {
       {
         data: {
           user: {
-            connect: { id: userId }
+            connect: { id: userId },
           },
           movie: {
-            connect: { id: args.id }
-          }
-        }
+            connect: { id: args.id },
+          },
+        },
       },
       info
     );
@@ -545,8 +545,8 @@ const Mutations = {
     const [existingSeenItItem] = await ctx.db.query.seenItItems({
       where: {
         user: { id: userId },
-        movie: { id: args.id }
-      }
+        movie: { id: args.id },
+      },
     });
 
     if (!existingSeenItItem) throw new Error("no SeenItItem found!");
@@ -557,8 +557,8 @@ const Mutations = {
     return ctx.db.mutation.deleteSeenItItem(
       {
         where: {
-          id: existingSeenItItem.id
-        }
+          id: existingSeenItItem.id,
+        },
       },
       info
     );
@@ -572,8 +572,8 @@ const Mutations = {
     const [existingToReadItem] = await ctx.db.query.toReadItems({
       where: {
         user: { id: userId },
-        book: { id: args.id }
-      }
+        book: { id: args.id },
+      },
     });
 
     if (existingToReadItem) {
@@ -585,12 +585,12 @@ const Mutations = {
       {
         data: {
           user: {
-            connect: { id: userId }
+            connect: { id: userId },
           },
           book: {
-            connect: { id: args.id }
-          }
-        }
+            connect: { id: args.id },
+          },
+        },
       },
       info
     );
@@ -601,8 +601,8 @@ const Mutations = {
     const [existingToReadItem] = await ctx.db.query.toReadItems({
       where: {
         user: { id: userId },
-        book: { id: args.id }
-      }
+        book: { id: args.id },
+      },
     });
     // 1.5 make sure we found an item
     if (!existingToReadItem) throw new Error("no toReadItem found!");
@@ -614,8 +614,8 @@ const Mutations = {
     return ctx.db.mutation.deleteToReadItem(
       {
         where: {
-          id: existingToReadItem.id
-        }
+          id: existingToReadItem.id,
+        },
       },
       info
     );
@@ -629,8 +629,8 @@ const Mutations = {
     const [existingReadItItem] = await ctx.db.query.readItItems({
       where: {
         user: { id: userId },
-        book: { id: args.id }
-      }
+        book: { id: args.id },
+      },
     });
 
     if (existingReadItItem) {
@@ -642,12 +642,12 @@ const Mutations = {
       {
         data: {
           user: {
-            connect: { id: userId }
+            connect: { id: userId },
           },
           book: {
-            connect: { id: args.id }
-          }
-        }
+            connect: { id: args.id },
+          },
+        },
       },
       info
     );
@@ -658,8 +658,8 @@ const Mutations = {
     const [existingReadItItem] = await ctx.db.query.readItItems({
       where: {
         user: { id: userId },
-        book: { id: args.id }
-      }
+        book: { id: args.id },
+      },
     });
 
     if (!existingReadItItem) throw new Error("no ReadItItem found!");
@@ -670,8 +670,8 @@ const Mutations = {
     return ctx.db.mutation.deleteReadItItem(
       {
         where: {
-          id: existingReadItItem.id
-        }
+          id: existingReadItItem.id,
+        },
       },
       info
     );
@@ -685,8 +685,8 @@ const Mutations = {
     const [existingToPlayItem] = await ctx.db.query.toPlayItems({
       where: {
         user: { id: userId },
-        game: { id: args.id }
-      }
+        game: { id: args.id },
+      },
     });
 
     if (existingToPlayItem) {
@@ -698,12 +698,12 @@ const Mutations = {
       {
         data: {
           user: {
-            connect: { id: userId }
+            connect: { id: userId },
           },
           game: {
-            connect: { id: args.id }
-          }
-        }
+            connect: { id: args.id },
+          },
+        },
       },
       info
     );
@@ -714,8 +714,8 @@ const Mutations = {
     const [existingToPlayItem] = await ctx.db.query.toPlayItems({
       where: {
         user: { id: userId },
-        game: { id: args.id }
-      }
+        game: { id: args.id },
+      },
     });
     // 1.5 make sure we found an item
     if (!existingToPlayItem) throw new Error("no toPlayItem found!");
@@ -727,8 +727,8 @@ const Mutations = {
     return ctx.db.mutation.deleteToPlayItem(
       {
         where: {
-          id: existingToPlayItem.id
-        }
+          id: existingToPlayItem.id,
+        },
       },
       info
     );
@@ -742,8 +742,8 @@ const Mutations = {
     const [existingPlayedItItem] = await ctx.db.query.playedItItems({
       where: {
         user: { id: userId },
-        game: { id: args.id }
-      }
+        game: { id: args.id },
+      },
     });
 
     if (existingPlayedItItem) {
@@ -755,12 +755,12 @@ const Mutations = {
       {
         data: {
           user: {
-            connect: { id: userId }
+            connect: { id: userId },
           },
           game: {
-            connect: { id: args.id }
-          }
-        }
+            connect: { id: args.id },
+          },
+        },
       },
       info
     );
@@ -771,8 +771,8 @@ const Mutations = {
     const [existingPlayedItItem] = await ctx.db.query.playedItItems({
       where: {
         user: { id: userId },
-        game: { id: args.id }
-      }
+        game: { id: args.id },
+      },
     });
 
     if (!existingPlayedItItem) throw new Error("no PlayedItItem found!");
@@ -783,8 +783,8 @@ const Mutations = {
     return ctx.db.mutation.deletePlayedItItem(
       {
         where: {
-          id: existingPlayedItItem.id
-        }
+          id: existingPlayedItItem.id,
+        },
       },
       info
     );
@@ -816,14 +816,14 @@ const Mutations = {
     const charge = await stripe.charges.create({
       amount,
       currency: "USD",
-      source: args.token
+      source: args.token,
     });
     // 4. Convert the CartItems to OrderItems
-    const orderItems = user.cart.map(cartItem => {
+    const orderItems = user.cart.map((cartItem) => {
       const orderItem = {
         ...cartItem.item,
         quantity: cartItem.quantity,
-        user: { connect: { id: userId } }
+        user: { connect: { id: userId } },
       };
       delete orderItem.id;
       return orderItem;
@@ -835,19 +835,19 @@ const Mutations = {
         total: charge.amount,
         charge: charge.id,
         items: { create: orderItems },
-        user: { connect: { id: userId } }
-      }
+        user: { connect: { id: userId } },
+      },
     });
     // 6. Clean up - clear the users cart, delete cartItems
-    const cartItemIds = user.cart.map(cartItem => cartItem.id);
+    const cartItemIds = user.cart.map((cartItem) => cartItem.id);
     await ctx.db.mutation.deleteManyCartItems({
       where: {
-        id_in: cartItemIds
-      }
+        id_in: cartItemIds,
+      },
     });
     // 7. Return the Order to the client
     return order;
-  }
+  },
 };
 
 module.exports = Mutations;

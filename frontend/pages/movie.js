@@ -1,4 +1,4 @@
-import SingleMovie from "../components/SingleMovie";
+import SingleMovie from "../components/movies/SingleMovie";
 import User from "../components/User";
 
 const Movie = (props) => {

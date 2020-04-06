@@ -1,4 +1,4 @@
-import UpdateGame from "../components/UpdateGame";
+import UpdateGame from "../components/games/UpdateGame";
 
 const UpdateGamePage = ({ query }) => (
   <div>

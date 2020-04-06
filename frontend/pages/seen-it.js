@@ -1,4 +1,4 @@
-import Movies from "../components/Movies";
+import Movies from "../components/movies/Movies";
 
 const SeenItPage = (props) => {
   return (

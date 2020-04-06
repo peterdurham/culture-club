@@ -1,4 +1,4 @@
-import Books from "../components/Books";
+import Books from "../components/books/Books";
 import Link from "next/link";
 import { GoPlus } from "react-icons/go";
 
@@ -6,7 +6,7 @@ const BooksPage = (props) => {
   return (
     <div>
       <div className="flex-apart">
-        <h1>Books Page</h1>
+        <h1 className="page-header">Books Page</h1>
         <Link href="/add-book">
           <a className="button new-button">
             Add Book

@@ -1,7 +1,7 @@
-import CreateGame from "../components/CreateGame";
+import CreateGame from "../components/games/CreateGame";
 import PleaseSignIn from "../components/PleaseSignIn";
 
-const AddGamePage = props => (
+const AddGamePage = (props) => (
   <div>
     <PleaseSignIn>
       <CreateGame />

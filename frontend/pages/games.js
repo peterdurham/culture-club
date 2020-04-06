@@ -1,4 +1,4 @@
-import Games from "../components/Games";
+import Games from "../components/games/Games";
 import Link from "next/link";
 import { GoPlus } from "react-icons/go";
 
@@ -6,7 +6,7 @@ const GamesPage = (props) => {
   return (
     <div>
       <div className="flex-apart">
-        <h1>Games Page</h1>
+        <h1 className="page-header">Games Page</h1>
         <Link href="/add-game">
           <a className="button new-button">
             Add Game

@@ -15,10 +15,7 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <link
-            href="https://fonts.googleapis.com/css?family=Fira+Sans+Condensed|Libre+Franklin|Merriweather|Noto+Sans|Sen|Sofia|Source+Sans+Pro|Varela+Round&display=swap"
-            rel="stylesheet"
-          />
+        <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700|Sen:400,700&display=swap" rel="stylesheet">
           {this.props.styleTags}
         </Head>
 

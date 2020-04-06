@@ -1,7 +1,7 @@
-import CreateMovie from "../components/CreateMovie";
+import CreateMovie from "../components/movies/CreateMovie";
 import PleaseSignIn from "../components/PleaseSignIn";
 
-const AddMoviePage = props => (
+const AddMoviePage = (props) => (
   <div>
     <PleaseSignIn>
       <CreateMovie />

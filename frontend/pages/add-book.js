@@ -1,7 +1,7 @@
-import CreateBook from "../components/CreateBook";
+import CreateBook from "../components/books/CreateBook";
 import PleaseSignIn from "../components/PleaseSignIn";
 
-const AddBookPage = props => (
+const AddBookPage = (props) => (
   <div>
     <PleaseSignIn>
       <CreateBook />

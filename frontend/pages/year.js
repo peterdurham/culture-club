@@ -1,8 +1,8 @@
 import User from "../components/User";
 
-import Movies from "../components/Movies";
-import Books from "../components/Books";
-import Games from "../components/Games";
+import Movies from "../components/movies/Movies";
+import Books from "../components/books/Books";
+import Games from "../components/games/Games";
 
 const YearPage = (props) => {
   return (

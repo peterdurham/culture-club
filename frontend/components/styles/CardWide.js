@@ -49,7 +49,10 @@ const CardWide = styled.div`
     font-size: 21px;
     line-height: 29px;
     font-weight: 700;
-   
+    @media (max-width: 1300px) {
+      font-size: 17px;
+      line-height: 25px;
+  }
   }
   .cardWideYear {
    font-size: 15px;

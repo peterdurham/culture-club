@@ -36,13 +36,13 @@ const Inner = styled.div`
 `;
 
 injectGlobal`
-  @font-face {
+  /* @font-face {
       font-family: 'radnika_next';
       src: url('/static/radnikanext-medium-webfont.woff2')
       format('woff2');
       font-weight: normal;
       font-style: normal;
-  }
+  } */
   html {
       box-sizing: border-box;
       font-size: 10px;
@@ -53,18 +53,24 @@ injectGlobal`
       padding:0 ;
   }
   body {
-      padding: 0;
-      margin: 0;
-      font-size: 1.5rem;
-      line-height: 2;
-  font-family: 'Libre Franklin', sans-serif;
-  font-family: 'Source Sans Pro', sans-serif;
-      font-family: 'radnika_next';
-  font-family: 'Sen', sans-serif;
-  font-family: 'Noto Sans', sans-serif;
-  font-family: 'Varela Round', sans-serif;
+    padding: 0;
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 2;
+
+    /* font-family: 'Libre Franklin', sans-serif; */
+    font-family: 'Noto Sans', sans-serif;
+    
+  }
+  button {
+    font-family: 'Noto Sans', sans-serif;
+  }
+  .navLogo, .footerLogo {
+    font-family: 'Sen', sans-serif;
 
   }
+ 
+
   svg {
     font-size: 1.4rem;
   }
@@ -126,6 +132,10 @@ button.upcoming, a.upcoming {
 }
 .page-header {
   text-align: left;
+  @media (max-width: 1300px) {
+   font-size: 2rem;
+   line-height: 4.8rem;
+  }
 }
 .similarCardContainer {
     display: flex;
@@ -143,6 +153,9 @@ button.upcoming, a.upcoming {
   }
 .new-button svg {
   margin-left: 4px;
+}
+.outline-none {
+  outline: 0;
 }
 .listLinks {
   display: flex;

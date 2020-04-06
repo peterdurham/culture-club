@@ -1,6 +1,6 @@
 import User from "../components/User";
 
-import Movies from "../components/Movies";
+import Movies from "../components/movies/Movies";
 
 const DirectorPage = (props) => {
   return (

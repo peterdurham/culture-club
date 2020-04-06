@@ -9,7 +9,7 @@ import Error from "./ErrorMessage";
 const SingleItemStyles = styled.div`
   max-width: 1200px;
   margin: 2rem auto;
-  box-shadow: ${props => props.theme.bs};
+  box-shadow: ${(props) => props.theme.bs};
   display: grid;
   grid-auto-columns: 1fr;
   grid-auto-flow: column;
@@ -39,12 +39,11 @@ const SINGLE_ITEM_QUERY = gql`
 
 class SingleItem extends Component {
   render() {
-    console.log(this.props.id);
     return (
       <Query
         query={SINGLE_ITEM_QUERY}
         variables={{
-          id: this.props.id
+          id: this.props.id,
         }}
       >
         {({ error, loading, data }) => {

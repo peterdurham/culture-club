@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 import Items from "../components/Items";
-import Movies from "../components/Movies";
-import Books from "../components/Books";
-import Games from "../components/Games";
+import Movies from "../components/movies/Movies";
+import Books from "../components/books/Books";
+import Games from "../components/games/Games";
 import { GoPlus } from "react-icons/go";
 
 const Home = (props) => {
@@ -16,7 +16,7 @@ const Home = (props) => {
         }}
       >
         <div className="flex-apart">
-          <h1>Movies</h1>
+          <h1 className="page-header">Movies</h1>
           <Link href="/add-movie">
             <a className="button new-button">
               Add Movie
@@ -33,7 +33,7 @@ const Home = (props) => {
         />
 
         <div className="flex-apart">
-          <h1>Books</h1>
+          <h1 className="page-header">Books</h1>
           <Link href="/add-book">
             <a className="button new-button">
               Add Book
@@ -49,7 +49,7 @@ const Home = (props) => {
           setCardView={props.setCardView}
         />
         <div className="flex-apart">
-          <h1>Games</h1>
+          <h1 className="page-header">Games</h1>
           <Link href="/add-game">
             <a className="button new-button">
               Add Game

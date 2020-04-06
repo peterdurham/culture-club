@@ -1,6 +1,6 @@
 import User from "../components/User";
 
-import Games from "../components/Games";
+import Games from "../components/games/Games";
 
 const DeveloperPage = (props) => {
   return (

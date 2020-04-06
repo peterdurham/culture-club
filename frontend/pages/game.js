@@ -1,4 +1,4 @@
-import SingleGame from "../components/SingleGame";
+import SingleGame from "../components/games/SingleGame";
 import User from "../components/User";
 
 const Game = (props) => {

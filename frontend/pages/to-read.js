@@ -1,4 +1,4 @@
-import Books from "../components/Books";
+import Books from "../components/books/Books";
 
 const ToReadPage = (props) => {
   return (
