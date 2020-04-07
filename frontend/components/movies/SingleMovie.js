@@ -79,14 +79,13 @@ class SingleMovie extends Component {
                 if (loading) return <p>Loading...</p>;
                 if (!data.movies)
                   return <p>No movie Found for {this.props.id}</p>;
-                console.log(data.movies, "DATA.MOVIES");
+
                 const movie = data.movies.filter(
                   (movie) => movie.id === this.props.id
                 )[0];
-                console.log(movie, "movie");
+
                 const genres = [movie.genre1, movie.genre2, movie.genre3];
-                console.log(genres, "genres");
-                console.log(movie.genre1, "genre1");
+
                 const genreTitles = MovieGenres.map((genre) => genre.title);
                 const genreValues = MovieGenres.map((genre) => genre.value);
 

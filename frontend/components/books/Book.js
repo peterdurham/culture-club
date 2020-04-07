@@ -27,8 +27,7 @@ const BookCard = ({ book, me, cardView }) => {
     toReadIds = me.toRead.map((item) => item.book.id);
     readItIds = me.readIt.map((item) => item.book.id);
   }
-  console.log(toReadIds, "TO READ");
-  console.log(readItIds, "READ IT");
+
   const genres = [book.genre1, book.genre2, book.genre3];
   const genreTitles = BookGenres.map((genre) => genre.title);
   const genreValues = BookGenres.map((genre) => genre.value);

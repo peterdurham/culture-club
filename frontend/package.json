@@ -7,7 +7,7 @@
     "dev": "next -p 7777",
     "build": "next build",
     "start": "next start -p $PORT",
-    "test": "NODE_ENV=test jest --watchAll",
+    "test": "jest --watchAll",
     "test-win": "SET NODE_ENV=test&& jest --watch",
     "heroku-postbuild": "next build"
   },
