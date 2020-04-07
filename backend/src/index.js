@@ -36,7 +36,6 @@ server.express.use(async (req, res, next) => {
 
 server.start(
   {
-    port: 4444,
     cors: {
       credentials: true,
       origin: [process.env.FRONTEND_URL],
