@@ -46,9 +46,9 @@ server.express.use(function(req, res, next) {
 server.start(
   {
     cors: {
-      // origin: "*",
+      origin: "*",
       credentials: true,
-      origin: process.env.FRONTEND_URL,
+      // origin: process.env.FRONTEND_URL,
     },
   },
   (deets) => {
