@@ -79,8 +79,7 @@ class UpdateMovie extends Component {
   };
   updateMovie = async (e, updateMovieMutation) => {
     e.preventDefault();
-    console.log("Updating Movie!!");
-    console.log(this.state);
+
     const res = await updateMovieMutation({
       variables: {
         id: this.props.id,

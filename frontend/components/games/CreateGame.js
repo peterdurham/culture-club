@@ -105,7 +105,7 @@ class CreateGame extends Component {
               // call the mutation
               const res = await createGame();
               // change them to the single item page
-              console.log(res);
+
               Router.push({
                 pathname: "/game",
                 query: { id: res.data.createGame.id },

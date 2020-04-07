@@ -27,7 +27,6 @@ const MovieCard = ({ movie, me, cardView }) => {
 
   if (me) {
     toWatchIds = me.toWatch.map((item) => {
-      console.log(item, me);
       return item.movie.id;
     });
     seenItIds = me.seenIt.map((item) => item.movie.id);
@@ -42,8 +41,6 @@ const MovieCard = ({ movie, me, cardView }) => {
     return genreTitles[genreIndex];
   });
 
-  console.log(me);
-  console.log(movie);
   if (cardView === "default") {
     return (
       <CardDefault>

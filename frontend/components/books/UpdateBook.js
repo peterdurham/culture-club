@@ -85,15 +85,10 @@ class UpdateBook extends Component {
     } else {
       this.setState({ [name]: val });
     }
-
-    // val = e.target.name === "genres" ? val.split(", ") : val;
-    // val = e.target.name === "characters" ? val.split(", ") : val;
-    // console.log(val);
   };
   updateBook = async (e, updateBookMutation) => {
     e.preventDefault();
     console.log("Updating Book!!");
-    console.log(this.state);
     const res = await updateBookMutation({
       variables: {
         id: this.props.id,
